@@ -68,7 +68,8 @@
     "unexpected": "^11.14.0"
   },
   "scripts": {
-    "release": "yarn release:pack && yarn release:move && yarn release:clean && yarn release:unpack",
+    "rerelease": "yarn release:clean && yarn release",
+    "release": "yarn build:lib && yarn release:pack && yarn release:move && yarn release:unpack",
     "release:pack": "yarn lerna run pack",
     "release:move": "copyfiles -f -V -u 2 packages/**/*.tgz ../zapisani-pl/FRONTEND/react-page",
     "release:clean": "yarn run del -f ../zapisani-pl/FRONTEND/react-page/*-unpacked",
