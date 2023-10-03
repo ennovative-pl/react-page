@@ -26,7 +26,16 @@ const DisplayModeToggle = ({
   return (
     <div className="react-page-controls-mode-toggle-button" style={style}>
       <div className="react-page-controls-mode-toggle-button-inner">
-        <Fab
+        <button
+          type="button"
+          className={'btn ' + (active ? 'btn-primary' : 'btn-secondary')}
+          onClick={onClick}
+          disabled={disabled}
+          {...rest}
+        >
+          {icon}
+        </button>
+        {/* <Fab
           color={active ? activeColor : 'default'}
           size={isSmall ? 'small' : 'large'}
           onClick={onClick}
@@ -34,7 +43,7 @@ const DisplayModeToggle = ({
           {...rest}
         >
           {icon}
-        </Fab>
+        </Fab> */}
       </div>
       <div className="react-page-controls-mode-toggle-button-description">
         {description}

@@ -13,7 +13,8 @@ const ToggleEdit: React.FC<Props> = ({ label }) => {
   const setEditMode = useSetEditMode();
   return (
     <Button
-      icon={<Create />}
+      //icon={<Create />}
+      icon={<i className="fas fa-fw fa-edit" />}
       description={label}
       active={isEditMode}
       onClick={setEditMode}

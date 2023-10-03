@@ -1,6 +1,6 @@
 {
   "name": "@react-page/plugins-slate",
-  "version": "0.0.0",
+  "version": "5.4.4-ennovative",
   "main": "./lib/index.js",
   "module": "./lib-es/index.js",
   "sideEffects": false,
@@ -11,6 +11,7 @@
     "url": "https://github.com/react-page/react-page"
   },
   "scripts": {
+    "pack": "yarn pack",
     "build": "npm-run-all --parallel build:lib build:css",
     "build:watch": "npm-run-all --parallel build:lib:watch build:css:watch",
     "build:lib": "tsc -p ./tsconfig.json && tsc -p ./tsconfig-es.json",
@@ -29,7 +30,7 @@
   "dependencies": {
     "@emotion/is-prop-valid": "^1.2.0",
     "@mui/icons-material": "^5.8.0",
-    "@react-page/editor": "0.0.0",
+    "@react-page/editor": "^5.4.4-ennovative",
     "@xmldom/xmldom": "^0.8.1",
     "cssstyle": "^2.3.0",
     "deep-rename-keys": "^0.2.1",
@@ -61,5 +62,6 @@
   "browser": {
     "./lib/HtmlToSlate/parseHtml.js": "./lib/HtmlToSlate/parseHtml.browser.js",
     "./lib-es/HtmlToSlate/parseHtml.js": "./lib-es/HtmlToSlate/parseHtml.browser.js"
-  }
+  },
+  "gitHead": "2463f837858716626ff6892328e760b7fbd14c4d"
 }

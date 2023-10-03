@@ -44,7 +44,11 @@ const UndoRedo: React.FC<Props> = ({ labelUndo, labelRedo }) => {
             transform: `translateX(${isSmall ? 27 : 35}px)`,
           }}
           icon={
-            <IconUndo
+            // <IconUndo
+            //   style={{ transform: `translateX(-${isSmall ? 6 : 12}px)` }}
+            // />
+            <i
+              className="fas fa-fw fa-rotate-left"
               style={{ transform: `translateX(-${isSmall ? 6 : 12}px)` }}
             />
           }
@@ -68,7 +72,11 @@ const UndoRedo: React.FC<Props> = ({ labelUndo, labelRedo }) => {
           active
           disabled={!canRedo}
           icon={
-            <IconRedo
+            // <IconRedo
+            //   style={{ transform: `translateX(${isSmall ? 6 : 12}px)` }}
+            // />
+            <i
+              className="fas fa-fw fa-rotate-right"
               style={{ transform: `translateX(${isSmall ? 6 : 12}px)` }}
             />
           }

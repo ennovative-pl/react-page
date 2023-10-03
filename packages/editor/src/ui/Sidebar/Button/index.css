@@ -4,26 +4,27 @@
 }
 
 .react-page-controls-mode-toggle-button-description {
-  font-family: Roboto, sans-serif;
+  /* font-family: Roboto, sans-serif; */
   font-size: 16px;
   margin-top: 18px;
   float: right;
-  background: transparent;
-  color: transparent;
-  border: 1px transparent solid;
+  /* background: transparent; */
+  /* color: transparent; */
+  /* border: 1px transparent solid; */
   padding: 2px 8px;
   text-align: right;
   display: none;
   transition: all 200ms ease;
-  white-space: nowrap;
-  overflow: hidden;
+  /* white-space: nowrap; */
+  /* overflow: hidden; */
 }
 
 .react-page-controls-mode-toggle-button:hover
   .react-page-controls-mode-toggle-button-description {
   max-width: 999px;
-  background: var(--darkBlack);
-  color: var(--white);
+  /* background: var(--darkBlack); */
+  /* background: var(--bs-primary); */
+  /* color: var(--white); */
   display: block;
-  border: 1px solid var(--faintBlack);
+  /* border: 1px solid var(--faintBlack); */
 }

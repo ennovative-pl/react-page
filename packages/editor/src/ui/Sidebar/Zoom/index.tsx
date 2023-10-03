@@ -48,7 +48,11 @@ const Zoom: React.FC<Props> = ({ labelZoomIn, labelZoomOut }) => {
             transform: `translateX(${isSmall ? 27 : 35}px)`,
           }}
           icon={
-            <IconZoomIn
+            // <IconZoomIn
+            //   style={{ transform: `translateX(-${isSmall ? 6 : 12}px)` }}
+            // />
+            <i
+              className="fas fa-fw fa-magnifying-glass-plus"
               style={{ transform: `translateX(-${isSmall ? 6 : 12}px)` }}
             />
           }
@@ -72,7 +76,11 @@ const Zoom: React.FC<Props> = ({ labelZoomIn, labelZoomOut }) => {
           active
           disabled={!canZoomOut}
           icon={
-            <IconZoomOut
+            // <IconZoomOut
+            //   style={{ transform: `translateX(${isSmall ? 6 : 12}px)` }}
+            // />
+            <i
+              className="fas fa-fw fa-magnifying-glass-minus"
               style={{ transform: `translateX(${isSmall ? 6 : 12}px)` }}
             />
           }

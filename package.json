@@ -56,6 +56,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "redux": "^4.0.5",
+    "copyfiles": "^2.4.1",
     "replace-in-file": "^6.1.0",
     "rimraf": "2.6.2",
     "semantic-release": "^19.0.2",
@@ -64,6 +65,9 @@
     "unexpected": "^11.14.0"
   },
   "scripts": {
+    "release": "yarn release:pack && yarn release:move",
+    "release:pack": "yarn lerna run pack",
+    "release:move": "copyfiles -f -V -u 2 packages/**/*.tgz ../zapisani-pl/FRONTEND/react-page",
     "docs": "docsify serve -p 3100 ./docs",
     "analyze": "ANALYZE=true npm-run-all build",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
@@ -124,7 +128,7 @@
       "/node_modules/react-dnd/(?!dist)"
     ]
   },
-  "version": "0.0.0-development",
+  "version": "5.4.4-ennovative",
   "repository": {
     "type": "git",
     "url": "https://github.com/react-page/react-page.git"

@@ -14,7 +14,8 @@ const ToggleLayout: React.FC<Props> = ({ label }) => {
   const setLayoutMode = useSetLayoutMode();
   return (
     <Button
-      icon={<ViewQuilt />}
+      // icon={<ViewQuilt />}
+      icon={<i className="fas fa-fw fa-up-down-left-right" />}
       description={label}
       active={isLayoutMode}
       onClick={setLayoutMode}
