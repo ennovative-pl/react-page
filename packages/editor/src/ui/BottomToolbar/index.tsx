@@ -24,41 +24,63 @@ export const BottomToolbar: FC<PropsWithChildren<BottomToolbarProps>> =
       children,
     }) => {
       const [scale, setScale] = React.useState(1);
-      const [minimized, setMinimized] = React.useState(false);
+      const [minimized, setMinimized] = React.useState(true);
 
       return (
-        <BottomToolbarDrawer
-          className={className}
-          open={open}
-          anchor={anchor}
-          scale={scale}
-          style={style}
+        <div
+          onMouseEnter={minimized ? () => setMinimized?.(false) : undefined}
+          onMouseLeave={minimized ? () => setMinimized?.(true) : undefined}
+          id="bottom-drawer"
         >
-          {!minimized && (
-            <>
-              {children}
-              {pluginControls}
-            </>
-          )}
-          <BottomToolbarMainBar
-            nodeId={nodeId}
-            actionsLeft={[
-              <div className="btn-group mx-2" key="buttons">
-                <MinimizeButton
-                  key="scalebutton"
-                  minimized={minimized}
-                  setMinimized={setMinimized}
-                />
-                <ScaleButton
+          <BottomToolbarDrawer
+            className={className}
+            open={open}
+            anchor={anchor}
+            scale={scale}
+            style={style}
+          >
+            {!minimized && (
+              <div
+                style={{
+                  display: minimized ? 'none' : 'block',
+                  transition: 'opacity 0.3s',
+                }}
+              >
+                {children}
+                {pluginControls}
+              </div>
+            )}
+            {minimized && (
+              <div
+                style={{
+                  display: !minimized ? 'none' : 'block',
+                  transition: 'opacity 0.3s',
+                }}
+                className="text-center"
+              >
+                <small className="text-muted">Najedź aby edytować</small>
+              </div>
+            )}
+            <BottomToolbarMainBar
+              nodeId={nodeId}
+              actionsLeft={[
+                <div className="btn-group me-2" key="buttons">
+                  <MinimizeButton
+                    key="minimizebutton"
+                    minimized={minimized}
+                    setMinimized={setMinimized}
+                  />
+                  {/* <ScaleButton
                   key="scalebutton"
                   scale={scale}
                   setScale={setScale}
-                />
-              </div>,
-              ...React.Children.toArray(actionsLeft),
-            ]}
-          />
-        </BottomToolbarDrawer>
+                /> */}
+                </div>,
+                ...React.Children.toArray(actionsLeft),
+              ]}
+            />
+          </BottomToolbarDrawer>
+        </div>
       );
     }
   );

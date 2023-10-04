@@ -21,7 +21,7 @@ export const getActiveList = (editor: Editor) => {
 };
 
 export const getActiveListType = (editor: Editor) => {
-  return getActiveList(editor)?.[0]?.type;
+  return (getActiveList(editor)?.[0] as any)?.type;
 };
 
 export const getPreviousListItem = (editor: Editor, listItemType: string) => {
@@ -103,7 +103,8 @@ const moveToParent = (
     const onlyTextChildren =
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ((targetNode?.[0] as any).children as Node[])?.every(
-        (child) => Text.isText(child) || Editor.isInline(editor, child)
+        (child) =>
+          Text.isText(child as any) || Editor.isInline(editor, child as any)
       );
     if (onlyTextChildren) {
       Transforms.setNodes(

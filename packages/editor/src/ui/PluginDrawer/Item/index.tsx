@@ -11,6 +11,8 @@ import {
 } from '../../../core/components/hooks';
 import type { CellPlugin, InsertNewCell } from '../../../core/types';
 import Draggable from '../Draggable/index';
+import { FieldLabel } from '../../_Custom/FieldLabel';
+import { CustomAvatar } from '../../_Custom/CustomAvatar';
 
 type ItemProps = {
   plugin: CellPlugin;
@@ -42,13 +44,18 @@ const Item: React.FC<ItemProps> = ({ plugin, insert }) => {
         className="react-page-plugin-drawer-item"
         onClick={insertIt}
       >
-        <Avatar
+        <CustomAvatar
           children={plugin.icon || title?.[0]}
           style={{
             marginRight: 16,
           }}
         />
-        <ListItemText primary={t(title)} secondary={t(plugin.description)} />
+        {/* <ListItemText primary={t(title)} secondary={t(plugin.description)} /> */}
+        <FieldLabel
+          name={plugin.id}
+          label={t(title)}
+          subscript={t(plugin.description) ?? ''}
+        />
       </ListItem>
     </Draggable>
   );

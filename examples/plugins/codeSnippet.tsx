@@ -8,6 +8,7 @@ const CodeSnippet = dynamic(() => import('../components/CodeSnippet'));
 const codeSnippet: CellPlugin<{
   code: string;
   language: string;
+  select: string;
 }> = {
   Renderer: ({ data }) =>
     data?.code ? (
@@ -28,6 +29,16 @@ const codeSnippet: CellPlugin<{
           type: 'string',
           uniforms: {
             multiline: true,
+          },
+        },
+        select: {
+          type: 'string',
+          enum: ['one', 'two'],
+          uniforms: {
+            options: [
+              { label: 'Jeden', value: 'one' },
+              { label: 'Dwa', value: 'two' },
+            ],
           },
         },
       },

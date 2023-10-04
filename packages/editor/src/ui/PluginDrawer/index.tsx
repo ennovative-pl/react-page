@@ -13,6 +13,7 @@ import {
 } from '../../core/components/hooks';
 import type { CellPlugin } from '../../core/types';
 import Item from './Item/index';
+import { Form } from 'react-bootstrap';
 
 export interface PluginDrawerLabels {
   noPluginFoundContent: string;
@@ -102,12 +103,18 @@ export const PluginDrawer: React.FC = React.memo(() => {
           }
         >
           <ListItem>
-            <TextField
+            <Form.Control
+              type="text"
+              placeholder={t(defaultLabels.searchPlaceholder) ?? ''}
+              onChange={onSearch}
+              ref={inputRef as any}
+            />
+            {/* <TextField
               inputRef={inputRef}
               placeholder={t(defaultLabels.searchPlaceholder) ?? ''}
               fullWidth={true}
               onChange={onSearch}
-            />
+            /> */}
           </ListItem>
           {filteredPlugins.length === 0 && (
             <ListSubheader>
