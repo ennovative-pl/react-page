@@ -7,6 +7,7 @@ import {
   useParentCellId,
   useUiTranslator,
 } from '../../core/components/hooks';
+import { Tooltip } from '@mui/material';
 
 export const SelectParentButton: React.FC<{
   nodeId: string;
@@ -16,13 +17,22 @@ export const SelectParentButton: React.FC<{
   const focusParent = useFocusCell(parentCellId);
 
   return parentCellId ? (
-    <IconButton
-      className="bottomToolbar__selectParentButton"
-      onClick={() => focusParent()}
-      color="default"
-      title={t('Select parent') ?? ''}
-    >
-      <VerticalAlignTopIcon />
-    </IconButton>
-  ) : null;
+    <Tooltip title={t('Select parent') ?? ''}>
+      <button
+        type="button"
+        className="btn btn-sm btn-secondary"
+        onClick={() => focusParent()}
+      >
+        <i className="fas fa-fw fa-arrows-up-to-line" />
+      </button>
+    </Tooltip>
+  ) : // <IconButton
+  //   className="bottomToolbar__selectParentButton"
+  //   onClick={() => focusParent()}
+  //   color="default"
+  //   title={t('Select parent') ?? ''}
+  // >
+  //   <VerticalAlignTopIcon />
+  // </IconButton>
+  null;
 });

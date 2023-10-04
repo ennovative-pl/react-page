@@ -34,21 +34,25 @@
 
   .react-page-cell-insert-new-icon {
     align-items: center;
+    /* background-color: var(--bg-primary-bg-subtle);
     background-color: var(--minBlack);
     border-radius: 50%;
-    display: flex;
+    display: flex; */
     height: 52px;
     justify-content: center;
     width: 52px;
 
-    svg {
+    /* svg {
       height: 24px;
       fill: #fff;
-    }
+    } */
   }
 
   .react-page-cell-insert-new:hover,
   .react-page-cell-insert-new.hover {
+    /* background: var(--bg-primary-bg-subtle);
+    border: 1px solid var(--bg-primary-border-subtle); */
+
     background: var(--minBlack);
     border: 1px solid var(--lightWhite);
   }
