@@ -69,11 +69,11 @@
   },
   "scripts": {
     "rerelease": "yarn release:clean && yarn release",
-    "release": "yarn build:lib && yarn release:pack && yarn release:move && yarn release:unpack",
+    "release": "yarn build:lib && yarn release:pack && yarn release:move && yarn release:unpack && yarn release:remove-lib",
     "release:pack": "yarn lerna run pack",
     "release:move": "copyfiles -f -V -u 2 packages/**/*.tgz ../zapisani-pl/FRONTEND/react-page",
     "release:clean": "yarn run del -f ../zapisani-pl/FRONTEND/react-page/*-unpacked",
-    "release:remove-lib": "yarn run del -f ../zapisani-pl/FRONTEND/react-page/*-unpacked/package/lib-es",
+    "release:remove-lib": "yarn run del -f ../zapisani-pl/FRONTEND/react-page/*-unpacked/package/*.tgz",
     "release:unpack": "run-for-every-file --src \"../zapisani-pl/FRONTEND/react-page/\" --file \"*.tgz\" --run \"yarn decompress -o {{src-file}}-unpacked {{src-file}}\"",
     "docs": "docsify serve -p 3100 ./docs",
     "analyze": "ANALYZE=true npm-run-all build",
