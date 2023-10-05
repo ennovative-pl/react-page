@@ -1,7 +1,7 @@
 import type { CheckboxProps } from '@mui/material/Checkbox';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-//import FormGroup from '@mui/material/FormGroup';
+import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Radio from '@mui/material/Radio';
@@ -13,15 +13,12 @@ import type { TextFieldProps } from '@mui/material/TextField';
 import TextField from '@mui/material/TextField';
 import omit from 'lodash/omit';
 import xor from 'lodash/xor';
-import type { ChangeEvent, Ref } from 'react';
+import type { Ref } from 'react';
 import React from 'react';
 import type { FieldProps } from 'uniforms';
 import { connectField, filterDOMProps } from 'uniforms';
-import { FormGroup, Form, InputGroup } from 'react-bootstrap';
-import { FieldLabel } from '../_Custom/FieldLabel';
 
 import wrapField from './wrapField';
-import { FieldFeedback } from '../_Custom/FieldFeedback';
 
 type SelectFieldCommonProps = {
   allowedValues?: string[];
@@ -184,84 +181,49 @@ function Select(props: SelectFieldProps) {
     'variant',
   ]);
 
-  const items = props.field.uniforms?.options
-    ? (props.field.uniforms?.options as { label: string; value: string }[])
-    : allowedValues?.map((data: string) => ({ label: data, value: data }));
-
   return (
-    <FormGroup className="m-2">
-      {label && <FieldLabel label={label} name={name} />}
-      <InputGroup>
-        <Form.Select
-          onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-            disabled ||
-              readOnly ||
-              onChange(e.target.value !== '' ? e.target.value : undefined);
-          }}
-          ref={props.inputRef as any}
-          value={props.value}
-          test-id={props.name}
-          isInvalid={error && showInlineError && errorMessage}
-          isValid={!error && value?.length > 0}
-        >
-          {items?.map((data: any) => {
-            if (data === undefined) {
-              return <></>;
-            }
-            return (
-              <option key={data?.value} value={data?.value}>
-                {data?.label}
-                {/* {transform && data ? transform(data?.label ?? '') : data?.label ?? ''} */}
-              </option>
-            );
-          })}
-        </Form.Select>
-      </InputGroup>
-      <FieldFeedback error={error} novalidationspace={true} />
-    </FormGroup>
+    <TextField
+      disabled={disabled}
+      error={!!error}
+      fullWidth={fullWidth}
+      helperText={(error && showInlineError && errorMessage) || helperText}
+      InputLabelProps={{
+        shrink: !!label && (hasPlaceholder || hasValue),
+        ...labelProps,
+        ...InputLabelProps,
+      }}
+      label={label}
+      margin={margin}
+      onChange={(event) =>
+        disabled ||
+        readOnly ||
+        onChange(event.target.value !== '' ? event.target.value : undefined)
+      }
+      required={required}
+      select
+      SelectProps={{
+        displayEmpty: hasPlaceholder,
+        inputProps: { name, id, ...inputProps },
+        multiple: fieldType === Array || undefined,
+        native,
+        ...filteredProps,
+      }}
+      value={native && !value ? '' : value}
+      variant={variant}
+      {...textFieldProps}
+    >
+      {(hasPlaceholder || !required || !hasValue) && (
+        <Item value="" disabled={!!required}>
+          {placeholder || label}
+        </Item>
+      )}
 
-    // <TextField
-    //   disabled={disabled}
-    //   error={!!error}
-    //   fullWidth={fullWidth}
-    //   helperText={(error && showInlineError && errorMessage) || helperText}
-    //   InputLabelProps={{
-    //     shrink: !!label && (hasPlaceholder || hasValue),
-    //     ...labelProps,
-    //     ...InputLabelProps,
-    //   }}
-    //   label={label}
-    //   margin={margin}
-    //   onChange={(event) =>
-    //     disabled ||
-    //     readOnly ||
-    //     onChange(event.target.value !== '' ? event.target.value : undefined)
-    //   }
-    //   required={required}
-    //   select
-    //   SelectProps={{
-    //     displayEmpty: hasPlaceholder,
-    //     inputProps: { name, id, ...inputProps },
-    //     multiple: fieldType === Array || undefined,
-    //     native,
-    //     ...filteredProps,
-    //   }}
-    //   value={native && !value ? '' : value}
-    //   variant={variant}
-    //   {...textFieldProps}
-    // >
-    //   {(hasPlaceholder || !required || !hasValue) && (
-    //     <Item value="" disabled={!!required}>
-    //       {placeholder || label}
-    //     </Item>
-    //   )}
-
-    //   {allowedValues!.map((value) => (
-    //     <Item disabled={props.disableItem?.(value)} key={value} value={value}>
-    //       {transform ? transform(value) : value}
-    //     </Item>
-    //   ))}
-    // </TextField>
+      {allowedValues!.map((value) => (
+        <Item disabled={props.disableItem?.(value)} key={value} value={value}>
+          {transform ? transform(value) : value}
+        </Item>
+      ))}
+    </TextField>
   );
 }
 

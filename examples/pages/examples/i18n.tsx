@@ -14,10 +14,6 @@ const LANGUAGES = [
     lang: 'de',
     label: 'Deutsch',
   },
-  {
-    lang: 'pl',
-    label: 'Polski',
-  },
 ];
 
 const TRANSLATIONS: { [key: string]: string } = {

@@ -15,8 +15,7 @@ const ToggleResize: React.FC<Props> = (props) => {
   const setResizeMode = useSetResizeMode();
   return (
     <Button
-      // icon={<Resize />}
-      icon={<i className="fas fa-fw fa-expand" />}
+      icon={<Resize />}
       description={props.label}
       active={isResizeMode}
       onClick={setResizeMode}

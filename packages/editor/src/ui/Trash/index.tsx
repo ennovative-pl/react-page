@@ -1,5 +1,5 @@
-//import Fab from '@mui/material/Fab';
-//import Delete from '@mui/icons-material/Delete';
+import Fab from '@mui/material/Fab';
+import Delete from '@mui/icons-material/Delete';
 import classNames from 'classnames';
 import React from 'react';
 import { useIsLayoutMode, useTrashDrop } from '../../core/components/hooks';
@@ -14,16 +14,9 @@ export const Trash: React.FC = React.memo(() => {
         'react-page-controls-trash-active': isLayoutMode,
       })}
     >
-      {/* <Fab color="secondary" disabled={!isHovering}> */}
-      {/* <Delete /> */}
-      <button
-        type="button"
-        className="btn btn-secondary"
-        disabled={!isHovering}
-      >
-        <i className="fas fa-fw fa-trash text-secondary m-2" />
-      </button>
-      {/* </Fab> */}
+      <Fab color="secondary" disabled={!isHovering}>
+        <Delete />
+      </Fab>
     </div>
   );
 });

@@ -25,21 +25,13 @@ export const I18nTools: React.FC<{
       </Dialog>
 
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <button
-          type="button"
-          className="btn btn-sm btn-secondary"
-          onClick={() => setShowI18nDialog(true)}
-        >
-          <i className="fa-regular fa-fw fa-copy" />
-        </button>
-
-        {/* <IconButton
+        <IconButton
           onClick={() => setShowI18nDialog(true)}
           aria-label="i18n"
           color="secondary"
         >
           <Translate />
-        </IconButton> */}
+        </IconButton>
 
         <SelectLang />
       </div>

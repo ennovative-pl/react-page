@@ -7,7 +7,6 @@ import {
 import { BottomToolbarDrawer } from '../BottomToolbar';
 import DeleteAll from './DeleteAll';
 import DuplicateAll from './DuplicateAll';
-import { CustomAvatar } from '../_Custom/CustomAvatar';
 
 export const MultiNodesBottomToolbar: React.FC = React.memo(() => {
   const { t } = useUiTranslator();
@@ -16,7 +15,7 @@ export const MultiNodesBottomToolbar: React.FC = React.memo(() => {
     <BottomToolbarDrawer open={focusedNodeIds.length > 1} anchor={'bottom'}>
       <Grid container={true} direction="row" alignItems="center">
         <Grid item={true}>
-          <CustomAvatar
+          <Avatar
             children={focusedNodeIds.length}
             style={{
               marginRight: 16,

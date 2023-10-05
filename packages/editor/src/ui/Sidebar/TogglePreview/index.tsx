@@ -14,8 +14,7 @@ const TogglePreview: React.FC<Props> = ({ label }) => {
   const setIsPreviewMode = useSetPreviewMode();
   return (
     <Button
-      // icon={<Devices />}
-      icon={<i className="fas fa-fw fa-tv" />}
+      icon={<Devices />}
       description={label}
       active={isPreviewMode}
       onClick={setIsPreviewMode}

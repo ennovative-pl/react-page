@@ -14,8 +14,7 @@ const ToggleInsert: React.FC<Props> = ({ label }) => {
   const setInsertMode = useSetInsertMode();
   return (
     <Button
-      //icon={<ContentAdd />}
-      icon={<i className="fas fa-fw fa-plus" />}
+      icon={<ContentAdd />}
       description={label}
       active={isInsertMode}
       onClick={setInsertMode}

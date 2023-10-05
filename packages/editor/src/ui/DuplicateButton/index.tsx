@@ -9,16 +9,9 @@ export const DuplicateButton: React.FC<{ nodeId: string }> = React.memo(
     const { t } = useUiTranslator();
     return (
       <Tooltip title={t('Duplicate Plugin') ?? ''}>
-        <button
-          type="button"
-          className="btn btn-sm btn-secondary"
-          onClick={duplicateCell}
-        >
-          <i className="fa-regular fa-fw fa-copy" />
-        </button>
-        {/* <IconButton onClick={duplicateCell} aria-label="delete" color="default">
+        <IconButton onClick={duplicateCell} aria-label="delete" color="default">
           <Icon />
-        </IconButton> */}
+        </IconButton>
       </Tooltip>
     );
   }

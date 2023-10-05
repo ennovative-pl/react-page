@@ -43,9 +43,9 @@
     "lodash.throttle": "^4.1.1",
     "react-portal": "^4.2.2",
     "redux-undo": "^1.0.0",
-    "slate": "^0.94.0",
-    "slate-hyperscript": "^1.0.0-20213121046",
-    "slate-react": "^1.0.0-202303023441",
+    "slate": "^0.78.0",
+    "slate-hyperscript": "^0.77.0",
+    "slate-react": "^0.79.0",
     "slate-react-presentation": "^0.1.1"
   },
   "publishConfig": {

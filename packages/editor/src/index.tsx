@@ -26,4 +26,4 @@ export { migrateValue };
 export { deepEquals };
 export default Editor;
 
-export const VERSION = '###VERSION###';
+export const VERSION = '5.4.4';

@@ -15,32 +15,20 @@ export const BottomToolbarTools: React.FC<BottomToolbarToolsProps> = React.memo(
     const removeCell = useRemoveCell(nodeId);
 
     return (
-      <div
-        style={{ display: 'flex', alignItems: 'center' }}
-        className="btn-group"
-        role="group"
-      >
+      <div style={{ display: 'flex', alignItems: 'center' }}>
         <I18nTools nodeId={nodeId} />
-        {/* <DraftSwitch nodeId={nodeId} /> */}
+        <DraftSwitch nodeId={nodeId} />
         <SelectParentButton nodeId={nodeId} />
         <DuplicateButton nodeId={nodeId} />
 
         <Tooltip title={t('Remove Plugin') ?? ''}>
-          <button
-            type="button"
-            className="btn btn-sm btn-danger"
-            onClick={() => removeCell()}
-          >
-            <i className="fas fa-fw fa-trash" />
-          </button>
-
-          {/* <IconButton
+          <IconButton
             onClick={() => removeCell()}
             aria-label="delete"
             color="secondary"
           >
             <Delete />
-          </IconButton> */}
+          </IconButton>
         </Tooltip>
       </div>
     );

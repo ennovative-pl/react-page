@@ -30,7 +30,6 @@ class EditorStore<T extends RootState = RootState> {
 
   constructor({ middleware = [], store, initialState }: CoreEditorProps<T>) {
     this.store = store || createStore(initialState, middleware);
-    console.log('EditorStore.constructor', this.store);
     this.middleware = middleware;
   }
 

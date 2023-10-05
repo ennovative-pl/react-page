@@ -15,8 +15,6 @@ import '@react-page/plugins-video/lib/index.css';
 import '@react-page/plugins-image/lib/index.css';
 import '@react-page/plugins-slate/lib/index.css';
 import 'katex/dist/katex.min.css';
-import '../styles/bootstrap.min.css';
-import '../styles/fontawesome.css';
 import type { AppProps } from 'next/app';
 
 import createEmotionCache from '../utils/createEmotionCache';

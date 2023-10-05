@@ -44,8 +44,7 @@ const EditorStoreProvider: FC<
     let oldLang: string | undefined = lang;
     const handleChanges = () => {
       // notify outsiders to new language, when chagned in ui
-      console.log('getCurrentStore 1', editorStore);
-      const newLang = editorStore?.store.getState().reactPage.settings.lang;
+      const newLang = editorStore.store.getState().reactPage.settings.lang;
       if (newLang && (newLang !== oldLang || newLang !== lang)) {
         oldLang = newLang;
         onChangeLang?.(newLang);
@@ -53,10 +52,9 @@ const EditorStoreProvider: FC<
       if (!onChange) {
         return;
       }
-      console.log('getCurrentStore 2', editorStore);
       //console.time('calculate notifiy on change');
       const currentValue =
-        editorStore?.store.getState().reactPage.values.present;
+        editorStore.store.getState().reactPage.values.present;
 
       if (!currentValue) {
         // console.timeEnd('calculate notifiy on change');
@@ -74,8 +72,7 @@ const EditorStoreProvider: FC<
       //   console.timeEnd('calculate notifiy on change');
       onChange(serializedValue);
     };
-    console.log('getCurrentStore 3', editorStore);
-    const unsubscribe = editorStore?.store.subscribe(handleChanges);
+    const unsubscribe = editorStore.store.subscribe(handleChanges);
     return () => {
       unsubscribe();
     };
@@ -84,27 +81,23 @@ const EditorStoreProvider: FC<
   useEffect(() => {
     const equal = deepEquals(value, lastValueRef.current);
     // value changed from outside
-    if (!equal && editorStore) {
+    if (!equal) {
       lastValueRef.current = value;
 
       const migratedValue = migrateValue(value, {
         cellPlugins,
         lang,
       });
-      console.log('getCurrentStore 5', editorStore);
-      editorStore?.store.dispatch(updateValue(migratedValue));
+      editorStore.store.dispatch(updateValue(migratedValue));
     }
   }, [value, cellPlugins, lang]);
   useEffect(() => {
     // if changed from outside
-    if (editorStore) {
-      editorStore.setLang(lang);
-    }
+    editorStore.setLang(lang);
   }, [editorStore, lang]);
 
-  console.log('getCurrentStore 4', editorStore);
   return (
-    <ReduxProvider store={editorStore?.store}>
+    <ReduxProvider store={editorStore.store}>
       <EditorContext.Provider value={editorStore}>
         {children}
       </EditorContext.Provider>

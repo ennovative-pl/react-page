@@ -8,7 +8,6 @@ import {
 } from '../../core/components/hooks';
 import MoveActions from './MoveActions';
 import { BottomToolbarTools } from './Tools';
-import { CustomAvatar } from '../_Custom/CustomAvatar';
 
 export type BottomToolbarMainBarProps = {
   nodeId: string;
@@ -21,37 +20,39 @@ export const BottomToolbarMainBar: React.FC<BottomToolbarMainBarProps> =
     const focus = useFocusCell(nodeId);
     const showMoveButtons = useOption('showMoveButtonsInBottomToolbar');
     return (
-      <Grid container={true} direction="row" alignItems="center">
-        {actionsLeft &&
-          React.Children.map(actionsLeft, (action, index) => (
-            <Grid item={true} key={index}>
-              {action}
+      <div>
+        <Grid container={true} direction="row" alignItems="center">
+          {icon || title ? (
+            <Grid item={true}>
+              <Avatar
+                onClick={() => focus(true)}
+                children={icon || (title ? title[0] : '')}
+                style={{
+                  cursor: 'pointer',
+                  marginRight: 16,
+                }}
+              />
             </Grid>
-          ))}
-        {icon || title ? (
+          ) : null}
           <Grid item={true}>
-            <CustomAvatar
-              onClick={() => focus(true)}
-              children={icon || (title ? title[0] : '')}
-              style={{
-                cursor: 'pointer',
-                marginRight: 16,
-              }}
-            />
+            <Typography variant="subtitle1">{t(title)}</Typography>
           </Grid>
-        ) : null}
-        <Grid item={true}>
-          <Typography variant="subtitle1">{t(title)}</Typography>
-        </Grid>
-        {showMoveButtons ? (
-          <Grid item={true} style={{ marginLeft: 'auto' }}>
-            <MoveActions nodeId={nodeId} />
-          </Grid>
-        ) : null}
+          {actionsLeft &&
+            React.Children.map(actionsLeft, (action, index) => (
+              <Grid item={true} key={index}>
+                {action}
+              </Grid>
+            ))}
+          {showMoveButtons ? (
+            <Grid item={true} style={{ marginLeft: 'auto' }}>
+              <MoveActions nodeId={nodeId} />
+            </Grid>
+          ) : null}
 
-        <Grid item={true} style={{ marginLeft: 'auto' }}>
-          <BottomToolbarTools nodeId={nodeId} />
+          <Grid item={true} style={{ marginLeft: 'auto' }}>
+            <BottomToolbarTools nodeId={nodeId} />
+          </Grid>
         </Grid>
-      </Grid>
+      </div>
     );
   });

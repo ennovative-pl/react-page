@@ -22,22 +22,13 @@ export const ScaleButton: React.FC<{
   }, [scale, lastScale, setScale]);
   return (
     <Tooltip title={t('Change size of this window') ?? ''}>
-      <button
-        type="button"
-        className="btn btn-sm btn-secondary"
-        aria-label="Change size of this window"
-        onClick={toggleScale}
-      >
-        <i className="fas fa-fw fa-up-right-and-down-left-from-center" />
-      </button>
-
-      {/* <IconButton
+      <IconButton
         onClick={toggleScale}
         aria-label="Change size of this window"
         color="primary"
       >
         <ScaleIcon />
-      </IconButton> */}
+      </IconButton>
     </Tooltip>
   );
 };
