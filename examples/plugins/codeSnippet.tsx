@@ -18,32 +18,50 @@ const codeSnippet: CellPlugin<{
   title: 'Code snippet',
   description: 'A code snippet',
   version: 1,
-  controls: {
-    type: 'autoform',
-    schema: {
-      properties: {
-        language: {
-          type: 'string',
-        },
-        code: {
-          type: 'string',
-          uniforms: {
-            multiline: true,
+  controls: [
+    {
+      title: 'Part 1',
+      icon: 'fa-user',
+      controls: {
+        type: 'autoform',
+        schema: {
+          properties: {
+            language: {
+              type: 'string',
+            },
+            select: {
+              type: 'string',
+              enum: ['one', 'two'],
+              uniforms: {
+                options: [
+                  { label: 'Jeden', value: 'one' },
+                  { label: 'Dwa', value: 'two' },
+                ],
+              },
+            },
           },
-        },
-        select: {
-          type: 'string',
-          enum: ['one', 'two'],
-          uniforms: {
-            options: [
-              { label: 'Jeden', value: 'one' },
-              { label: 'Dwa', value: 'two' },
-            ],
-          },
+          required: ['code'],
         },
       },
-      required: ['code'],
     },
-  },
+    {
+      title: 'Part 2',
+      controls: {
+        type: 'autoform',
+        schema: {
+          properties: {
+            code: {
+              type: 'string',
+              uniforms: {
+                multiline: true,
+              },
+            },
+          },
+          required: ['code'],
+        },
+      },
+    },
+
+  ],
 };
 export default codeSnippet;

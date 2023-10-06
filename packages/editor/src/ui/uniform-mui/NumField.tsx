@@ -34,8 +34,10 @@ function Num({
   ...props
 }: NumFieldProps) {
   return (
-    <FormGroup className="m-2">
-      {label && <FieldLabel label={label} name={name} disabled={disabled} />}
+    <FormGroup className="m-1">
+      {label && (
+        <FieldLabel label={label} name={name} disabled={disabled} small />
+      )}
       <Form.Control
         test-id={name}
         disabled={disabled}
@@ -52,9 +54,9 @@ function Num({
         step={step}
         value={value}
         ref={inputRef}
+        size="sm"
         isInvalid={error && showInlineError && errorMessage}
         isValid={!error && value !== undefined}
-        size={props.size == 'small' ? 'sm' : undefined}
         // {...filterDOMProps(props)}
       />
       <FieldFeedback error={error} novalidationspace={true} />

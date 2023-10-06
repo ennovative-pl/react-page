@@ -20,7 +20,7 @@ export function FieldFeedback(props: IFieldFeedback) {
       ) : (
         <Form.Text
           className="text-primary"
-          style={{ display: props.novalidationspace ? 'hidden' : 'block' }}
+          style={{ display: props.novalidationspace ? 'none' : 'block' }}
         >
           &nbsp;{props.novalidationspace}
         </Form.Text>

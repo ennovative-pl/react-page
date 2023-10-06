@@ -27,7 +27,8 @@ const Zoom: React.FC<Props> = ({ labelZoomIn, labelZoomOut }) => {
   return (
     <div
       style={{
-        height: isSmall ? 56 : 80,
+        height: 56,
+        //height: isSmall ? 56 : 80,
         float: 'right',
         display: 'flex',
         direction: 'ltr',

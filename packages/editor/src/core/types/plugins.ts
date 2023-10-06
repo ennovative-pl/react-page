@@ -127,6 +127,7 @@ export type AutoformControlsDef<DataT extends DataTType> = {
 
 export type SubControlsDef<T extends DataTType = DataTAny> = {
   title: string;
+  icon?: React.ReactNode;
   controls: ControlsDef<T>;
 };
 

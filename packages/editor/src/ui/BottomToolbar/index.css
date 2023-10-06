@@ -1,0 +1,12 @@
+.box {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+    overflow: auto;
+ }
+ 
+ .box-hover {
+    max-height: 900px;
+    opacity: 1;
+    transition: max-height 0.3s ease-in, opacity 0.3s ease-in;
+ }

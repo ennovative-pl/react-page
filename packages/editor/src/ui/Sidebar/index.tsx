@@ -56,9 +56,9 @@ export const Sidebar: React.FC<{
     resize: 'Resize blocks',
     preview: 'Preview page',
   };
-
+  
   const customOptions = useOption('customOptions');
-
+  
   const actions = [
     // eslint-disable-next-line react/jsx-key
     undoRedoEnabled
@@ -82,7 +82,8 @@ export const Sidebar: React.FC<{
     previewEnabled
       ? { action: <TogglePreview label={t(defaultLabels.preview) ?? ''} /> }
       : null,
-    ...(customOptions?.map((CustomOption) => ({ action: <CustomOption /> })) ?? []),
+    ...(customOptions?.map((CustomOption) => ({ action: <CustomOption /> })) ??
+      []),
   ].filter(notEmpty);
   return (
     <div

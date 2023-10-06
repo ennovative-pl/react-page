@@ -189,8 +189,10 @@ function Select(props: SelectFieldProps) {
     : allowedValues?.map((data: string) => ({ label: data, value: data }));
 
   return (
-    <FormGroup className="m-2">
-      {label && <FieldLabel label={label} name={name} />}
+    <FormGroup className="m-1">
+      {label && (
+        <FieldLabel label={label} name={name} disabled={disabled} small />
+      )}
       <InputGroup>
         <Form.Select
           onChange={(e: ChangeEvent<HTMLSelectElement>) => {
@@ -201,6 +203,7 @@ function Select(props: SelectFieldProps) {
           ref={props.inputRef as any}
           value={props.value}
           test-id={props.name}
+          size="sm"
           isInvalid={error && showInlineError && errorMessage}
           isValid={!error && value?.length > 0}
         >

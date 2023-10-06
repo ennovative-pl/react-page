@@ -23,7 +23,8 @@ const UndoRedo: React.FC<Props> = ({ labelUndo, labelRedo }) => {
   return (
     <div
       style={{
-        height: isSmall ? 56 : 80,
+        //height: isSmall ? 56 : 80,
+        height: 56,
         float: 'right',
         display: 'flex',
         direction: 'ltr',

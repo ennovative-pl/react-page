@@ -51,7 +51,7 @@ function Bool(props: BoolFieldProps) {
   };
 
   return (
-    <div className="align-items-center m-2">
+    <div className="align-items-center m-1">
       <FormGroup title={props.title}>
         <Form.Switch
           test-id={props.name}

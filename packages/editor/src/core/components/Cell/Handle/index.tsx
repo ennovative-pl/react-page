@@ -27,10 +27,13 @@ const Handle: React.FC<{ nodeId: string }> = ({ nodeId }) => {
     <>
       {previewElement}
       <div
-        className={classNames('react-page-cell-handle', {
-          'react-page-cell-handle-drag-enabled': dragEnabled,
-          'react-page-cell-handle-is-dragging': isDragging,
-        })}
+        className={
+          'nav-item nav-link active ' +
+          classNames('react-page-cell-handle', {
+            'react-page-cell-handle-drag-enabled': dragEnabled,
+            'react-page-cell-handle-is-dragging': isDragging,
+          })
+        }
         ref={dragRef}
         onClick={(e) => {
           const mode = e.metaKey || e.ctrlKey ? 'add' : 'replace';

@@ -26,8 +26,10 @@ function Text({
   ...props
 }: TextFieldProps) {
   return (
-    <FormGroup className="m-2">
-      {label && <FieldLabel label={label} name={name} disabled={disabled} />}
+    <FormGroup className="m-1">
+      {label && (
+        <FieldLabel label={label} name={name} disabled={disabled} small />
+      )}
       <Form.Control
         test-id={name}
         disabled={disabled}
@@ -41,7 +43,8 @@ function Text({
         ref={inputRef}
         isInvalid={error && showInlineError && errorMessage}
         isValid={!error && value?.length > 0}
-        size={props.size == 'small' ? 'sm' : undefined}
+        size="sm"
+        // size={props.size == 'small' ? 'sm' : undefined}
         // {...filterDOMProps(props)}
       />
       <FieldFeedback error={error} novalidationspace={true} />

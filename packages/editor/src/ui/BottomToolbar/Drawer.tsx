@@ -88,7 +88,7 @@ export const BottomToolbarDrawer: FC<
           {theChildren.map((child, index) => (
             <Fragment key={index}>
               {child}
-              {index < theChildren.length - 1 ? divider : null}
+              {/* {index < theChildren.length - 1 ? divider : null} */}
             </Fragment>
           ))}
         </div>

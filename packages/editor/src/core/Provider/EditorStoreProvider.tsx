@@ -44,7 +44,7 @@ const EditorStoreProvider: FC<
     let oldLang: string | undefined = lang;
     const handleChanges = () => {
       // notify outsiders to new language, when chagned in ui
-      console.log('getCurrentStore 1', editorStore);
+      //console.log('getCurrentStore 1', editorStore);
       const newLang = editorStore?.store.getState().reactPage.settings.lang;
       if (newLang && (newLang !== oldLang || newLang !== lang)) {
         oldLang = newLang;
@@ -53,7 +53,7 @@ const EditorStoreProvider: FC<
       if (!onChange) {
         return;
       }
-      console.log('getCurrentStore 2', editorStore);
+      //console.log('getCurrentStore 2', editorStore);
       //console.time('calculate notifiy on change');
       const currentValue =
         editorStore?.store.getState().reactPage.values.present;
@@ -74,7 +74,7 @@ const EditorStoreProvider: FC<
       //   console.timeEnd('calculate notifiy on change');
       onChange(serializedValue);
     };
-    console.log('getCurrentStore 3', editorStore);
+    //console.log('getCurrentStore 3', editorStore);
     const unsubscribe = editorStore?.store.subscribe(handleChanges);
     return () => {
       unsubscribe();
@@ -91,7 +91,7 @@ const EditorStoreProvider: FC<
         cellPlugins,
         lang,
       });
-      console.log('getCurrentStore 5', editorStore);
+      //console.log('getCurrentStore 5', editorStore);
       editorStore?.store.dispatch(updateValue(migratedValue));
     }
   }, [value, cellPlugins, lang]);
@@ -102,7 +102,7 @@ const EditorStoreProvider: FC<
     }
   }, [editorStore, lang]);
 
-  console.log('getCurrentStore 4', editorStore);
+  //console.log('getCurrentStore 4', editorStore);
   return (
     <ReduxProvider store={editorStore?.store}>
       <EditorContext.Provider value={editorStore}>

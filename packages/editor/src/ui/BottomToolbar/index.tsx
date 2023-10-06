@@ -29,7 +29,7 @@ export const BottomToolbar: FC<PropsWithChildren<BottomToolbarProps>> =
       return (
         <div
           onMouseEnter={minimized ? () => setMinimized?.(false) : undefined}
-          onMouseLeave={minimized ? () => setMinimized?.(true) : undefined}
+          onMouseLeave={!minimized ? () => setMinimized?.(true) : undefined}
           id="bottom-drawer"
         >
           <BottomToolbarDrawer
@@ -39,28 +39,16 @@ export const BottomToolbar: FC<PropsWithChildren<BottomToolbarProps>> =
             scale={scale}
             style={style}
           >
-            {!minimized && (
-              <div
-                style={{
-                  display: minimized ? 'none' : 'block',
-                  transition: 'opacity 0.3s',
-                }}
-              >
-                {children}
-                {pluginControls}
-              </div>
-            )}
-            {minimized && (
-              <div
-                style={{
-                  display: !minimized ? 'none' : 'block',
-                  transition: 'opacity 0.3s',
-                }}
-                className="text-center"
-              >
-                <small className="text-muted">Najedź aby edytować</small>
-              </div>
-            )}
+            <div className={minimized ? 'box' : 'box-hover'}>
+              {children}
+              {pluginControls}
+            </div>
+            {/* )} 
+            {minimized && ( */}
+            <div className={'text-center'}>
+              <small className="text-muted">Najedź aby edytować</small>
+            </div>
+            {/* )} */}
             <BottomToolbarMainBar
               nodeId={nodeId}
               actionsLeft={[

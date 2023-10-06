@@ -8,12 +8,19 @@ interface IFieldLabelProps {
   id?: string;
   name: string;
   disabled?: boolean;
+  small?: boolean;
 }
 
 export const FieldLabel = (props: IFieldLabelProps) => {
   return (
-    <Form.Label htmlFor={props.id || props.name} disabled={props.disabled}>
-      <div className="d-flex">{props.label}</div>
+    <Form.Label
+      htmlFor={props.id || props.name}
+      disabled={props.disabled}
+      className="my-0 ms-1"
+    >
+      <div className={`d-flex ${props.small ? 'small' : undefined}`}>
+        {props.label}
+      </div>
       {props.subscript && (
         <small className="d-block text-muted">{props.subscript}</small>
       )}
