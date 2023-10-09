@@ -9,6 +9,7 @@ const codeSnippet: CellPlugin<{
   code: string;
   language: string;
   select: string;
+  check: boolean;
 }> = {
   Renderer: ({ data }) =>
     data?.code ? (
@@ -38,6 +39,9 @@ const codeSnippet: CellPlugin<{
                   { label: 'Dwa', value: 'two' },
                 ],
               },
+            },
+            check: {
+              type: 'boolean',
             },
           },
           required: ['code'],
