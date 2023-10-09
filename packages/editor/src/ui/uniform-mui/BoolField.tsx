@@ -1,7 +1,7 @@
 import type { CheckboxProps } from '@mui/material/Checkbox';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
+//import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import type { SwitchProps } from '@mui/material/Switch';
 import Switch from '@mui/material/Switch';
@@ -12,7 +12,7 @@ import type { FieldProps } from 'uniforms';
 import { connectField, filterDOMProps } from 'uniforms';
 
 import wrapField from './wrapField';
-import { Form } from 'react-bootstrap';
+import { Form, FormGroup } from 'react-bootstrap';
 import { FieldFeedback } from '../_Custom/FieldFeedback';
 import { FieldLabel } from '../_Custom/FieldLabel';
 
@@ -42,31 +42,34 @@ function Bool(props: BoolFieldProps) {
     transform,
     value,
   } = props;
-  const SelectionControl =
-    appearance === 'checkbox' || appearance === undefined ? Checkbox : Switch;
+  // const SelectionControl =
+  //   appearance === 'checkbox' || appearance === undefined ? Checkbox : Switch;
 
   const newProps = {
     ...(props as any),
-    label: <>{props.label}</>,
+    // label: <>{props.label}</>,
   };
 
   return (
-    <div className="align-items-center m-1">
-      <FormGroup title={props.title}>
-        <Form.Switch
-          test-id={props.name}
-          name={name}
-          ref={inputRef}
-          {...newProps}
-          checked={value}
-          onChange={(event) =>
-            !disabled && !readOnly && onChange && onChange(event.target.checked)
-          }
-        />
-        {/* {(label || legend) && (
-          <FieldLabel name={name} subscript={legend} label={label} />
-        )} */}
-      </FormGroup>
+    <div className="align-items-center m-1 d-flex">
+      <Form.Switch
+        test-id={props.name}
+        name={name}
+        ref={inputRef}
+        {...omit(filterDOMProps(newProps), [
+          'helperText',
+          'fullWidth',
+          'fieldType',
+        ])}
+        // {...newProps}
+        checked={value ?? false}
+        onChange={(event) =>
+          !disabled && !readOnly && onChange && onChange(event.target.checked)
+        }
+      />
+      {(label || legend) && (
+        <FieldLabel name={name} subscript={legend} label={label} small />
+      )}
     </div>
   );
 

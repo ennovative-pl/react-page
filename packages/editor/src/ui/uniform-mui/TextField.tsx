@@ -6,6 +6,7 @@ import type { FieldProps } from 'uniforms';
 import { connectField, filterDOMProps } from 'uniforms';
 import { FieldLabel } from '../_Custom/FieldLabel';
 import { FieldFeedback } from '../_Custom/FieldFeedback';
+import omit from 'lodash/omit';
 
 export type TextFieldProps = FieldProps<string, MUITextFieldProps>;
 
@@ -35,9 +36,15 @@ function Text({
         disabled={disabled}
         type={props.multiline ? undefined : type}
         as={props.multiline ? 'textarea' : undefined}
-        rows={props.multiline ? '5' : undefined}
         placeholder={placeholder}
-        {...(props as any)}
+        {...({
+          ...omit(filterDOMProps(props), [
+            'helperText',
+            'fullWidth',
+            'fieldType',
+          ]),
+        } as any)}
+        rows={props.multiline ? 5 : undefined}
         onChange={(event) => disabled || onChange(event.target.value)}
         value={value}
         ref={inputRef}
