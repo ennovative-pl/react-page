@@ -42,6 +42,36 @@ export const getCellInnerDivStylingProps = (
   };
 };
 
+export const getContentStyle = (plugin: CellPlugin | null, data: DataTType) =>
+  plugin?.contentStyle
+    ? typeof plugin?.contentStyle === 'function'
+      ? plugin?.contentStyle(data)
+      : plugin?.contentStyle
+    : undefined;
+
+export const getContentClassName = (
+  plugin: CellPlugin | null,
+  data: unknown
+) => {
+  const additionalClass = plugin?.contentClassName
+    ? typeof plugin?.contentClassName === 'function'
+      ? plugin?.contentClassName(data)
+      : plugin?.contentClassName
+    : undefined;
+
+  return additionalClass ? ' ' + additionalClass : '';
+};
+
+export const getContentStylingProps = (
+  plugin: CellPlugin | null,
+  data: DataTType
+) => {
+  return {
+    style: getContentStyle(plugin, data),
+    className: getContentClassName(plugin, data),
+  };
+};
+
 export const gridClass = (size?: number): string => {
   return `react-page-cell-sm-${size || 12} react-page-cell-xs-12`;
 };

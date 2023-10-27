@@ -21,6 +21,7 @@ import {
 import {
   getCellInnerDivStylingProps,
   getCellOuterDivClassName,
+  getContentStylingProps,
 } from '../core/utils/getCellStylingProps';
 
 const rowHasInlineChildren = ({ cells }: { cells: Cell[] }) =>
@@ -121,6 +122,7 @@ const HTMLCell: React.FC<
           }
         : undefined;
     const innerStylingProps = getCellInnerDivStylingProps(cell, plugin, data);
+    const contentStylingProps = getContentStylingProps(plugin, data);
 
     return (
       <Provider {...props}>
@@ -137,7 +139,7 @@ const HTMLCell: React.FC<
                     }
               }
             >
-              <Renderer {...props}>
+              <Renderer {...props} {...contentStylingProps}>
                 {cell.rows?.length ? (
                   <div
                     style={{

@@ -3,7 +3,7 @@ import type { Cell, PartialCell, PartialRow } from './node';
 import type { JsonSchema } from './jsonSchema';
 import type { ChildConstraints } from './constraints';
 import type { CellSpacing } from './renderOptions';
-import type { PropsWithChildren } from 'react';
+import type { CSSProperties, PropsWithChildren } from 'react';
 
 export type DataTType = Record<string, unknown>;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,6 +67,14 @@ export type CellPluginComponentProps<DataT extends DataTType = DataTAny> = {
    * whether the editor is in edit mode
    */
   isEditMode: boolean;
+  /**
+   * additional plugin content class names
+   */
+  className?: string;
+  /**
+   * additional plugin content style
+   */
+  style?: CSSProperties;
 };
 
 export type CellPluginMissingProps = Omit<
@@ -228,6 +236,16 @@ export type CellPlugin<
    * additional classname(s) for the inner cell
    */
   cellClassName?: string | ((data: DataT) => string);
+
+  /**
+   * ENN additional style for the content of the plugin itself
+   */
+  contentStyle?: React.CSSProperties | ((data: DataT) => React.CSSProperties);
+
+  /**
+   * ENN additional classname(s) for the content of the plugin itself
+   */
+  contentClassName?: string | ((data: DataT) => string);
 
   /**
    * cell spacing setting for the internal layout (nested cells) if any

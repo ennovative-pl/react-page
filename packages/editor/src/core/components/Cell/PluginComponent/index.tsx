@@ -16,6 +16,10 @@ import {
 import PluginControls from '../PluginControls';
 import PluginMissing from '../PluginMissing';
 import NoopProvider from '../NoopProvider';
+import {
+  getContentClassName,
+  getContentStyle,
+} from '../../../utils/getCellStylingProps';
 
 const PluginComponent: FC<
   PropsWithChildren<{ nodeId: string; hasChildren: boolean }>
@@ -31,6 +35,9 @@ const PluginComponent: FC<
   const plugin = usePluginOfCell(nodeId);
   const focused = useIsExclusivlyFocused(nodeId);
   const hasInlineNeighbour = useCellProps(nodeId, (c) => c?.hasInlineNeighbour);
+
+  const className = getContentClassName(plugin, data);
+  const style = getContentStyle(plugin, data);
 
   const Renderer = plugin?.Renderer;
   const Missing = CustomPluginMissing ?? PluginMissing;
@@ -51,6 +58,8 @@ const PluginComponent: FC<
       isEditMode,
       isPreviewMode,
       remove,
+      className,
+      style,
     }),
     [
       nodeId,
@@ -63,6 +72,8 @@ const PluginComponent: FC<
       isEditMode,
       isPreviewMode,
       remove,
+      className,
+      style,
     ]
   );
 
