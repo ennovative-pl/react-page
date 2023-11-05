@@ -27,35 +27,38 @@ function Text({
   ...props
 }: TextFieldProps) {
   return (
-    <FormGroup className="m-1">
-      {label && (
-        <FieldLabel label={label} name={name} disabled={disabled} small />
-      )}
-      <Form.Control
-        test-id={name}
-        disabled={disabled}
-        type={props.multiline ? undefined : type}
-        as={props.multiline ? 'textarea' : undefined}
-        placeholder={placeholder}
-        {...({
-          ...omit(filterDOMProps(props), [
-            'helperText',
-            'fullWidth',
-            'fieldType',
-          ]),
-        } as any)}
-        rows={props.multiline ? 5 : undefined}
-        onChange={(event) => disabled || onChange(event.target.value)}
-        value={value}
-        ref={inputRef}
-        isInvalid={error && showInlineError && errorMessage}
-        isValid={!error && value?.length > 0}
-        size="sm"
-        // size={props.size == 'small' ? 'sm' : undefined}
-        // {...filterDOMProps(props)}
-      />
-      <FieldFeedback error={error} novalidationspace={true} />
-    </FormGroup>
+    <div>
+      <FormGroup className="m-1">
+        {label && (
+          <FieldLabel label={label} name={name} disabled={disabled} small />
+        )}
+        <Form.Control
+          test-id={name}
+          disabled={disabled}
+          type={props.multiline ? undefined : type}
+          as={props.multiline ? 'textarea' : undefined}
+          placeholder={placeholder}
+          {...({
+            ...omit(filterDOMProps(props), [
+              'helperText',
+              'fullWidth',
+              'fieldType',
+            ]),
+          } as any)}
+          rows={props.multiline ? 5 : undefined}
+          onChange={(event) => disabled || onChange(event.target.value)}
+          value={value}
+          ref={inputRef}
+          isInvalid={error && showInlineError && errorMessage}
+          isValid={!error && value?.length > 0}
+          size="sm"
+          multiline={props.multiline ? 'true' : 'false'}
+          // size={props.size == 'small' ? 'sm' : undefined}
+          // {...filterDOMProps(props)}
+        />
+        <FieldFeedback error={error} novalidationspace={true} />
+      </FormGroup>
+    </div>
 
     // <TextField
     //   disabled={disabled}

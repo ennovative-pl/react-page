@@ -15,6 +15,10 @@ import deepEquals from './core/utils/deepEquals';
 import { createValue } from './core/utils/createValue';
 import { objIsNode } from './core/utils/objIsNode';
 import { getTextContents } from './core/utils/getTextContents';
+import {
+  getContentClassName,
+  getContentStyle,
+} from './core/utils/getCellStylingProps';
 export { objIsNode };
 export { lazyLoad };
 export { EditorProps };
@@ -22,6 +26,7 @@ export { Migration };
 export { makeUniformsSchema };
 export { createValue, getTextContents };
 export { migrateValue };
+export { getContentClassName, getContentStyle };
 
 export { deepEquals };
 export default Editor;

@@ -70,7 +70,7 @@ const InsertNew: React.FC<InsertNewProps> = ({ parentCellId }) => {
       }}
     >
       <div className="react-page-cell-insert-new-icon">
-        <button type="button" className={'btn btn-light'}>
+        <button type="button" className={'btn btn-lg btn-light shadow'}>
           <i className="fas fa-fw fa-plus" />
         </button>
         {/* <svg

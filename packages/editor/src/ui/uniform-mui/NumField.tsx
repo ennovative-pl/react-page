@@ -34,33 +34,35 @@ function Num({
   ...props
 }: NumFieldProps) {
   return (
-    <FormGroup className="m-1">
-      {label && (
-        <FieldLabel label={label} name={name} disabled={disabled} small />
-      )}
-      <Form.Control
-        test-id={name}
-        disabled={disabled}
-        type="number"
-        placeholder={placeholder}
-        {...(props as any)}
-        onChange={(event) => {
-          const parse = decimal ? parseFloat : parseInt;
-          const value = parse(event.target.value);
-          onChange(isNaN(value) ? undefined : value);
-        }}
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        ref={inputRef}
-        size="sm"
-        isInvalid={error && showInlineError && errorMessage}
-        isValid={!error && value !== undefined}
-        // {...filterDOMProps(props)}
-      />
-      <FieldFeedback error={error} novalidationspace={true} />
-    </FormGroup>
+    <div>
+      <FormGroup className="m-1">
+        {label && (
+          <FieldLabel label={label} name={name} disabled={disabled} small />
+        )}
+        <Form.Control
+          test-id={name}
+          disabled={disabled}
+          type="number"
+          placeholder={placeholder}
+          {...(props as any)}
+          onChange={(event) => {
+            const parse = decimal ? parseFloat : parseInt;
+            const value = parse(event.target.value);
+            onChange(isNaN(value) ? undefined : value);
+          }}
+          min={min}
+          max={max}
+          step={step}
+          value={value}
+          ref={inputRef}
+          size="sm"
+          isInvalid={error && showInlineError && errorMessage}
+          isValid={!error && value !== undefined}
+          // {...filterDOMProps(props)}
+        />
+        <FieldFeedback error={error} novalidationspace={true} />
+      </FormGroup>
+    </div>
 
     // <TextField
     //   disabled={disabled}

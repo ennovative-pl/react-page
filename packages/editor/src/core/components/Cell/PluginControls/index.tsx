@@ -15,50 +15,96 @@ const ControlsList: React.FC<{
 }> = React.memo(({ controls, componentProps }) => {
   const [tab, setTab] = useState(0);
 
-  const activeControls = controls[tab]?.controls;
+  //const activeControls = controls[tab]?.controls;
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-      }}
-    >
-      <Tabs
-        sx={{
-          marginTop: '-12px',
-          marginBottom: '-12px',
-          marginLeft: '-24px',
-          alignItems: 'flex-start',
-          backgroundColor: (theme) => theme.palette.background.default,
-        }}
-        value={tab}
-        onChange={(e, v) => setTab(v)}
-        orientation="vertical"
-        variant="scrollable"
-      >
-        {controls.map((t, index) => (
-          <Tab
-            sx={{
-              alignItems: 'flex-start',
-            }}
-            label={t.title}
-            key={index}
-          />
-        ))}
-      </Tabs>
-
-      {activeControls ? (
-        <div
-          style={{
-            flex: 1,
-            marginLeft: 24,
-            display: 'flex',
-          }}
-        >
-          <Controls controls={activeControls} componentProps={componentProps} />
+    <>
+      <nav className="w-100">
+        <div className="nav nav-tabs w-100" id="nav-tab" role="tablist">
+          {controls.map((t, index) => (
+            <button
+              key={index}
+              className={`nav-link ${index == tab ? 'active' : ''}`}
+              id={`btn-${index}`}
+              data-bs-toggle="tab"
+              data-bs-target={`#nav-${index}`}
+              onClick={() => setTab(index)}
+              type="button"
+              role="tab"
+            >
+              {t.title}
+            </button>
+            //       <Tab
+            //         sx={{
+            //           alignItems: 'flex-start',
+            //         }}
+            //         label={t.title}
+            //         key={index}
+            //       />
+          ))}
         </div>
-      ) : null}
-    </div>
+        <div className="tab-content" id="nav-tabContent">
+          {controls.map((t, index) => (
+            <div
+              key={index}
+              className={`tab-pane fade ${index == tab ? 'show active' : ''}`}
+              id={`nav-${index}`}
+              role="tabpanel"
+            >
+              <Controls controls={t.controls} componentProps={componentProps} />
+            </div>
+            //       <Tab
+            //         sx={{
+            //           alignItems: 'flex-start',
+            //         }}
+            //         label={t.title}
+            //         key={index}
+            //       />
+          ))}
+        </div>
+      </nav>
+    </>
+    // <div
+    //   style={{
+    //     display: 'flex',
+    //     flexDirection: 'row',
+    //   }}
+    // >
+    //   <Tabs
+    //     sx={{
+    //       marginTop: '-12px',
+    //       marginBottom: '-12px',
+    //       marginLeft: '-24px',
+    //       alignItems: 'flex-start',
+    //       backgroundColor: (theme) => theme.palette.background.default,
+    //     }}
+    //     value={tab}
+    //     onChange={(e, v) => setTab(v)}
+    //     orientation="vertical"
+    //     variant="scrollable"
+    //   >
+    //     {controls.map((t, index) => (
+    //       <Tab
+    //         sx={{
+    //           alignItems: 'flex-start',
+    //         }}
+    //         label={t.title}
+    //         key={index}
+    //       />
+    //     ))}
+    //   </Tabs>
+
+    //   {activeControls ? (
+    //     <div
+    //       style={{
+    //         flex: 1,
+    //         marginLeft: 24,
+    //         display: 'flex',
+    //       }}
+    //     >
+    //       <Controls controls={activeControls} componentProps={componentProps} />
+    //     </div>
+    //   ) : null}
+    // </div>
   );
 });
 
@@ -71,6 +117,7 @@ const Controls: React.FC<{
     return <ControlsList componentProps={componentProps} controls={controls} />;
   }
 
+  //(controls as any).columnCount = 1;
   if (controls?.type === 'custom') {
     const { Component } = controls;
     pluginControls = <Component {...componentProps} {...controls} />;
@@ -87,11 +134,12 @@ const PluginControls: React.FC<{
   return (
     <div
       style={{
-        maxHeight: '50vh',
+        //maxHeight: '50vh',
         // if it has tabs, stretch to avoid jumping tabs
-        width: Array.isArray(controls) ? '100vw' : undefined,
+        //width: Array.isArray(controls) ? '100vw' : undefined,
         maxWidth: '100%',
         display: 'flex',
+        marginBottom: '60px',
       }}
     >
       <Controls controls={controls} componentProps={componentProps} />

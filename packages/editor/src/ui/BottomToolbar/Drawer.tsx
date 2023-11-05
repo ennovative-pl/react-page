@@ -49,41 +49,61 @@ export const BottomToolbarDrawer: FC<
         anchor={anchor}
         PaperProps={{
           style: {
-            zIndex: 10,
-            backgroundColor: 'transparent',
-            border: 'none',
+            zIndex: 10010,
+            minWidth: 400,
+            maxWidth: 'min(1280px, calc(50vw - 250px))',
+            padding: '1rem',
             overflow: 'visible',
-            pointerEvents: 'none',
+            //pointerEvents: 'none',
           },
         }}
+
+        // PaperProps={{
+        //   style: {
+        //     zIndex: 10,
+        //     backgroundColor: 'transparent',
+        //     border: 'none',
+        //     overflow: 'visible',
+        //     pointerEvents: 'none',
+        //   },
+        // }}
       >
         <div
-          style={{
-            pointerEvents: 'all',
-            border: `${dark ? darkBlack : brightBorder} 1px solid`,
-            borderRadius: '4px 4px 0 0',
-            backgroundColor: dark ? darkBlack : bright,
-            padding: '12px 24px',
+        // style={{
+        //   pointerEvents: 'all',
+        //   border: `${dark ? darkBlack : brightBorder} 1px solid`,
+        //   borderRadius: '4px 4px 0 0',
+        //   backgroundColor: dark ? darkBlack : bright,
+        //   padding: '12px 24px',
 
-            ...(isSmall
-              ? {
-                  marginLeft: 20,
-                  marginRight: 80,
-                }
-              : {
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                  minWidth: '50vw',
-                  maxWidth: 'min(1280px, calc(100vw - 250px))',
-                }),
-            boxShadow: '0px 1px 8px -1px rgba(0,0,0,0.4)',
-            position: 'relative',
+        //   ...(isSmall
+        //     ? {
+        //         marginLeft: 20,
+        //         marginRight: 80,
+        //       }
+        //     : {
+        //         marginLeft: 'auto',
+        //         marginRight: 'auto',
+        //         minWidth: '50vw',
+        //         maxWidth: 'min(1280px, calc(100vw - 250px))',
+        //       }),
+        //   boxShadow: '0px 1px 8px -1px rgba(0,0,0,0.4)',
+        //   position: 'relative',
 
-            transformOrigin: 'bottom',
-            transform: `scale(${scale})`,
-            transition: 'scale 0.3s',
-            ...style,
-          }}
+        //   transformOrigin: 'bottom',
+        //   transform: `scale(${scale})`,
+        //   transition: 'scale 0.3s',
+        //   ...style,
+        // }}
+        // style={{
+        //   pointerEvents: 'all',
+        //   boxShadow: '0px 1px 8px -1px rgba(0,0,0,0.4)',
+        //   position: 'relative',
+        //   transformOrigin: 'right',
+        //   //transform: `scale(${scale})`,
+        //   transition: 'scale 0.3s',
+        //   ...style,
+        // }}
         >
           {theChildren.map((child, index) => (
             <Fragment key={index}>

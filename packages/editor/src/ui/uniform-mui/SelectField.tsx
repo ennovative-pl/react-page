@@ -189,39 +189,46 @@ function Select(props: SelectFieldProps) {
     : allowedValues?.map((data: string) => ({ label: data, value: data }));
 
   return (
-    <FormGroup className="m-1">
-      {label && (
-        <FieldLabel label={label} name={name} disabled={disabled} small />
-      )}
-      <InputGroup>
-        <Form.Select
-          onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-            disabled ||
-              readOnly ||
-              onChange(e.target.value !== '' ? e.target.value : undefined);
-          }}
-          ref={props.inputRef as any}
-          value={props.value}
-          test-id={props.name}
-          size="sm"
-          isInvalid={error && showInlineError && errorMessage}
-          isValid={!error && value?.length > 0}
-        >
-          {items?.map((data: any) => {
-            if (data === undefined) {
-              return <></>;
-            }
-            return (
-              <option key={data?.value} value={data?.value}>
-                {data?.label}
-                {/* {transform && data ? transform(data?.label ?? '') : data?.label ?? ''} */}
-              </option>
-            );
-          })}
-        </Form.Select>
-      </InputGroup>
-      <FieldFeedback error={error} novalidationspace={true} />
-    </FormGroup>
+    <div>
+      <FormGroup className="m-1">
+        {label && (
+          <FieldLabel label={label} name={name} disabled={disabled} small />
+        )}
+        <InputGroup>
+          <Form.Select
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+              disabled ||
+                readOnly ||
+                onChange(e.target.value !== '' ? e.target.value : undefined);
+            }}
+            ref={props.inputRef as any}
+            value={props.value}
+            test-id={props.name}
+            size="sm"
+            isInvalid={error && showInlineError && errorMessage}
+            isValid={!error && value?.length > 0}
+            className={`bg-${props.value} text-bg-${props.value} ${props.value}`}
+          >
+            {items?.map((data: any) => {
+              if (data === undefined) {
+                return <></>;
+              }
+              return (
+                <option
+                  key={data?.value}
+                  value={data?.value}
+                  className={`bg-${data?.value} text-bg-${data?.value} ${data?.value}`}
+                >
+                  {data?.label}
+                  {/* {transform && data ? transform(data?.label ?? '') : data?.label ?? ''} */}
+                </option>
+              );
+            })}
+          </Form.Select>
+        </InputGroup>
+        <FieldFeedback error={error} novalidationspace={true} />
+      </FormGroup>
+    </div>
 
     // <TextField
     //   disabled={disabled}

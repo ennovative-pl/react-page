@@ -15,7 +15,7 @@ export function FieldFeedback(props: IFieldFeedback) {
     <>
       {props.error ? (
         <Form.Control.Feedback type="invalid" style={{ display: 'block' }}>
-          <i className="fas fa-exclamation-circle" /> {props.error}
+          <i className="fas fa-exclamation-circle" /> {props.error?.message}
         </Form.Control.Feedback>
       ) : (
         <Form.Text
