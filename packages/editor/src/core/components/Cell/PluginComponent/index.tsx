@@ -12,6 +12,7 @@ import {
   useCellProps,
   useOption,
   useIsExclusivlyFocused,
+  useIsEditingNode,
 } from '../../hooks';
 import PluginControls from '../PluginControls';
 import PluginMissing from '../PluginMissing';
@@ -33,6 +34,7 @@ const PluginComponent: FC<
   const [data, onChange] = useDebouncedCellData(nodeId);
   const pluginId = useCellProps(nodeId, (c) => c?.plugin?.id);
   const plugin = usePluginOfCell(nodeId);
+  const editing = useIsEditingNode(nodeId);
   const focused = useIsExclusivlyFocused(nodeId);
   const hasInlineNeighbour = useCellProps(nodeId, (c) => c?.hasInlineNeighbour);
 
@@ -115,7 +117,7 @@ const PluginComponent: FC<
         </div>
         <Toolbar
           nodeId={nodeId}
-          open={focused}
+          open={editing}
           pluginControls={
             isEditMode && plugin?.controls ? (
               <PluginControls

@@ -58,8 +58,8 @@ export function AutoformControls<T extends DataTType>(props: Props<T>) {
         <div
           style={{
             columnCount: isSmall ? 1 : columnCount,
-            columnRule: '1px solid #E0E0E0',
-            columnGap: 48,
+            columnRule: '0px solid #E0E0E0',
+            columnGap: '0.5rem',
           }}
         >
           <AutoFields element={Fragment} />

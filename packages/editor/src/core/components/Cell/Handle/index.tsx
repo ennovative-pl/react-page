@@ -1,10 +1,12 @@
 import classNames from 'classnames';
 import React from 'react';
 import {
+  useEditCellById,
   useFocusCell,
   useIsLayoutMode,
   useOption,
   usePluginOfCell,
+  useRemoveCellById,
   useUiTranslator,
 } from '../../hooks';
 import { useDragHandle } from '../Draggable/useDragHandle';
@@ -18,11 +20,18 @@ const Handle: React.FC<{ nodeId: string }> = ({ nodeId }) => {
     dragEnabled
   );
   const focus = useFocusCell(nodeId);
+  const remove = useRemoveCellById();
+  const edit = useEditCellById(nodeId);
   const plugin = usePluginOfCell(nodeId);
   const { t } = useUiTranslator();
   if (!plugin) {
     return null;
   }
+
+  const handleRemove = () => {
+    remove(nodeId);
+  };
+
   return (
     <>
       {previewElement}
@@ -40,7 +49,23 @@ const Handle: React.FC<{ nodeId: string }> = ({ nodeId }) => {
           focus(false, mode);
         }}
       >
-        {t(plugin?.title || plugin?.text)}
+        <div className="d-flex align-items-center gap-2">
+          <button
+            title="Ustawienia komponentu"
+            className="btn btn-outline-secondary btn-sm me-2"
+            onClick={() => edit()}
+          >
+            <i className="fas fa-cog" />{' '}
+          </button>
+          <span>{t(plugin?.title || plugin?.text)}</span>
+          <button
+            title="Usuń komponent"
+            className="btn btn-outline-danger btn-sm ms-2"
+            onClick={handleRemove}
+          >
+            <i className="fas fa-trash" />{' '}
+          </button>
+        </div>
       </div>
     </>
   );

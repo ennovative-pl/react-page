@@ -7,10 +7,12 @@ import { focus } from './focus';
 
 import { hover } from './hover';
 import { settings } from './settings';
+import { edit } from './edit';
 
 const reducer = combineReducers({
   values,
   display,
+  edit,
   focus,
   settings,
   hover,
@@ -26,6 +28,7 @@ export function initialState(value: Value | null, lang: string): RootState {
     reactPage: {
       __nodeCache: {},
       hover: null,
+      edit: null,
       focus: null,
       display: {
         mode: 'edit',

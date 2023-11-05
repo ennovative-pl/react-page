@@ -5,6 +5,7 @@ import { blurAllCells } from '../../actions/cell';
 import type { FocusMode } from '../../actions/cell/core';
 import {
   blurCell,
+  editCell,
   focusCell,
   removeCells,
   resizeCell,
@@ -93,6 +94,14 @@ export const useUpdateCellData = (id: string) => {
     },
     [dispatch, id, currentLang]
   );
+};
+
+/**
+ * @returns a function to edit cell by id
+ */
+export const useEditCellById = (id: string) => {
+  const dispatch = useDispatch();
+  return useCallback(() => dispatch(editCell(id)), [dispatch]);
 };
 
 /**

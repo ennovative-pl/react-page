@@ -5,6 +5,7 @@ export const CELL_UPDATE_DATA = 'CELL_UPDATE_DATA';
 export const CELL_REMOVE = 'CELL_REMOVE';
 export const CELL_RESIZE = 'CELL_RESIZE';
 export const CELL_FOCUS = 'CELL_FOCUS';
+export const CELL_EDIT = 'CELL_EDIT';
 export const CELL_BLUR = 'CELL_BLUR' as const;
 export const CELL_BLUR_ALL = 'CELL_BLUR_ALL' as const;
 
@@ -82,6 +83,20 @@ export const resizeCell =
   });
 
 export type FocusMode = 'replace' | 'add';
+
+export interface EditSettingsAction extends Action {
+  ts: Date;
+  id: string;
+  type: typeof CELL_EDIT;
+}
+/**
+ * Dispatch to focus a cell.
+ */
+export const editCell = (id: string): EditSettingsAction => ({
+  type: CELL_EDIT,
+  ts: new Date(),
+  id,
+});
 
 export interface FocusCellAction extends Action {
   ts: Date;

@@ -5,7 +5,7 @@ import { DEFAULT_OPTIONS } from '../../defaultOptions';
 import type EditorStore from '../../EditorStore';
 import { EditorContext } from '../../EditorStore';
 import { useSelector } from '../../reduxConnect';
-import { getLang } from '../../selector/setting';
+import { getEditingNode, getLang } from '../../selector/setting';
 import type { CellSpacing, Options, RenderOptions } from '../../types';
 
 import { normalizeCellSpacing } from '../../utils/getCellSpacing';
@@ -68,6 +68,21 @@ export const useUiTranslator = (): {
 export const useLang = () => {
   return useSelector(getLang);
 };
+
+/**
+ * @returns the current language
+ */
+export const useEditingNodeId = () => {
+  return useSelector(getEditingNode);
+};
+
+/**
+ * @returns the current language
+ */
+export const useIsEditingNode = (id: string) => {
+  return useSelector((state) => getEditingNode(state) == id);
+};
+
 
 /**
  * @returns cell spacing for the current cell sub-tree

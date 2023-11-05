@@ -50,8 +50,9 @@ export const BottomToolbarDrawer: FC<
         PaperProps={{
           style: {
             zIndex: 10010,
-            minWidth: 400,
-            maxWidth: 'min(1280px, calc(50vw - 250px))',
+            minWidth: isSmall ? '100vw' : '400px',
+            maxWidth: isSmall ? '100vw' : 'min(1280px, 50vw)',
+            //maxWidth: 'min(1280px, calc(50vw - 250px))',
             padding: '1rem',
             overflow: 'visible',
             //pointerEvents: 'none',

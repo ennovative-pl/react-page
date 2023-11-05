@@ -7,6 +7,12 @@ const CodeSnippet = dynamic(() => import('../components/CodeSnippet'));
 
 const codeSnippet: CellPlugin<{
   code: string;
+  code1: string;
+  code2: string;
+  code3: string;
+  code4: string;
+  code5: string;
+  code6: string;
   language: string;
   select: string;
   check: boolean;
@@ -25,9 +31,28 @@ const codeSnippet: CellPlugin<{
       icon: 'fa-user',
       controls: {
         type: 'autoform',
+        columnCount: 2,
         schema: {
           properties: {
             language: {
+              type: 'string',
+            },
+            code1: {
+              type: 'string',
+            },
+            code2: {
+              type: 'string',
+            },
+            code3: {
+              type: 'string',
+            },
+            code4: {
+              type: 'string',
+            },
+            code5: {
+              type: 'string',
+            },
+            code6: {
               type: 'string',
             },
             select: {

@@ -28,7 +28,7 @@ export const BottomToolbar: FC<PropsWithChildren<BottomToolbarProps>> =
       children,
     }) => {
       const [scale, setScale] = React.useState(1);
-      const [minimized, setMinimized] = React.useState(true);
+      const [minimized, setMinimized] = React.useState(false);
       const { title, icon } = usePluginOfCell(nodeId) ?? {};
       const focus = useFocusCell(nodeId);
 
@@ -63,9 +63,9 @@ export const BottomToolbar: FC<PropsWithChildren<BottomToolbarProps>> =
 
       return (
         <>
-          {minimized && (
+          {/* {minimized && (
             <div
-              //onMouseEnter={() => setMinimized?.(false)}
+              onMouseEnter={() => setMinimized?.(false)}
               onClick={() => setMinimized?.(false)}
             >
               <Portal>
@@ -95,7 +95,7 @@ export const BottomToolbar: FC<PropsWithChildren<BottomToolbarProps>> =
                 </Drawer>
               </Portal>
             </div>
-          )}
+          )} */}
           {!minimized && (
             <div
               //onMouseEnter={minimized ? () => setMinimized?.(false) : undefined}
