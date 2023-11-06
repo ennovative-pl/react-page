@@ -5,7 +5,6 @@ import createEmotionServer from '@emotion/server/create-instance';
 import { ServerStyleSheet } from 'styled-components';
 
 import createEmotionCache from '../utils/createEmotionCache';
-
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const styledComponentsSheet = new ServerStyleSheet();

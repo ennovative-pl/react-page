@@ -43,6 +43,7 @@ function Text({
               'helperText',
               'fullWidth',
               'fieldType',
+              'showIf',
             ]),
           } as any)}
           rows={props.multiline ? 5 : undefined}

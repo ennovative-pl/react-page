@@ -49,12 +49,15 @@ export const BottomToolbarDrawer: FC<
         anchor={anchor}
         PaperProps={{
           style: {
-            zIndex: 10010,
-            minWidth: isSmall ? '100vw' : '400px',
-            maxWidth: isSmall ? '100vw' : 'min(1280px, 50vw)',
+            zIndex: 100,
+            minWidth: '400px',
+            //maxWidth: '450px', //'min(1280px, 50vw)',
+            //minWidth: isSmall ? '10px' : '400px',
+            maxWidth: isSmall ? '100vw' : '450px', //'min(1280px, 50vw)',
             //maxWidth: 'min(1280px, calc(50vw - 250px))',
             padding: '1rem',
             overflow: 'visible',
+            // opacity: '0.93',
             //pointerEvents: 'none',
           },
         }}

@@ -6,6 +6,7 @@ import type { FieldProps } from 'uniforms';
 import { connectField, filterDOMProps } from 'uniforms';
 import { FieldFeedback } from '../_Custom/FieldFeedback';
 import { FieldLabel } from '../_Custom/FieldLabel';
+import omit from 'lodash/omit';
 
 export type NumFieldProps = FieldProps<
   number,
@@ -44,7 +45,14 @@ function Num({
           disabled={disabled}
           type="number"
           placeholder={placeholder}
-          {...(props as any)}
+          {...({
+            ...omit(filterDOMProps(props), [
+              'helperText',
+              'fullWidth',
+              'fieldType',
+              'showIf',
+            ]),
+          } as any)}
           onChange={(event) => {
             const parse = decimal ? parseFloat : parseInt;
             const value = parse(event.target.value);
@@ -58,6 +66,7 @@ function Num({
           size="sm"
           isInvalid={error && showInlineError && errorMessage}
           isValid={!error && value !== undefined}
+          changed={props.changed ? 'true' : 'false'}
           // {...filterDOMProps(props)}
         />
         <FieldFeedback error={error} novalidationspace={true} />

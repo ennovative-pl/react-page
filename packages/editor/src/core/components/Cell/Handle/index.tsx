@@ -52,7 +52,7 @@ const Handle: React.FC<{ nodeId: string }> = ({ nodeId }) => {
         <div className="d-flex align-items-center gap-2">
           <button
             title="Ustawienia komponentu"
-            className="btn btn-outline-secondary btn-sm me-2"
+            className="btn btn-secondary btn-sm me-2"
             onClick={() => edit()}
           >
             <i className="fas fa-cog" />{' '}
