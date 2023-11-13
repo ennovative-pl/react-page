@@ -7,7 +7,8 @@ const PlayArrow = lazyLoad(() => import('@mui/icons-material/PlayArrow'));
 export const defaultTranslations = {
   pluginName: 'Video',
   pluginDescription: 'Include videos from Vimeo or YouTube',
-  label: 'Video location (YouTube / Vimeo)',
+  label: 'URL',
+  //label: 'Video location (YouTube / Vimeo)',
   placeholder: 'https://www.youtube.com/watch?v=ER97mPHhgtM',
 };
 

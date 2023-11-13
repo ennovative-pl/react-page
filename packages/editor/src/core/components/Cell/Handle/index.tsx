@@ -49,7 +49,7 @@ const Handle: React.FC<{ nodeId: string }> = ({ nodeId }) => {
           focus(false, mode);
         }}
       >
-        <div className="d-flex align-items-center gap-2">
+        <div className="d-flex align-items-center gap-2" style={{ zIndex: 10 }}>
           <button
             title="Ustawienia komponentu"
             className="btn btn-secondary btn-sm me-2"
