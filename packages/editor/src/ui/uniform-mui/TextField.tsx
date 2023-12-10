@@ -30,7 +30,7 @@ function Text({
     <div>
       <FormGroup className="m-1">
         {label && (
-          <FieldLabel label={label} name={name} disabled={disabled} small />
+          <FieldLabel label={label} name={name} disabled={disabled} />
         )}
         <Form.Control
           test-id={name}

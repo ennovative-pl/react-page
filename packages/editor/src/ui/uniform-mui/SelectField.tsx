@@ -192,7 +192,7 @@ function Select(props: SelectFieldProps) {
     <div>
       <FormGroup className="m-1">
         {label && (
-          <FieldLabel label={label} name={name} disabled={disabled} small />
+          <FieldLabel label={label} name={name} disabled={disabled} />
         )}
         <InputGroup>
           <Form.Select

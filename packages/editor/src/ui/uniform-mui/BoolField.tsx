@@ -68,7 +68,7 @@ function Bool(props: BoolFieldProps) {
         }
       />
       {(label || legend) && (
-        <FieldLabel name={name} subscript={legend} label={label} small />
+        <FieldLabel name={name} subscript={legend} label={label} />
       )}
     </div>
   );
