@@ -57,7 +57,10 @@ const Handle: React.FC<{ nodeId: string }> = ({ nodeId }) => {
           >
             <i className="fas fa-cog" />{' '}
           </button>
-          <span>{t(plugin?.title || plugin?.text)}</span>
+          <span>
+            {t(plugin?.title || plugin?.text)}
+            {plugin?.showId ? ` (${nodeId})` : ''}
+          </span>
           <button
             title="Usuń komponent"
             className="btn btn-outline-danger btn-sm ms-2"

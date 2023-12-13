@@ -226,6 +226,7 @@ export type CellPlugin<
 
   isInlineable?: boolean;
   allowInlineNeighbours?: boolean;
+  showId?: boolean;
 
   /**
    * additional style for the inner cell

@@ -212,6 +212,7 @@ export const HTMLRenderer: React.FC<HTMLRendererProps> = React.memo(
     const optRows = optimizeRows(rows);
     return (
       <div
+        id="react-page-html"
         style={{
           margin:
             optRows?.length && normCellSpacing.x > 0

@@ -87,7 +87,11 @@ const BlurGate: FC<PropsWithChildren> = ({ children }) => {
   const disabled = useOption('blurGateDisabled');
   const ref = useBlurAll({ defaultMode, disabled });
 
-  return <div ref={ref as any}>{children}</div>;
+  return (
+    <div id="react-page-html" ref={ref as any}>
+      {children}
+    </div>
+  );
 };
 
 export default BlurGate;
