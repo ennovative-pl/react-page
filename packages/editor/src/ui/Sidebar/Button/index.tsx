@@ -1,5 +1,4 @@
-import React from 'react';
-import Fab from '@mui/material/Fab';
+import React, { useState, useEffect, useRef } from 'react';
 
 import type { PropTypes } from '@mui/material';
 import { useIsSmallScreen } from '../../../core/components/hooks';
@@ -23,6 +22,8 @@ const DisplayModeToggle = ({
   style?: React.CSSProperties;
 } & unknown) => {
   const isSmall = useIsSmallScreen();
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
   return (
     <div className="react-page-controls-mode-toggle-button" style={style}>
       <div className="react-page-controls-mode-toggle-button-inner">
@@ -31,19 +32,14 @@ const DisplayModeToggle = ({
           className={'btn ' + (active ? 'btn-primary' : 'btn-secondary')}
           onClick={onClick}
           disabled={disabled}
+          data-toggle="tooltip"
+          data-placement="left"
+          title={description}
+          ref={buttonRef}
           {...rest}
         >
           {icon}
         </button>
-        {/* <Fab
-          color={active ? activeColor : 'default'}
-          size={isSmall ? 'small' : 'large'}
-          onClick={onClick}
-          disabled={disabled}
-          {...rest}
-        >
-          {icon}
-        </Fab> */}
       </div>
       <div className="react-page-controls-mode-toggle-button-description">
         {description}
