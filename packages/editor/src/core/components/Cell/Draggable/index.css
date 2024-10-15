@@ -84,10 +84,20 @@
       height: 2px;
       position: absolute;
       content: '';
-      transform: translate(-50%, -50%);
+      transform: translateY(-50%, -50%);
       left: 50%;
-      transform: translate(-50%, -50%);
       background: white;
+    }
+
+    .react-page-cell-draggable-overlay-handle
+      .fa-solid {
+        position: absolute;
+        content: '';
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        font-size: 22px;
+        /* background: white; */
     }
 
     .react-page-cell:hover

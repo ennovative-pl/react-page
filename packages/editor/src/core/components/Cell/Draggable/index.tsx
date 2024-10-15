@@ -6,7 +6,8 @@ import { useDragHandle } from './useDragHandle';
 
 const DefaultSmallHandle = ({ onClick }: { onClick: () => void }) => (
   <div className="react-page-cell-draggable-overlay-handle" onClick={onClick}>
-    <div className="react-page-cell-draggable-overlay-handle-icon" />
+    {/* <div className="react-page-cell-draggable-overlay-handle-icon fas fa-up-down-left-right" /> */}
+    <i className="fa-solid fa-up-down-left-right fs-6"></i>
   </div>
 );
 
