@@ -37,8 +37,8 @@
   &&-mode-layout {
     .react-page-cell {
       position: relative;
-      transition: box-shadow 0.3s;
-
+      /* transition: box-shadow 0.3s; */
+      
       &-is-draft {
         opacity: 0.3;
         outline: 1px dashed black;
@@ -48,12 +48,14 @@
       }
       &.react-page-cell-has-plugin:hover {
         z-index: 2;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        outline: 1px solid var(--bs-secondary);
+        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); */
         opacity: 1;
       }
       &.react-page-cell-focused.react-page-cell-focused {
         z-index: 1;
-        box-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
+        /* outline: 2px solid var(--bs-primary); */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
         opacity: 1;
       }
     }

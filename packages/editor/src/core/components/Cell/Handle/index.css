@@ -34,8 +34,10 @@
 
       position: absolute;
       top: 0px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-100%);
+      /* left: 50%; */
+      left: 0px;
+      transform: translateY(-100%);
+      /* transform: translateX(-50%) translateY(-100%); */
       transition: opacity ease 0.4s;
       opacity: 0;
 
@@ -46,7 +48,7 @@
       color: rgba(0, 0, 0, 0.97);
 
       display: inline-block;
-      padding: 12px 24px;
+      padding: 9px 18px;
       margin: 0 auto;
       /* border-radius: 12px 12px 0 0; */
       border-radius: var(--bs-border-radius) var(--bs-border-radius) 0 0;
@@ -55,7 +57,7 @@
       line-height: 1.4;
       /* letter-spacing: 0.15em; */
 
-      box-shadow: 0 -5px 5px rgb(0 0 0 / 22%);
+      box-shadow: 0 0px 10px 0px rgb(0 0 0 / 22%);
       pointer-events: none;
     }
 

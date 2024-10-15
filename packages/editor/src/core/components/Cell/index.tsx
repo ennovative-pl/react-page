@@ -111,7 +111,7 @@ const Cell: React.FC<Props> = ({ nodeId, measureRef }) => {
       }
       onClick={onClick}
     >
-      <Handle nodeId={nodeId} />
+      {focused && <Handle nodeId={nodeId} />}
       {showMoveButtons &&
       isLayoutMode &&
       !hasChildren &&
