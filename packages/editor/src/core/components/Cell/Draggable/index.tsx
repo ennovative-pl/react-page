@@ -1,15 +1,32 @@
 import classNames from 'classnames';
 import type { FC, PropsWithChildren } from 'react';
 import React from 'react';
-import { useCell, useFocusCell, useIsLayoutMode, useOption } from '../../hooks';
+import {
+  useCell,
+  useFocusCell,
+  useIsEditMode,
+  useIsLayoutMode,
+  useOption,
+} from '../../hooks';
 import { useDragHandle } from './useDragHandle';
 
-const DefaultSmallHandle = ({ onClick }: { onClick: () => void }) => (
-  <div className="react-page-cell-draggable-overlay-handle" onClick={onClick}>
-    {/* <div className="react-page-cell-draggable-overlay-handle-icon fas fa-up-down-left-right" /> */}
-    <i className="fa-solid fa-up-down-left-right fs-6"></i>
-  </div>
-);
+const DefaultSmallHandle = ({ onClick }: { onClick: () => void }) => {
+  const isLayoutMode = useIsLayoutMode();
+  const isEditMode = useIsEditMode();
+  return (
+    <>
+      {(isLayoutMode || isEditMode) && (
+        <div
+          className="react-page-cell-draggable-overlay-handle"
+          onClick={onClick}
+        >
+          {/* <div className="react-page-cell-draggable-overlay-handle-icon fas fa-up-down-left-right" /> */}
+          <i className="fa-solid fa-up-down-left-right fs-6"></i>
+        </div>
+      )}
+    </>
+  );
+};
 
 type Props = {
   isLeaf?: boolean;

@@ -5,6 +5,7 @@ import {
   useFocusCell,
   useIsLayoutMode,
   useOption,
+  useParentCellId,
   usePluginOfCell,
   useRemoveCellById,
   useUiTranslator,
@@ -13,6 +14,11 @@ import { useDragHandle } from '../Draggable/useDragHandle';
 const Handle: React.FC<{ nodeId: string }> = ({ nodeId }) => {
   const allowMoveInEditMode = useOption('allowMoveInEditMode');
   const isLayoutMode = useIsLayoutMode();
+  const parentCellId = useParentCellId(nodeId);
+  const focusParent = useFocusCell(parentCellId);
+
+  console.log('Handle', nodeId, parentCellId);
+
   const dragEnabled = allowMoveInEditMode || isLayoutMode;
 
   const [isDragging, dragRef, previewElement] = useDragHandle(
@@ -44,26 +50,35 @@ const Handle: React.FC<{ nodeId: string }> = ({ nodeId }) => {
           })
         }
         ref={dragRef}
-        onClick={(e) => {
-          const mode = e.metaKey || e.ctrlKey ? 'add' : 'replace';
-          focus(false, mode);
-        }}
+        // onClick={(e) => {
+        //   const mode = e.metaKey || e.ctrlKey ? 'add' : 'replace';
+        //   focus(false, mode);
+        // }}
       >
         <div className="d-flex align-items-center gap-2" style={{ zIndex: 10 }}>
-          <button
-            title="Ustawienia komponentu"
-            className="btn btn-secondary btn-sm me-2"
-            onClick={() => edit()}
-          >
-            <i className="fas fa-cog" />{' '}
-          </button>
           <span>
             {t(plugin?.title || plugin?.text)}
             {plugin?.showId ? ` (${nodeId})` : ''}
           </span>
           <button
+            title="Ustawienia komponentu"
+            className="btn btn-outline-secondary btn-sm ms-2"
+            onClick={() => edit()}
+          >
+            <i className="fas fa-cog" />{' '}
+          </button>
+          {parentCellId && (
+            <button
+              title="Zaznacz komponent nadrzędny"
+              className="btn btn-outline-secondary btn-sm"
+              onClick={() => focusParent(true, 'replace')}
+            >
+              <i className="fas fa-arrows-up-to-line" />{' '}
+            </button>
+          )}
+          <button
             title="Usuń komponent"
-            className="btn btn-outline-danger btn-sm ms-2"
+            className="btn btn-outline-danger btn-sm"
             onClick={handleRemove}
           >
             <i className="fas fa-trash" />{' '}

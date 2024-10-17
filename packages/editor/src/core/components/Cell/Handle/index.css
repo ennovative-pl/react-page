@@ -57,9 +57,9 @@
       line-height: 1.2;
       /* letter-spacing: 0.15em; */
 
-      border-width: 1px 1px 0px 1px;
+      border-width: 1px 1px 1px 1px;
       border-style: solid ;
-      border-color: var(--bs-primary);
+      border-color: var(--bs-primary) var(--bs-primary) rgba(255, 255, 255, 0.95) var(--bs-primary);
       /* box-shadow: 0 0px 10px 0px rgb(0 0 0 / 22%); */
       pointer-events: none;
     }
