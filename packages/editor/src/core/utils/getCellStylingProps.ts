@@ -6,12 +6,26 @@ export const getCellInnerDivStyle = (
   cell: Cell | null,
   plugin: CellPlugin | null,
   data: DataTType
-) =>
-  cell && plugin?.cellStyle
+) => {
+  if (!cell) {
+    return undefined;
+  }
+
+  const style = plugin?.cellStyle
     ? typeof plugin?.cellStyle === 'function'
       ? plugin?.cellStyle(data)
       : plugin?.cellStyle
-    : undefined;
+    : {};
+
+  const marginStyle = plugin?.marginStyle
+    ? typeof plugin?.marginStyle === 'function'
+      ? plugin?.marginStyle(data)
+      : plugin?.marginStyle
+    : {};
+
+  const result = { ...style, ...marginStyle };
+  return Object.keys(result).length == 0 ? undefined : result;
+};
 
 export const getCellInnerDivClassName = (
   cell: Cell | null,
@@ -24,10 +38,17 @@ export const getCellInnerDivClassName = (
       : plugin?.cellClassName
     : undefined;
 
+  const cellMarginClassName = plugin?.marginClassName
+    ? typeof plugin?.marginClassName === 'function'
+      ? plugin?.marginClassName(data)
+      : plugin?.marginClassName
+    : undefined;
+
   return (
     'react-page-cell-inner' +
     ((cell?.rows?.length ?? 0) > 0 ? '' : ' react-page-cell-inner-leaf') +
-    (additionalClass ? ' ' + additionalClass : '')
+    (additionalClass ? ' ' + additionalClass : '') +
+    (cellMarginClassName ? ' ' + cellMarginClassName : '')
   );
 };
 

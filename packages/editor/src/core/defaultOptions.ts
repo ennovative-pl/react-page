@@ -17,6 +17,7 @@ export const DEFAULT_OPTIONS: Required<Options> = {
   undoRedoEnabled: true,
   editEnabled: true,
   insertEnabled: true,
+  insertAlways: false,
   layoutEnabled: true,
   resizeEnabled: true,
   previewEnabled: true,

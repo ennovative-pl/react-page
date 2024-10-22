@@ -17,8 +17,6 @@ const Handle: React.FC<{ nodeId: string }> = ({ nodeId }) => {
   const parentCellId = useParentCellId(nodeId);
   const focusParent = useFocusCell(parentCellId);
 
-  console.log('Handle', nodeId, parentCellId);
-
   const dragEnabled = allowMoveInEditMode || isLayoutMode;
 
   const [isDragging, dragRef, previewElement] = useDragHandle(

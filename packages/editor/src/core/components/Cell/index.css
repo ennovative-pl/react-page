@@ -48,7 +48,7 @@
       }
       &.react-page-cell-has-plugin:hover {
         z-index: 2;
-        outline: 1px solid var(--bs-secondary);
+        outline: 1px solid var(--bs-gray-500);
         /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); */
         opacity: 1;
       }

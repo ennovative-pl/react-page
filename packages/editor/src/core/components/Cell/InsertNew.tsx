@@ -4,8 +4,11 @@ import type { CellDrag } from '../../types';
 import {
   useCellIsAllowedHere,
   useInsertNew,
+  useIsFocused,
+  useIsInsertMode,
   useIsLayoutMode,
   useIsPreviewMode,
+  useOption,
   useSetDisplayReferenceNodeId,
   useSetInsertMode,
 } from '../hooks';
@@ -19,9 +22,12 @@ const InsertNew: React.FC<InsertNewProps> = ({ parentCellId }) => {
   const setInsertMode = useSetInsertMode();
 
   const insertNew = useInsertNew(parentCellId);
+  const focused = useIsFocused(parentCellId ?? '');
+  const insertAlways = useOption('insertAlways');
 
   const isPreviewMode = useIsPreviewMode();
   const isLayoutMode = useIsLayoutMode();
+  const isInsertMode = useIsInsertMode();
 
   const setReferenceNodeId = useSetDisplayReferenceNodeId();
   const checkIfAllowed = useCellIsAllowedHere(parentCellId);
@@ -48,6 +54,7 @@ const InsertNew: React.FC<InsertNewProps> = ({ parentCellId }) => {
   });
 
   if (isPreviewMode) return null;
+  if (!focused && !insertAlways && !isInsertMode) return null;
   return (
     <div
       ref={dropRef}

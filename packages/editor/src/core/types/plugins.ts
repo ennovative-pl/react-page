@@ -249,6 +249,16 @@ export type CellPlugin<
   contentClassName?: string | ((data: DataT) => string);
 
   /**
+   * ENN additional style for the margin of the plugin itself
+   */
+  marginStyle?: React.CSSProperties | ((data: DataT) => React.CSSProperties);
+
+  /**
+   * ENN additional classname(s) for the margin of the plugin itself
+   */
+  marginClassName?: string | ((data: DataT) => string);  
+
+  /**
    * cell spacing setting for the internal layout (nested cells) if any
    */
   cellSpacing?:

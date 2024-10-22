@@ -56,6 +56,11 @@ export type Options = {
   insertEnabled?: boolean;
 
   /**
+   * always show insert button
+   */
+  insertAlways?: boolean;
+
+  /**
    * enable layout option
    */
   layoutEnabled?: boolean;
