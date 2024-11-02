@@ -45,12 +45,12 @@ export const PluginDrawer: React.FC = React.memo(() => {
         plugin &&
         id &&
         !plugin.hideInMenu &&
-        (id.toLowerCase().startsWith(searchText?.toLowerCase()) ||
+        (id.toLowerCase().includes(searchText?.toLowerCase()) ||
           (plugin.description &&
             plugin.description
               .toLowerCase()
-              .startsWith(searchText?.toLowerCase())) ||
-          (title && title.toLowerCase().startsWith(searchText?.toLowerCase())))
+              .includes(searchText?.toLowerCase())) ||
+          (title && title.toLowerCase().includes(searchText?.toLowerCase())))
       );
     },
     [searchText]

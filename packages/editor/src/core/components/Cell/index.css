@@ -58,6 +58,14 @@
         /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); */
         opacity: 1;
       }
+      &.react-page-cell-no-width {
+        width: 300px;
+        outline: 1px dashed var(--bs-danger);
+      }
+      &.react-page-cell-no-width.react-page-cell-focused {
+        width: 300px;
+        outline: 1px dashed var(--bs-danger);
+      }
     }
   }
 

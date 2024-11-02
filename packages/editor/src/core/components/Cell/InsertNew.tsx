@@ -54,7 +54,7 @@ const InsertNew: React.FC<InsertNewProps> = ({ parentCellId }) => {
   });
 
   if (isPreviewMode) return null;
-  if (!focused && !insertAlways && !isInsertMode) return null;
+  if (!focused && !insertAlways && !isInsertMode && parentCellId) return null;
   return (
     <div
       ref={dropRef}
@@ -77,10 +77,7 @@ const InsertNew: React.FC<InsertNewProps> = ({ parentCellId }) => {
       }}
     >
       <div className="react-page-cell-insert-new-icon">
-        <button
-          type="button"
-          className={'btn btn-lg btn-outline-secondary shadow'}
-        >
+        <button type="button" className={'btn btn-lg btn-secondary shadow'}>
           <i className="fas fa-fw fa-plus" />
         </button>
         {/* <svg

@@ -5,6 +5,7 @@ import type { UseMeasureRef } from 'react-use/lib/useMeasure';
 import { getCellOuterDivClassName } from '../../utils/getCellStylingProps';
 import {
   useAllFocusedNodeIds,
+  useCellData,
   useCellHasPlugin,
   useCellProps,
   useCellSpacing,
@@ -16,6 +17,7 @@ import {
   useLang,
   useNodeHasChildren,
   useOption,
+  useParentCellId,
   useScrollToViewEffect,
   useSetDisplayReferenceNodeId,
 } from '../hooks';
@@ -27,9 +29,10 @@ import scrollIntoViewWithOffset from './utils/scrollIntoViewWithOffset';
 
 type Props = {
   nodeId: string;
+  inFlexbox?: boolean;
   measureRef?: UseMeasureRef;
 };
-const Cell: React.FC<Props> = ({ nodeId, measureRef }) => {
+const Cell: React.FC<Props> = ({ nodeId, inFlexbox, measureRef }) => {
   const focused = useIsFocused(nodeId);
 
   const { inline, hasInlineNeighbour, isDraft, isDraftI18n, size } =
@@ -55,6 +58,9 @@ const Cell: React.FC<Props> = ({ nodeId, measureRef }) => {
   const hasPlugin = useCellHasPlugin(nodeId);
   const cellSpacing = useCellSpacing();
   const needVerticalPadding = !hasChildren || hasPlugin;
+  const parentCellId = useParentCellId(nodeId);
+  const parentData = useCellData(parentCellId ?? '');
+  const data = useCellData(nodeId);
 
   const isDraftInLang = isDraftI18n?.[lang] ?? isDraft;
   const ref = React.useRef<HTMLDivElement>(null);
@@ -97,7 +103,7 @@ const Cell: React.FC<Props> = ({ nodeId, measureRef }) => {
         getCellOuterDivClassName({
           hasChildren,
           hasInlineNeighbour,
-          size,
+          size: parentData.useFlexLayout ? 12 : size,
           inline,
         }) +
         ' ' +
@@ -105,13 +111,20 @@ const Cell: React.FC<Props> = ({ nodeId, measureRef }) => {
           'react-page-cell-has-plugin': hasPlugin,
           'react-page-cell-focused': focused,
           'react-page-cell-is-draft': isDraftInLang,
+          'react-page-cell-no-width':
+            inFlexbox && !data.width && !data.minWidth,
           'react-page-cell-bring-to-front':
             !isResizeMode && !isLayoutMode && inline, // inline must not be active for resize/layout
         })
       }
       onClick={onClick}
     >
-      {focused && <Handle nodeId={nodeId} />}
+      {focused && (
+        <Handle
+          nodeId={nodeId}
+          noWidth={(inFlexbox ?? false) && !data.width && !data.minWidth}
+        />
+      )}
       {showMoveButtons &&
       isLayoutMode &&
       !hasChildren &&

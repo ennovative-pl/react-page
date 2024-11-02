@@ -64,6 +64,12 @@
       pointer-events: none;
     }
 
+    .react-page-cell-handle-no-width {
+      border-width: 1px 1px 1px 1px;
+      border-style: solid ;
+      border-color: var(--bs-danger) var(--bs-danger) rgba(255, 255, 255, 0.95) var(--bs-danger) !important;
+    }
+
     .react-page-cell-handle-drag-enabled {
       cursor: move;
     }

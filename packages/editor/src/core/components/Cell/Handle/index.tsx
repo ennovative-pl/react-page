@@ -11,7 +11,10 @@ import {
   useUiTranslator,
 } from '../../hooks';
 import { useDragHandle } from '../Draggable/useDragHandle';
-const Handle: React.FC<{ nodeId: string }> = ({ nodeId }) => {
+const Handle: React.FC<{ nodeId: string; noWidth: boolean }> = ({
+  nodeId,
+  noWidth,
+}) => {
   const allowMoveInEditMode = useOption('allowMoveInEditMode');
   const isLayoutMode = useIsLayoutMode();
   const parentCellId = useParentCellId(nodeId);
@@ -45,6 +48,7 @@ const Handle: React.FC<{ nodeId: string }> = ({ nodeId }) => {
           classNames('react-page-cell-handle', {
             'react-page-cell-handle-drag-enabled': dragEnabled,
             'react-page-cell-handle-is-dragging': isDragging,
+            'bg-danger react-page-cell-handle-no-width': noWidth,
           })
         }
         ref={dragRef}
