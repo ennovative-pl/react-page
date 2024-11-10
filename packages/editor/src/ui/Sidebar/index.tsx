@@ -7,6 +7,7 @@ import TogglePreview from './TogglePreview/index';
 import ToggleResize from './ToggleResize/index';
 import UndoRedo from './UndoRedo';
 import Zoom from './Zoom';
+import ToggleDevice from './ToggleDevice';
 
 const getStickyNessstyle = (stickyness?: StickyNess): React.CSSProperties => {
   if (
@@ -49,6 +50,7 @@ export const Sidebar: React.FC<{
   const layoutEnabled = useOption('layoutEnabled');
   const resizeEnabled = useOption('resizeEnabled');
   const previewEnabled = useOption('previewEnabled');
+  const deviceToggleEnabled = useOption('deviceToggleEnabled');
   const defaultLabels = {
     edit: 'Edit blocks',
     insert: 'Add blocks',
@@ -56,9 +58,9 @@ export const Sidebar: React.FC<{
     resize: 'Resize blocks',
     preview: 'Preview page',
   };
-  
+
   const customOptions = useOption('customOptions');
-  
+
   const actions = [
     // eslint-disable-next-line react/jsx-key
     undoRedoEnabled
@@ -66,6 +68,9 @@ export const Sidebar: React.FC<{
       : null,
     zoomEnabled
       ? { action: <Zoom labelZoomIn="zoom in" labelZoomOut="zoom out" /> }
+      : null,
+    deviceToggleEnabled
+      ? { action: <ToggleDevice label={t('Toggle device') ?? ''} /> }
       : null,
     editEnabled
       ? { action: <ToggleEdit label={t(defaultLabels.edit) ?? ''} /> }

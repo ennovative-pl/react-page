@@ -1,14 +1,16 @@
-import { IconButton, Tooltip } from '@mui/material';
-import Icon from '@mui/icons-material/FileCopy';
 import React from 'react';
 import { useDuplicateCell, useUiTranslator } from '../../core/components/hooks';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 export const DuplicateButton: React.FC<{ nodeId: string }> = React.memo(
   ({ nodeId }) => {
     const duplicateCell = useDuplicateCell(nodeId);
     const { t } = useUiTranslator();
     return (
-      <Tooltip title={t('Duplicate Plugin') ?? ''}>
+      // <Tooltip title={t('Duplicate Plugin') ?? ''}>
+      <OverlayTrigger
+        overlay={<Tooltip>{t('Duplicate Plugin') ?? ''}</Tooltip>}
+      >
         <button
           type="button"
           className="btn btn-sm btn-secondary"
@@ -16,10 +18,14 @@ export const DuplicateButton: React.FC<{ nodeId: string }> = React.memo(
         >
           <i className="fa-regular fa-fw fa-copy" />
         </button>
-        {/* <IconButton onClick={duplicateCell} aria-label="delete" color="default">
-          <Icon />
-        </IconButton> */}
-      </Tooltip>
+      </OverlayTrigger>
     );
+    {
+      /* <IconButton onClick={duplicateCell} aria-label="delete" color="default">
+          <Icon />
+        </IconButton> */
+    }
+    // </Tooltip>
+    //);
   }
 );

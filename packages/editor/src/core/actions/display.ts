@@ -7,6 +7,7 @@ export const DISPLAY_MODE_EDIT = 'edit';
 export const DISPLAY_MODE_INSERT = 'insert';
 export const DISPLAY_MODE_RESIZING = 'resizing';
 export const DISPLAY_SET_ZOOM = 'DISPLAY_SET_ZOOM';
+export const DISPLAY_SET_ON_MOBILE = 'DISPLAY_SET_ON_MOBILE';
 export type DisplayModes =
   | 'preview'
   | 'layout'
@@ -31,11 +32,17 @@ export type SetDisplayReferenceNodeIdAction = {
   ts: Date;
   referenceNodeId?: string | null;
 };
+export type SetOnMobileAction = {
+  type: typeof DISPLAY_SET_ON_MOBILE;
+  onMobile: boolean;
+};
 
 export type DisplayAction =
   | SetDisplayModeAction
   | SetZoomAction
+  | SetOnMobileAction
   | SetDisplayReferenceNodeIdAction;
+
 const setDisplayMode =
   (mode: DisplayModes, referenceNodeId?: string) =>
   (): SetDisplayModeAction => ({
@@ -96,4 +103,9 @@ export const resizeMode = setDisplayMode(DISPLAY_MODE_RESIZING);
 export const setZoom = (zoom: number): SetZoomAction => ({
   type: DISPLAY_SET_ZOOM,
   zoom,
+});
+
+export const setOnMobile = (onMobile: boolean): SetOnMobileAction => ({
+  type: DISPLAY_SET_ON_MOBILE,
+  onMobile,
 });

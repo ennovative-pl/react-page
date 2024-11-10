@@ -21,6 +21,7 @@ export const DEFAULT_OPTIONS: Required<Options> = {
   layoutEnabled: true,
   resizeEnabled: true,
   previewEnabled: true,
+  deviceToggleEnabled: true,
 
   dndBackend: HTML5Backend,
   blurGateDefaultMode: DISPLAY_MODE_EDIT,

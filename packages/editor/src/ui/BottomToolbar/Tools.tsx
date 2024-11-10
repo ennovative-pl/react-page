@@ -1,12 +1,13 @@
-import { IconButton, Tooltip } from '@mui/material';
-import Delete from '@mui/icons-material/Delete';
+//import { IconButton, Tooltip } from '@mui/material';
+//import Delete from '@mui/icons-material/Delete';
 import React from 'react';
 import { useRemoveCell, useUiTranslator } from '../../core/components/hooks';
-import DraftSwitch from '../DraftSwitch';
+//import DraftSwitch from '../DraftSwitch';
 import { DuplicateButton } from '../DuplicateButton';
 import { I18nTools } from '../I18nTools';
 import { SelectParentButton } from '../SelectParentButton';
 import { BottomToolbarToolsProps } from './types';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 export { BottomToolbarToolsProps };
 export const BottomToolbarTools: React.FC<BottomToolbarToolsProps> = React.memo(
@@ -25,7 +26,10 @@ export const BottomToolbarTools: React.FC<BottomToolbarToolsProps> = React.memo(
         <SelectParentButton nodeId={nodeId} />
         <DuplicateButton nodeId={nodeId} />
 
-        <Tooltip title={t('Remove Plugin') ?? ''}>
+        {/* <Tooltip title={t('Remove Plugin') ?? ''}> */}
+        <OverlayTrigger
+          overlay={<Tooltip title={t('Remove Plugin') ?? ''}></Tooltip>}
+        >
           <button
             type="button"
             className="btn btn-sm btn-danger"
@@ -33,15 +37,16 @@ export const BottomToolbarTools: React.FC<BottomToolbarToolsProps> = React.memo(
           >
             <i className="fas fa-fw fa-trash" />
           </button>
+        </OverlayTrigger>
 
-          {/* <IconButton
+        {/* <IconButton
             onClick={() => removeCell()}
             aria-label="delete"
             color="secondary"
           >
             <Delete />
           </IconButton> */}
-        </Tooltip>
+        {/* </Tooltip> */}
       </div>
     );
   }

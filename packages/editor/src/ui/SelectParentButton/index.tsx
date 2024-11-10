@@ -7,7 +7,8 @@ import {
   useParentCellId,
   useUiTranslator,
 } from '../../core/components/hooks';
-import { Tooltip } from '@mui/material';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+//import { Tooltip } from '@mui/material';
 
 export const SelectParentButton: React.FC<{
   nodeId: string;
@@ -17,7 +18,8 @@ export const SelectParentButton: React.FC<{
   const focusParent = useFocusCell(parentCellId);
 
   return parentCellId ? (
-    <Tooltip title={t('Select parent') ?? ''}>
+    // <Tooltip title={t('Select parent') ?? ''}>
+    <OverlayTrigger overlay={<Tooltip>{t('Select parent') ?? ''}</Tooltip>}>
       <button
         type="button"
         className="btn btn-sm btn-secondary"
@@ -25,8 +27,9 @@ export const SelectParentButton: React.FC<{
       >
         <i className="fas fa-fw fa-arrows-up-to-line" />
       </button>
-    </Tooltip>
-  ) : // <IconButton
+    </OverlayTrigger>
+  ) : // </Tooltip>
+  // <IconButton
   //   className="bottomToolbar__selectParentButton"
   //   onClick={() => focusParent()}
   //   color="default"

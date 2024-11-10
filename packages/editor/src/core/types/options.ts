@@ -35,6 +35,8 @@ export type Options = {
    */
   allowMoveInEditMode?: boolean;
 
+  deviceToggleEnabled?: boolean;
+
   /**
    * enable zoom function
    */

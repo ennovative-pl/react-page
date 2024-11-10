@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import { useDispatch, useSelector } from '../../reduxConnect';
-import { setZoom } from '../../actions/display';
+import { setOnMobile, setZoom } from '../../actions/display';
 import { useOption } from './options';
 
 export const useSetZoom = () => {
@@ -47,4 +47,22 @@ export const useCanZoomIn = () => {
   const zoom = useZoom();
   const zoomFactors = useOption('zoomFactors');
   return zoomFactors?.some((z) => z > zoom) ?? false;
+};
+
+export const useOnMobile = () => {
+  return useSelector((state) => state.reactPage.display.onMobile);
+};
+
+export const useSetOnMobile = () => {
+  const dispatch = useDispatch();
+  return useCallback(
+    (onMobile: boolean) => dispatch(setOnMobile(onMobile)),
+    [dispatch]
+  );
+};
+
+export const useToggleOnMobile = () => {
+  const onMobile = useOnMobile();
+  const setOnMobile = useSetOnMobile();
+  return useCallback(() => setOnMobile(!onMobile), [onMobile, setOnMobile]);
 };

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import type { PropTypes } from '@mui/material';
 import { useIsSmallScreen } from '../../../core/components/hooks';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 const DisplayModeToggle = ({
   description,
@@ -27,23 +28,26 @@ const DisplayModeToggle = ({
   return (
     <div className="react-page-controls-mode-toggle-button" style={style}>
       <div className="react-page-controls-mode-toggle-button-inner">
-        <button
-          type="button"
-          className={'btn ' + (active ? 'btn-primary' : 'btn-secondary')}
-          onClick={onClick}
-          disabled={disabled}
-          data-toggle="tooltip"
-          data-placement="left"
-          title={description}
-          ref={buttonRef}
-          {...rest}
+        <OverlayTrigger
+          placement="left"
+          overlay={<Tooltip>{description}</Tooltip>}
         >
-          {icon}
-        </button>
+          <button
+            type="button"
+            className={'btn ' + (active ? 'btn-primary' : 'btn-secondary')}
+            onClick={onClick}
+            disabled={disabled}
+            title={description}
+            ref={buttonRef}
+            {...rest}
+          >
+            {icon}
+          </button>
+        </OverlayTrigger>
       </div>
-      <div className="react-page-controls-mode-toggle-button-description">
+      {/* <div className="react-page-controls-mode-toggle-button-description">
         {description}
-      </div>
+      </div> */}
     </div>
   );
 };

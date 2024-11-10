@@ -4,4 +4,5 @@ export type Display = {
   mode: DisplayModes;
   referenceNodeId?: string;
   zoom: number;
+  onMobile: boolean;
 };
