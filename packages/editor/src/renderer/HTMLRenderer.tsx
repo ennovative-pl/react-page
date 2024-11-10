@@ -213,6 +213,7 @@ export const HTMLRenderer: React.FC<HTMLRendererProps> = React.memo(
     return (
       <div
         id="react-page-html"
+        className="viewer-container"
         style={{
           margin:
             optRows?.length && normCellSpacing.x > 0

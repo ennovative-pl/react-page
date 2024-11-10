@@ -34,7 +34,11 @@ const DisplayModeToggle = ({
         >
           <button
             type="button"
-            className={'btn ' + (active ? 'btn-primary' : 'btn-secondary')}
+            className={
+              'btn ' +
+              (active ? 'btn-primary' : 'btn-secondary') +
+              (isSmall ? ' btn-sm' : '')
+            }
             onClick={onClick}
             disabled={disabled}
             title={description}

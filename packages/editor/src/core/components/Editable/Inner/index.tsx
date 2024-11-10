@@ -21,9 +21,11 @@ const Inner: React.FC = () => {
     ref.current?.getBoundingClientRect().width ?? window.innerWidth;
   const windowWidth = window.innerWidth;
 
+  const mobileWidth = 400;
+
   const backdropPercentZoom = zoom < 1 ? 50 * (1 - zoom) : 0;
   const backdropPercentMobile =
-    ((windowWidth - contentWidth) / windowWidth) * 100;
+    ((contentWidth - mobileWidth * zoom) / contentWidth / 2) * 100;
   const backdropPercent = onMobile
     ? backdropPercentMobile
     : backdropPercentZoom;
@@ -31,6 +33,8 @@ const Inner: React.FC = () => {
   const right = 100 - backdropPercent + '%';
   const top = backdropPercentZoom * offsetPercent * 2 + '%';
   const bottom = 100 - backdropPercentZoom * (1 - offsetPercent) * 2 + '%';
+
+  console.log(zoom, windowWidth, contentWidth, mobileWidth, backdropPercentMobile, backdropPercentZoom, backdropPercent, left, right, top, bottom);
 
   return (
     <div
@@ -58,11 +62,14 @@ const Inner: React.FC = () => {
         style={{
           transformOrigin: `center ${zoomTransformOriginY}px`,
           transform: `scale(${zoom})`,
-          maxWidth: onMobile ? '400px' : '100%',
+          maxWidth: onMobile ? mobileWidth + 'px' : '100%',
           border: onMobile ? '1px dashed #ccc' : 'none',
           transition: '0.6s',
         }}
-        className={'react-page-editable react-page-editable-mode-' + mode}
+        className={
+          'react-page-editable editor-container react-page-editable-mode-' +
+          mode
+        }
       >
         <Rows />
       </div>

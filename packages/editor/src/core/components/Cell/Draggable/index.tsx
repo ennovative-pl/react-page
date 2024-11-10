@@ -6,6 +6,8 @@ import {
   useFocusCell,
   useIsEditMode,
   useIsLayoutMode,
+  useIsSmallScreen,
+  useOnMobile,
   useOption,
 } from '../../hooks';
 import { useDragHandle } from './useDragHandle';
@@ -45,6 +47,10 @@ const Draggable: FC<PropsWithChildren<Props>> = ({
   const isLayoutMode = useIsLayoutMode();
   const allowMoveInEditMode = useOption('allowMoveInEditMode');
   const components = useOption('components');
+  const onMobile = useOnMobile();
+  const isSmallScreen = useIsSmallScreen();
+
+  const showHandle = allowMoveInEditMode && !onMobile && !isSmallScreen;
 
   const ResizeHandle = components?.EditModeResizeHandle ?? DefaultSmallHandle;
 
@@ -78,7 +84,7 @@ const Draggable: FC<PropsWithChildren<Props>> = ({
               'react-page-cell-draggable-leaf': isLeaf,
             })}
           ></div>
-        ) : allowMoveInEditMode ? (
+        ) : showHandle ? (
           <div ref={dragRef}>
             <ResizeHandle onClick={focus} />
           </div>

@@ -9,6 +9,8 @@ import {
   useResizeCell,
   useCellSpacing,
   useOption,
+  useOnMobile,
+  useIsSmallScreen,
 } from '../hooks';
 
 type Props = {
@@ -34,6 +36,8 @@ const ResizableRowCell: React.FC<Props> = ({
   const isResizeMode = useIsResizeMode();
   const isEditMode = useIsEditMode();
   const isPreviewMode = useIsPreviewMode();
+  const onMobile = useOnMobile();
+  const isSmallScreen = useIsSmallScreen();
   const resize = useResizeCell(nodeId);
   const [ref, { height: cellHeight }] = useMeasure();
   const { y: cellSpacingY } = useCellSpacing() ?? { y: 0 };
@@ -41,6 +45,8 @@ const ResizableRowCell: React.FC<Props> = ({
   const showResizeHandle =
     !isPreviewMode &&
     !isLast &&
+    !onMobile &&
+    !isSmallScreen &&
     (isResizeMode || (allowResizeInEditMode && isEditMode));
 
   return (

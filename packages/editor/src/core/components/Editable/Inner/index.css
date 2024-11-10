@@ -1,0 +1,80 @@
+.editor-container {
+    container-type: inline-size;
+    width: 500px; /* Simulated mobile width */
+    border: 1px solid #ccc;
+    overflow: auto;
+}
+
+/* Default Bootstrap styles (simplified) */
+.editor-container .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.editor-container .col {
+    flex: 1;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+/* Container Query Overrides */
+@container (max-width: 576px) {
+    .editor-container .row {
+    flex-direction: column;
+    }
+
+    .editor-container .col,
+    .editor-container .col-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    }
+
+    /* Include overrides for any other Bootstrap classes used */
+}
+
+
+/* Default display properties */
+.editor-container .d-none {
+    display: none !important;
+}
+
+.editor-container .d-block {
+    display: block !important;
+}
+
+/* Override for d-sm-* (≥576px) */
+@container (min-width: 576px) {
+    .editor-container .d-sm-block {
+    display: block !important;
+    }
+
+    .editor-container .d-sm-none {
+    display: none !important;
+    }
+}
+
+/* Override for d-md-* (≥768px) */
+@container (min-width: 768px) {
+    .editor-container .d-md-block {
+    display: block !important;
+    }
+
+    .editor-container .d-md-none {
+    display: none !important;
+    }
+}
+
+/* Override for d-lg-* (≥992px) */
+@container (min-width: 992px) {
+    .editor-container .d-lg-block {
+    display: block !important;
+    }
+
+    .editor-container .d-lg-none {
+    display: none !important;
+    }
+}
+
+/* Similarly for other display utilities */
