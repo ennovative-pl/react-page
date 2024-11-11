@@ -13,6 +13,7 @@ import {
   useOption,
   useIsExclusivlyFocused,
   useIsEditingNode,
+  useOnMobile,
 } from '../../hooks';
 import PluginControls from '../PluginControls';
 import PluginMissing from '../PluginMissing';
@@ -35,6 +36,7 @@ const PluginComponent: FC<
   const pluginId = useCellProps(nodeId, (c) => c?.plugin?.id);
   const plugin = usePluginOfCell(nodeId);
   const editing = useIsEditingNode(nodeId);
+  const onMobile = useOnMobile();
   const focused = useIsExclusivlyFocused(nodeId);
   const hasInlineNeighbour = useCellProps(nodeId, (c) => c?.hasInlineNeighbour);
 
@@ -58,6 +60,7 @@ const PluginComponent: FC<
       readOnly: !isEditMode,
       onChange: onChange,
       isEditMode,
+      onMobile,
       isPreviewMode,
       remove,
       className,
@@ -69,6 +72,7 @@ const PluginComponent: FC<
       data,
       plugin,
       isEditMode,
+      onMobile,
       focused,
       onChange,
       isEditMode,

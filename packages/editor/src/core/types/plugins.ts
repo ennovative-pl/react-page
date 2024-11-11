@@ -68,6 +68,10 @@ export type CellPluginComponentProps<DataT extends DataTType = DataTAny> = {
    */
   isEditMode: boolean;
   /**
+   * if view is mobile
+   */
+  onMobile: boolean;
+  /**
    * additional plugin content class names
    */
   className?: string;

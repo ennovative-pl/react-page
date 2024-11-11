@@ -109,6 +109,7 @@ const HTMLCell: React.FC<
       focused: false,
       isPreviewMode: false,
       isEditMode: false,
+      onMobile: false,
     };
     const childCellPlugins = getChildCellPlugins(cellPlugins, {
       data,
