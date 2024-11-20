@@ -34,8 +34,6 @@ const Inner: React.FC = () => {
   const top = backdropPercentZoom * offsetPercent * 2 + '%';
   const bottom = 100 - backdropPercentZoom * (1 - offsetPercent) * 2 + '%';
 
-  console.log(zoom, windowWidth, contentWidth, mobileWidth, backdropPercentMobile, backdropPercentZoom, backdropPercent, left, right, top, bottom);
-
   return (
     <div
       ref={ref}
@@ -65,6 +63,7 @@ const Inner: React.FC = () => {
           maxWidth: onMobile ? mobileWidth + 'px' : '100%',
           border: onMobile ? '1px dashed #ccc' : 'none',
           transition: '0.6s',
+          paddingTop: '50px',
         }}
         className={
           'react-page-editable editor-container react-page-editable-mode-' +

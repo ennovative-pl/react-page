@@ -59,12 +59,16 @@
         opacity: 1;
       }
       &.react-page-cell-no-width {
-        width: 300px;
+        min-width: 200px;
+        width: 100%;
+        white-space: nowrap !important;
         outline: 1px dashed var(--bs-danger);
       }
       &.react-page-cell-no-width.react-page-cell-focused {
-        width: 300px;
+        min-width: 200px;
+        width: 100%;;
         outline: 1px dashed var(--bs-danger);
+        white-space: nowrap !important;
       }
     }
   }
