@@ -3,11 +3,14 @@ import React from 'react';
 import {
   useEditCellById,
   useFocusCell,
+  useInsertNew,
   useIsLayoutMode,
   useOption,
   useParentCellId,
   usePluginOfCell,
   useRemoveCellById,
+  useSetDisplayReferenceNodeId,
+  useSetInsertMode,
   useUiTranslator,
 } from '../../hooks';
 import { useDragHandle } from '../Draggable/useDragHandle';
@@ -17,8 +20,10 @@ const Handle: React.FC<{ nodeId: string; noWidth: boolean }> = ({
 }) => {
   const allowMoveInEditMode = useOption('allowMoveInEditMode');
   const isLayoutMode = useIsLayoutMode();
+  const setInsertMode = useSetInsertMode();
   const parentCellId = useParentCellId(nodeId);
   const focusParent = useFocusCell(parentCellId);
+  const setReferenceNodeId = useSetDisplayReferenceNodeId();
 
   const dragEnabled = allowMoveInEditMode || isLayoutMode;
 
@@ -76,6 +81,18 @@ const Handle: React.FC<{ nodeId: string; noWidth: boolean }> = ({
               onClick={() => focusParent(true, 'replace')}
             >
               <i className="fas fa-arrows-up-to-line" />{' '}
+            </button>
+          )}
+          {plugin.hideAddChildrenInside && (
+            <button
+              title="Dodaj komponenty"
+              className="btn btn-outline-secondary btn-sm"
+              onClick={() => {
+                setReferenceNodeId(nodeId);
+                setInsertMode();
+              }}
+            >
+              <i className="fas fa-plus" />{' '}
             </button>
           )}
           <button

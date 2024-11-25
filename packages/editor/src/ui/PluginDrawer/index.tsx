@@ -10,6 +10,7 @@ import {
   useUiTranslator,
   useDisplayModeReferenceNodeId,
   useAllCellPluginsForNode,
+  useSetEditMode,
 } from '../../core/components/hooks';
 import type { CellPlugin } from '../../core/types';
 import Item from './Item/index';
@@ -34,6 +35,7 @@ export const PluginDrawer: React.FC = React.memo(() => {
   };
   const nodeId = useDisplayModeReferenceNodeId();
   const plugins = useAllCellPluginsForNode(nodeId);
+  const setEditMode = useSetEditMode();
 
   const { t } = useUiTranslator();
   const [searchText, setSearchText] = React.useState<string>('');
@@ -99,7 +101,21 @@ export const PluginDrawer: React.FC = React.memo(() => {
       >
         <List
           subheader={
-            <ListSubheader>{t(defaultLabels.insertPlugin)}</ListSubheader>
+            <ListSubheader>
+              <div className="d-flex w-100 justify-content-between align-items-center">
+                <span>{t(defaultLabels.insertPlugin)}</span>
+                <button
+                  //id="offcanvas-close"
+                  type="button"
+                  className="btn btn-close btn-primary"
+                  //data-bs-dismiss="offcanvas"
+                  onClick={() => setEditMode()}
+                  aria-label="Zamknij"
+                >
+                  <i className="fas fa-times" />
+                </button>
+              </div>
+            </ListSubheader>
           }
         >
           <ListItem>

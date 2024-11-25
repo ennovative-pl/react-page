@@ -95,7 +95,7 @@ export const Sidebar: React.FC<{
       className="react-page-controls-mode-toggle-control-group"
       style={{
         position: 'fixed',
-        zIndex: 100,
+        zIndex: 1200,
         bottom: 0,
         right: 0,
         display: 'flex',

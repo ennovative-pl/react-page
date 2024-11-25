@@ -233,6 +233,11 @@ export type CellPlugin<
   showId?: boolean;
 
   /**
+   * if true, the add button inside plugin is hidden
+   */
+  hideAddChildrenInside?: boolean;
+
+  /**
    * additional style for the inner cell
    */
   cellStyle?: React.CSSProperties | ((data: DataT) => React.CSSProperties);

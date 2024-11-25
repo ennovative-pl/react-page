@@ -12,6 +12,7 @@ import {
   useFocusCell,
   useIsSmallScreen,
   usePluginOfCell,
+  useSetEditMode,
 } from '../../core/components/hooks';
 import { CustomAvatar } from '../_Custom/CustomAvatar';
 import MoveActions from './MoveActions';
@@ -142,11 +143,13 @@ export const BottomToolbar: FC<PropsWithChildren<BottomToolbarProps>> =
                   <button
                     //id="offcanvas-close"
                     type="button"
-                    className="btn-close"
+                    className="btn btn-close btn-primary"
                     //data-bs-dismiss="offcanvas"
                     onClick={() => clear()}
                     aria-label="Zamknij"
-                  ></button>
+                  >
+                    <i className="fas fa-times" />
+                  </button>
                 </div>
 
                 {/* <div className="offcanvas-header">
@@ -166,7 +169,7 @@ export const BottomToolbar: FC<PropsWithChildren<BottomToolbarProps>> =
                   </div> */}
                 <div
                   className="offcanvas-body"
-                  style={{ maxHeight: 'calc(100vh - 180px)' }}
+                  style={{ maxHeight: 'calc(100vh - 180px)', zIndex: 1200 }}
                 >
                   <div className={/*minimized ? 'box' : */ 'box-hover'}>
                     {children}

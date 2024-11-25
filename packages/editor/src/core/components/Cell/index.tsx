@@ -2,7 +2,10 @@ import classNames from 'classnames';
 import type { BaseSyntheticEvent } from 'react';
 import React, { useCallback } from 'react';
 import type { UseMeasureRef } from 'react-use/lib/useMeasure';
-import { getCellOuterDivClassName } from '../../utils/getCellStylingProps';
+import {
+  getCellOuterDivClassName,
+  getMarginStyle,
+} from '../../utils/getCellStylingProps';
 import {
   useAllFocusedNodeIds,
   useCellData,
@@ -18,6 +21,7 @@ import {
   useNodeHasChildren,
   useOption,
   useParentCellId,
+  usePluginOfCell,
   useScrollToViewEffect,
   useSetDisplayReferenceNodeId,
 } from '../hooks';
@@ -61,6 +65,7 @@ const Cell: React.FC<Props> = ({ nodeId, inFlexbox, measureRef }) => {
   const parentCellId = useParentCellId(nodeId);
   const parentData = useCellData(parentCellId ?? '');
   const data = useCellData(nodeId);
+  const plugin = usePluginOfCell(nodeId);
 
   const isDraftInLang = isDraftI18n?.[lang] ?? isDraft;
   const ref = React.useRef<HTMLDivElement>(null);
@@ -97,18 +102,20 @@ const Cell: React.FC<Props> = ({ nodeId, inFlexbox, measureRef }) => {
 
   return (
     <div
-      style={cellOuterStlye}
+      style={{ ...cellOuterStlye, ...getMarginStyle(plugin, data) }}
       ref={ref}
       className={
         getCellOuterDivClassName({
           hasChildren,
           hasInlineNeighbour,
-          size: parentData.useFlexLayout ? 12 : size,
+          size: parentData.useFlex ? 0 : size,
           inline,
+          plugin,
+          data,
         }) +
         ' ' +
         classNames({
-          'react-page-cell-has-plugin': hasPlugin,
+          'react-page-cell-has-plugin h-100': hasPlugin,
           'react-page-cell-focused': focused,
           'react-page-cell-is-draft': isDraftInLang,
           'react-page-cell-no-width':

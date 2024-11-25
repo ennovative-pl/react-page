@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDrop } from 'react-dnd';
+import { useDragDropManager, useDrop } from 'react-dnd';
 import type { CellDrag } from '../../types';
 import {
   useCellIsAllowedHere,
@@ -9,9 +9,12 @@ import {
   useIsLayoutMode,
   useIsPreviewMode,
   useOption,
+  usePluginOfCell,
   useSetDisplayReferenceNodeId,
   useSetInsertMode,
+  useUiTranslator,
 } from '../hooks';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 export interface InsertNewProps {
   parentCellId?: string;
@@ -24,6 +27,7 @@ const InsertNew: React.FC<InsertNewProps> = ({ parentCellId }) => {
   const insertNew = useInsertNew(parentCellId);
   const focused = useIsFocused(parentCellId ?? '');
   const insertAlways = useOption('insertAlways');
+  const { t } = useUiTranslator();
 
   const isPreviewMode = useIsPreviewMode();
   const isLayoutMode = useIsLayoutMode();
@@ -31,6 +35,11 @@ const InsertNew: React.FC<InsertNewProps> = ({ parentCellId }) => {
 
   const setReferenceNodeId = useSetDisplayReferenceNodeId();
   const checkIfAllowed = useCellIsAllowedHere(parentCellId);
+  const plugin = usePluginOfCell(parentCellId ?? '');
+
+  const dragDropManager = useDragDropManager();
+  const monitor = dragDropManager.getMonitor();
+  const isAnyDragging = monitor.isDragging();
 
   const [{ isOver, isAllowed }, dropRef] = useDrop<
     CellDrag,
@@ -53,43 +62,65 @@ const InsertNew: React.FC<InsertNewProps> = ({ parentCellId }) => {
     },
   });
 
+  // console.log(
+  //   'InsertNew: ',
+  //   parentCellId,
+  //   plugin,
+  //   isAnyDragging
+  // );
+
   if (isPreviewMode) return null;
-  if (!focused && !insertAlways && !isInsertMode && parentCellId) return null;
+  if (parentCellId && plugin?.hideAddChildrenInside && !isAnyDragging) return null;
+
+  // TODO dorobić odkrywanie plusika gdy dodajemy elementy do kontrolki
+  if (
+    //!(plugin?.hideAddChildrenInside && parentCellId) &&
+    !focused &&
+    !insertAlways &&
+    !isInsertMode &&
+    //parentCellId &&
+    !isLayoutMode &&
+    //!isAnyDragging &&
+    true
+  )
+    return null;
   return (
-    <div
-      ref={dropRef}
-      className={
-        'react-page-cell-insert-new' + (isOver && isAllowed ? ' hover' : '')
-      }
-      style={{
-        pointerEvents: 'all',
-        zIndex: isLayoutMode ? 10 : 1,
-        overflow: 'hidden',
-        width: '50%', // just so that it leaves some room to click on the parent element
-        minWidth: 120,
-        margin: 'auto',
-        cursor: isOver && !isAllowed ? 'not-allowed' : 'pointer',
-      }}
-      onClick={(e) => {
-        e.stopPropagation();
-        setReferenceNodeId(parentCellId);
-        setInsertMode();
-      }}
-    >
-      <div className="react-page-cell-insert-new-icon">
-        <button type="button" className={'btn btn-lg btn-secondary shadow'}>
-          <i className="fas fa-fw fa-plus" />
-        </button>
-        {/* <svg
+    <OverlayTrigger overlay={<Tooltip>{t('Add blocks') ?? ''}</Tooltip>}>
+      <div
+        ref={dropRef}
+        className={
+          'react-page-cell-insert-new' + (isOver && isAllowed ? ' hover' : '')
+        }
+        style={{
+          pointerEvents: 'all',
+          zIndex: isLayoutMode ? 10 : 1,
+          overflow: 'hidden',
+          width: '50%', // just so that it leaves some room to click on the parent element
+          minWidth: 120,
+          margin: 'auto',
+          cursor: isOver && !isAllowed ? 'not-allowed' : 'pointer',
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+          setReferenceNodeId(parentCellId);
+          setInsertMode();
+        }}
+      >
+        <div className="react-page-cell-insert-new-icon">
+          <button type="button" className={'btn btn-lg btn-secondary shadow'}>
+            <i className="fas fa-fw fa-plus" />
+          </button>
+          {/* <svg
           focusable="false"
           aria-hidden="true"
           viewBox="0 0 24 24"
           data-testid="AddIcon"
-        >
+          >
           <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
-        </svg> */}
+          </svg> */}
+        </div>
       </div>
-    </div>
+    </OverlayTrigger>
   );
 };
 

@@ -51,62 +51,62 @@ const Row: React.FC<{ nodeId: string }> = ({ nodeId }) => {
   const [ref, { width: rowWidth }] = useMeasure();
   const parentNodeId = useParentCellId(nodeId);
   const data = useCellData(parentNodeId ?? '');
-  const useFlexLayout = data?.useFlexLayout;
+  const useFlex = data?.useFlex;
 
   // Get flex properties from cell data
   type FlexWrap = 'nowrap' | 'wrap' | 'wrap-reverse';
   const flexWrap: FlexWrap = data?.nowrap ? 'nowrap' : 'wrap'; // default value
-  const align = (data?.align as string) || 'left'; // default value
-  const verticalAlign = (data?.verticalAlign as string) || 'top'; // default value
+  // const align = (data?.align as string) || 'left'; // default value
+  // const verticalAlign = (data?.verticalAlign as string) || 'top'; // default value
   const direction = 'flex-' + ((data?.direction as string) || 'row'); // default value
 
-  let alignClassName = '';
-  switch (align) {
-    case 'left':
-      alignClassName = 'justify-content-start';
-      break;
-    case 'center':
-      alignClassName = 'justify-content-center';
-      break;
-    case 'right':
-      alignClassName = 'justify-content-end';
-      break;
-    case 'between':
-      alignClassName = 'justify-content-between';
-      break;
-    case 'around':
-      alignClassName = 'justify-content-around';
-      break;
-    case 'evenly':
-      alignClassName = 'justify-content-evenly';
-      break;
-  }
+  // let alignClassName = '';
+  // switch (align) {
+  //   case 'left':
+  //     alignClassName = 'justify-content-start';
+  //     break;
+  //   case 'center':
+  //     alignClassName = 'justify-content-center';
+  //     break;
+  //   case 'right':
+  //     alignClassName = 'justify-content-end';
+  //     break;
+  //   case 'between':
+  //     alignClassName = 'justify-content-between';
+  //     break;
+  //   case 'around':
+  //     alignClassName = 'justify-content-around';
+  //     break;
+  //   case 'evenly':
+  //     alignClassName = 'justify-content-evenly';
+  //     break;
+  // }
 
-  let verticalAlignClassName = '';
-  switch (verticalAlign) {
-    case 'top':
-      verticalAlignClassName = 'align-items-start';
-      break;
-    case 'center':
-      verticalAlignClassName = 'align-items-center';
-      break;
-    case 'bottom':
-      verticalAlignClassName = 'align-items-end';
-      break;
-    case 'baseline':
-      verticalAlignClassName = 'align-items-baseline';
-      break;
-    case 'stretch':
-      verticalAlignClassName = 'align-items-stretch';
-      break;
-  }
+  // let verticalAlignClassName = '';
+  // switch (verticalAlign) {
+  //   case 'top':
+  //     verticalAlignClassName = 'align-items-start';
+  //     break;
+  //   case 'center':
+  //     verticalAlignClassName = 'align-items-center';
+  //     break;
+  //   case 'bottom':
+  //     verticalAlignClassName = 'align-items-end';
+  //     break;
+  //   case 'baseline':
+  //     verticalAlignClassName = 'align-items-baseline';
+  //     break;
+  //   case 'stretch':
+  //     verticalAlignClassName = 'align-items-stretch';
+  //     break;
+  // }
 
   // console.log(
   //   'Row nodeId: ',
   //   nodeId,
   //   parentNodeId,
   //   data,
-  //   data.useFlexLayout,
+  //   data.useFlex,
   //   flexWrap,
   //   align,
   //   alignClassName,
@@ -140,17 +140,17 @@ const Row: React.FC<{ nodeId: string }> = ({ nodeId }) => {
           'react-page-row-has-floating-children': Boolean(
             rowHasInlineChildrenPosition
           ),
-          'd-flex': useFlexLayout,
-          [alignClassName]: useFlexLayout && alignClassName != '',
-          [direction]: useFlexLayout && direction != '',
-          [verticalAlignClassName]:
-            useFlexLayout && verticalAlignClassName != '',
+          'd-flex': useFlex,
+          // [alignClassName]: useFlex && alignClassName != '',
+          [direction]: useFlex && direction != '',
+          // [verticalAlignClassName]:
+          //   useFlex && verticalAlignClassName != '',
         })}
         style={{
-          //display: useFlexLayout ? 'flex' : 'block',
+          //display: useFlex ? 'flex' : 'block',
           flexWrap: flexWrap,
-          // justifyContent: useFlexLayout ? align : undefined,
-          // alignItems: useFlexLayout ? verticalAlign : undefined,
+          // justifyContent: useFlex ? align : undefined,
+          // alignItems: useFlex ? verticalAlign : undefined,
           position: 'relative',
           margin:
             cellSpacing && cellSpacing.x !== 0
@@ -179,7 +179,7 @@ const Row: React.FC<{ nodeId: string }> = ({ nodeId }) => {
         />
         {childrenWithOffsets.map(
           ({ offset, id, size, maxSize, noWidth }, index) =>
-            useFlexLayout ? (
+            useFlex ? (
               // When using flex layout
               // <div key={id} style={{ flex: `0 0 ${(size / 12) * 100}%` }}>
               <div

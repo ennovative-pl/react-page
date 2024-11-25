@@ -94,6 +94,9 @@ export const getContentStylingProps = (
 };
 
 export const gridClass = (size?: number): string => {
+  if (size === 0) {
+    return '';
+  }
   return `react-page-cell-sm-${size || 12} react-page-cell-xs-12`;
 };
 
@@ -102,15 +105,34 @@ export const getCellOuterDivClassName = ({
   hasInlineNeighbour,
   inline,
   hasChildren,
+  plugin,
+  data,
 }: {
   size?: number;
   hasChildren: boolean;
   hasInlineNeighbour?: string;
   inline?: string | null;
+  plugin?: CellPlugin | null;
+  data?: unknown;
 }) => {
-  return classNames('react-page-cell', gridClass(size), {
-    'react-page-cell-has-inline-neighbour': hasInlineNeighbour,
-    [`react-page-cell-inline-${inline || ''}`]: inline,
-    'react-page-cell-leaf': !hasChildren,
-  });
+  const cellMarginClassName = plugin?.marginClassName
+    ? typeof plugin?.marginClassName === 'function'
+      ? plugin?.marginClassName(data)
+      : plugin?.marginClassName
+    : undefined;
+
+  return (
+    classNames('react-page-cell', gridClass(size), {
+      'react-page-cell-has-inline-neighbour': hasInlineNeighbour,
+      [`react-page-cell-inline-${inline || ''}`]: inline,
+      'react-page-cell-leaf': !hasChildren,
+    }) + (cellMarginClassName ? ' ' + cellMarginClassName : '')
+  );
 };
+
+export const getMarginStyle = (plugin: CellPlugin | null, data: DataTType) =>
+  plugin?.marginStyle
+    ? typeof plugin?.marginStyle === 'function'
+      ? plugin?.marginStyle(data)
+      : plugin?.marginStyle
+    : undefined;

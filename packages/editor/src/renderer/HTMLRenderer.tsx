@@ -23,37 +23,42 @@ import {
   getCellOuterDivClassName,
   getContentStylingProps,
 } from '../core/utils/getCellStylingProps';
+import { useCellData, useParentCellId } from '../core/components/hooks';
 
 const rowHasInlineChildren = ({ cells }: { cells: Cell[] }) =>
   Boolean(cells.length === 2 && Boolean(cells[0].inline));
 
 const HTMLRow: React.FC<
   Partial<Row> & {
+    parent?: Cell;
     lang: string;
     className?: string;
     cellPlugins: CellPluginList;
     cellSpacing: CellSpacing;
   }
-> = React.memo(({ cells = [], className, lang, cellPlugins, cellSpacing }) => (
-  <div
-    className={classNames('react-page-row', className, {
-      'react-page-row-has-floating-children': rowHasInlineChildren({ cells }),
-    })}
-    style={{
-      margin: cellSpacing.x > 0 ? `0 ${-cellSpacing.x / 2}px` : undefined,
-    }}
-  >
-    {cells.map((c) => (
-      <HTMLCell
-        key={c.id}
-        {...c}
-        lang={lang}
-        cellPlugins={cellPlugins ?? []}
-        cellSpacing={cellSpacing}
-      />
-    ))}
-  </div>
-));
+> = React.memo(
+  ({ cells = [], className, parent, lang, cellPlugins, cellSpacing }) => (
+    <div
+      className={classNames('react-page-row', className, {
+        'react-page-row-has-floating-children': rowHasInlineChildren({ cells }),
+      })}
+      style={{
+        margin: cellSpacing.x > 0 ? `0 ${-cellSpacing.x / 2}px` : undefined,
+      }}
+    >
+      {cells.map((c) => (
+        <HTMLCell
+          key={c.id}
+          {...c}
+          parent={parent}
+          lang={lang}
+          cellPlugins={cellPlugins ?? []}
+          cellSpacing={cellSpacing}
+        />
+      ))}
+    </div>
+  )
+);
 
 // eslint-disable-next-line no-empty-function
 const noop = () => {
@@ -63,24 +68,26 @@ const noop = () => {
 const HTMLCell: React.FC<
   Cell & {
     lang?: string;
+    parent?: Cell;
     cellPlugins: CellPluginList;
     cellSpacing: CellSpacing;
   }
 > = React.memo((props) => {
-  const { lang = 'default', cellPlugins, cellSpacing, ...cell } = props;
+  const { lang = 'default', cellPlugins, parent, cellSpacing, ...cell } = props;
   const { size, hasInlineNeighbour, inline, isDraftI18n, isDraft } = cell;
   const hasChildren = (cell.rows?.length ?? 0) > 0;
 
   if (isDraftI18n?.[lang] ?? isDraft) {
     return null;
   }
+  const parentData = parent ? getCellData(parent, lang) ?? {} : {};
   const data = getCellData(cell, lang) ?? {};
   const plugin = cell.plugin
     ? cellPlugins.find((p) => p.id === cell.plugin?.id)
     : null;
   const outerClasses = getCellOuterDivClassName({
     hasChildren,
-    size,
+    size: parentData.useFlex ? 0 : size,
     hasInlineNeighbour,
     inline,
   });
@@ -154,6 +161,7 @@ const HTMLCell: React.FC<
                       <HTMLRow
                         key={r.id}
                         {...r}
+                        parent={cell}
                         cellPlugins={childCellPlugins}
                         cellSpacing={normCellSpacing}
                         lang={lang}
@@ -179,6 +187,7 @@ const HTMLCell: React.FC<
           <HTMLRow
             key={r.id}
             {...r}
+            parent={cell}
             lang={lang}
             cellPlugins={cellPlugins}
             cellSpacing={cellSpacing}
