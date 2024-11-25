@@ -182,13 +182,13 @@ const Row: React.FC<{ nodeId: string }> = ({ nodeId }) => {
             useFlex ? (
               // When using flex layout
               // <div key={id} style={{ flex: `0 0 ${(size / 12) * 100}%` }}>
-              <div
-                key={id}
-                style={{ flex: `0 0`, width: noWidth ? '300px' : undefined }}
-              >
-                <Cell nodeId={id} inFlexbox={true} />
-              </div>
+              // <div
+              //   key={id}
+              //   style={{ flex: `0 0`, width: noWidth ? '300px' : undefined }}
+              // >
+              <Cell nodeId={id} inFlexbox={true} noWidth={noWidth} />
             ) : (
+              // </div>
               // When using grid layout
               <ResizableRowCell
                 key={id}

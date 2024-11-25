@@ -22,6 +22,7 @@ import {
   getCellInnerDivStylingProps,
   getCellOuterDivClassName,
   getContentStylingProps,
+  getMarginStyle,
 } from '../core/utils/getCellStylingProps';
 import { useCellData, useParentCellId } from '../core/components/hooks';
 
@@ -90,7 +91,20 @@ const HTMLCell: React.FC<
     size: parentData.useFlex ? 0 : size,
     hasInlineNeighbour,
     inline,
+    plugin,
+    data,
   });
+
+  const outerStyle = getMarginStyle(plugin, data);
+
+  const cellOuterStyle = {
+    ...outerStyle,
+    ...(cellSpacing.y !== 0 || cellSpacing.x !== 0
+      ? {
+          padding: `${cellSpacing.y / 2}px ${cellSpacing.x / 2}px`,
+        }
+      : {}),
+  };
 
   if (plugin) {
     const { Renderer } = plugin;
@@ -123,14 +137,11 @@ const HTMLCell: React.FC<
       pluginId: plugin?.id,
     });
 
-    const cellOuterStyle =
-      cellSpacing.y !== 0 || cellSpacing.x !== 0
-        ? {
-            padding: `${cellSpacing.y / 2}px ${cellSpacing.x / 2}px`,
-          }
-        : undefined;
     const innerStylingProps = getCellInnerDivStylingProps(cell, plugin, data);
     const contentStylingProps = getContentStylingProps(plugin, data);
+
+    const margin =
+      normCellSpacing.y > 0 ? `${-normCellSpacing.y / 2}px 0` : undefined;
 
     return (
       <Provider {...props}>
@@ -149,14 +160,7 @@ const HTMLCell: React.FC<
             >
               <Renderer {...props} {...contentStylingProps}>
                 {cell.rows?.length ? (
-                  <div
-                    style={{
-                      margin:
-                        normCellSpacing.y > 0
-                          ? `${-normCellSpacing.y / 2}px 0`
-                          : undefined,
-                    }}
-                  >
+                  <div className="w-100" style={{ margin }}>
                     {cell.rows?.map((r: Row) => (
                       <HTMLRow
                         key={r.id}
@@ -176,11 +180,14 @@ const HTMLCell: React.FC<
       </Provider>
     );
   } else if ((cell.rows?.length ?? 0) > 0) {
+    const padding = cellSpacing.x > 0 ? `0 ${cellSpacing.x / 2}px` : undefined;
+
     return (
       <div
         className={outerClasses}
         style={{
-          padding: cellSpacing.x > 0 ? `0 ${cellSpacing.x / 2}px` : undefined,
+          ...outerStyle,
+          padding,
         }}
       >
         {cell.rows?.map((r: Row) => (

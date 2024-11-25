@@ -34,9 +34,10 @@ import scrollIntoViewWithOffset from './utils/scrollIntoViewWithOffset';
 type Props = {
   nodeId: string;
   inFlexbox?: boolean;
+  noWidth?: boolean;
   measureRef?: UseMeasureRef;
 };
-const Cell: React.FC<Props> = ({ nodeId, inFlexbox, measureRef }) => {
+const Cell: React.FC<Props> = ({ nodeId, noWidth, inFlexbox, measureRef }) => {
   const focused = useIsFocused(nodeId);
 
   const { inline, hasInlineNeighbour, isDraft, isDraftI18n, size } =
@@ -91,14 +92,17 @@ const Cell: React.FC<Props> = ({ nodeId, inFlexbox, measureRef }) => {
     return null;
   }
 
-  const cellOuterStlye =
-    cellSpacing && (cellSpacing.y !== 0 || cellSpacing.x !== 0)
+  const cellOuterStlye = {
+    ...(inFlexbox ? { flex: '0 0' } : {}),
+    ...(noWidth ? { width: '300px' } : {}),
+    ...(cellSpacing && (cellSpacing.y !== 0 || cellSpacing.x !== 0)
       ? {
           padding: `${needVerticalPadding ? cellSpacing.y / 2 : 0}px ${
             cellSpacing.x / 2
           }px`,
         }
-      : undefined;
+      : {}),
+  };
 
   return (
     <div

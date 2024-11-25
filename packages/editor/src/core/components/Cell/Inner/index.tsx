@@ -104,6 +104,7 @@ const Inner: React.FC<{ nodeId: string }> = ({ nodeId }) => {
                       ? { margin: `${-cellSpacingY / 2}px 0` }
                       : undefined
                   }
+                  className="w-100"
                 >
                   {children}
                 </div>

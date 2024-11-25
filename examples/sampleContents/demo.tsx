@@ -88,7 +88,7 @@ export const demo: Value = {
           dataI18n: {
             en: {
               modeFlag: 5,
-              //useFlex: true,
+              useFlex: true,
               align: 'center',
               verticalAlign: 'bottom',
               backgroundColor: { r: 0, g: 0, b: 0, a: 1 },
