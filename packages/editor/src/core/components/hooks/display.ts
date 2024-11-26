@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 
-import { useDispatch, useSelector } from '../../reduxConnect';
+import { ReduxContext, useDispatch, useSelector } from '../../reduxConnect';
 import { setOnMobile, setZoom } from '../../actions/display';
 import { useOption } from './options';
 
@@ -50,7 +50,16 @@ export const useCanZoomIn = () => {
 };
 
 export const useOnMobile = () => {
-  return useSelector((state) => state.reactPage.display.onMobile);
+  const reduxContextValue = useContext(ReduxContext);
+  const state =
+    reduxContextValue && reduxContextValue?.store
+      ? useSelector((state) => state?.reactPage.display.onMobile)
+      : false;
+  return (
+    state ||
+    (/iPad|iPhone|iPod|Android/.test(navigator.userAgent) &&
+      !Object.prototype.hasOwnProperty.call(window, 'MSStream'))
+  );
 };
 
 export const useSetOnMobile = () => {

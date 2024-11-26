@@ -5,7 +5,8 @@ import classNames from 'classnames';
 export const getCellInnerDivStyle = (
   cell: Cell | null,
   plugin: CellPlugin | null,
-  data: DataTType
+  data: DataTType,
+  includeMargin = true
 ) => {
   if (!cell) {
     return undefined;
@@ -17,11 +18,12 @@ export const getCellInnerDivStyle = (
       : plugin?.cellStyle
     : {};
 
-  const marginStyle = plugin?.marginStyle
-    ? typeof plugin?.marginStyle === 'function'
-      ? plugin?.marginStyle(data)
-      : plugin?.marginStyle
-    : {};
+  const marginStyle =
+    includeMargin && plugin?.marginStyle
+      ? typeof plugin?.marginStyle === 'function'
+        ? plugin?.marginStyle(data)
+        : plugin?.marginStyle
+      : {};
 
   const result = { ...style, ...marginStyle };
   return Object.keys(result).length == 0 ? undefined : result;
@@ -30,7 +32,8 @@ export const getCellInnerDivStyle = (
 export const getCellInnerDivClassName = (
   cell: Cell | null,
   plugin: CellPlugin | null,
-  data: unknown
+  data: unknown,
+  includeMargin = true
 ) => {
   const additionalClass = plugin?.cellClassName
     ? typeof plugin?.cellClassName === 'function'
@@ -38,28 +41,30 @@ export const getCellInnerDivClassName = (
       : plugin?.cellClassName
     : undefined;
 
-  // const cellMarginClassName = plugin?.marginClassName
-  //   ? typeof plugin?.marginClassName === 'function'
-  //     ? plugin?.marginClassName(data)
-  //     : plugin?.marginClassName
-  //   : undefined;
+  const marginClassName =
+    includeMargin && plugin?.marginClassName
+      ? typeof plugin?.marginClassName === 'function'
+        ? plugin?.marginClassName(data)
+        : plugin?.marginClassName
+      : undefined;
 
   return (
     'react-page-cell-inner' +
     ((cell?.rows?.length ?? 0) > 0 ? '' : ' react-page-cell-inner-leaf') +
-    (additionalClass ? ' ' + additionalClass : '') //+
-    //(cellMarginClassName ? ' ' + cellMarginClassName : '')
+    (additionalClass ? ' ' + additionalClass : '') +
+    (marginClassName ? ' ' + marginClassName : '')
   );
 };
 
 export const getCellInnerDivStylingProps = (
   cell: Cell | null,
   plugin: CellPlugin | null,
-  data: DataTType
+  data: DataTType,
+  includeMargin = true
 ) => {
   return {
-    style: getCellInnerDivStyle(cell, plugin, data),
-    className: getCellInnerDivClassName(cell, plugin, data),
+    style: getCellInnerDivStyle(cell, plugin, data, includeMargin),
+    className: getCellInnerDivClassName(cell, plugin, data, includeMargin),
   };
 };
 

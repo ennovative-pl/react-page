@@ -27,7 +27,7 @@ const createPlugin = (settings: BackgroundSettings) => {
     title: mergedSettings.translations?.pluginName,
     description: mergedSettings.translations?.pluginDescription,
     icon: <Icon />,
-    hideAddChildrenInside: true,
+    //hideAddChildrenInside: true,
 
     createInitialChildren: settings.getInitialChildren,
     cellStyle: mergedSettings.cellStyle,

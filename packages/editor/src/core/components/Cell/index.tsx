@@ -19,6 +19,7 @@ import {
   useIsResizeMode,
   useLang,
   useNodeHasChildren,
+  useOnMobile,
   useOption,
   useParentCellId,
   usePluginOfCell,
@@ -67,6 +68,7 @@ const Cell: React.FC<Props> = ({ nodeId, noWidth, inFlexbox, measureRef }) => {
   const parentData = useCellData(parentCellId ?? '');
   const data = useCellData(nodeId);
   const plugin = usePluginOfCell(nodeId);
+  const onMobile = useOnMobile();
 
   const isDraftInLang = isDraftI18n?.[lang] ?? isDraft;
   const ref = React.useRef<HTMLDivElement>(null);
@@ -112,10 +114,10 @@ const Cell: React.FC<Props> = ({ nodeId, noWidth, inFlexbox, measureRef }) => {
         getCellOuterDivClassName({
           hasChildren,
           hasInlineNeighbour,
-          size: parentData.useFlex ? 0 : size,
+          size: parentData.useFlex && !onMobile ? 0 : size,
           inline,
-          plugin,
-          data,
+          plugin: parentData.useFlex ? plugin : undefined,
+          data: parentData.useFlex ? data : undefined,
         }) +
         ' ' +
         classNames({

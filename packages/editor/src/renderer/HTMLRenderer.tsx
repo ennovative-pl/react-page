@@ -24,7 +24,7 @@ import {
   getContentStylingProps,
   getMarginStyle,
 } from '../core/utils/getCellStylingProps';
-import { useCellData, useParentCellId } from '../core/components/hooks';
+import { useCellData, useOnMobile, useParentCellId } from '../core/components/hooks';
 
 const rowHasInlineChildren = ({ cells }: { cells: Cell[] }) =>
   Boolean(cells.length === 2 && Boolean(cells[0].inline));
@@ -77,6 +77,7 @@ const HTMLCell: React.FC<
   const { lang = 'default', cellPlugins, parent, cellSpacing, ...cell } = props;
   const { size, hasInlineNeighbour, inline, isDraftI18n, isDraft } = cell;
   const hasChildren = (cell.rows?.length ?? 0) > 0;
+  const onMobile = useOnMobile();
 
   if (isDraftI18n?.[lang] ?? isDraft) {
     return null;
@@ -88,14 +89,14 @@ const HTMLCell: React.FC<
     : null;
   const outerClasses = getCellOuterDivClassName({
     hasChildren,
-    size: parentData.useFlex ? 0 : size,
+    size: parentData.useFlex && !onMobile ? 0 : size,
     hasInlineNeighbour,
     inline,
-    plugin,
-    data,
+    plugin: parentData.useFlex ? plugin : null,
+    data: parentData.useFlex ? data : null,
   });
 
-  const outerStyle = getMarginStyle(plugin, data);
+  const outerStyle = parentData.useFlex ? getMarginStyle(plugin, data) : {};
 
   const cellOuterStyle = {
     ...outerStyle,
@@ -137,7 +138,12 @@ const HTMLCell: React.FC<
       pluginId: plugin?.id,
     });
 
-    const innerStylingProps = getCellInnerDivStylingProps(cell, plugin, data);
+    const innerStylingProps = getCellInnerDivStylingProps(
+      cell,
+      plugin,
+      data,
+      !parentData.useFlex
+    );
     const contentStylingProps = getContentStylingProps(plugin, data);
 
     const margin =

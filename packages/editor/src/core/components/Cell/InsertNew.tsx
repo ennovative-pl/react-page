@@ -75,12 +75,12 @@ const InsertNew: React.FC<InsertNewProps> = ({ parentCellId }) => {
   // TODO dorobić odkrywanie plusika gdy dodajemy elementy do kontrolki
   if (
     //!(plugin?.hideAddChildrenInside && parentCellId) &&
-    !focused &&
+    //!focused &&
     !insertAlways &&
     !isInsertMode &&
     //parentCellId &&
-    !isLayoutMode &&
-    //!isAnyDragging &&
+    //!isLayoutMode //&&
+    //!isAnyDragging // &&
     true
   )
     return null;

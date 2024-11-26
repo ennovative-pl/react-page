@@ -140,7 +140,7 @@ const Row: React.FC<{ nodeId: string }> = ({ nodeId }) => {
           'react-page-row-has-floating-children': Boolean(
             rowHasInlineChildrenPosition
           ),
-          'd-flex': useFlex,
+          'd-flex h-100': useFlex,
           // [alignClassName]: useFlex && alignClassName != '',
           [direction]: useFlex && direction != '',
           // [verticalAlignClassName]:
