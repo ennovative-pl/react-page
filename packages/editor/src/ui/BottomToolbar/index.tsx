@@ -169,7 +169,7 @@ export const BottomToolbar: FC<PropsWithChildren<BottomToolbarProps>> =
                   </div> */}
                 <div
                   className="offcanvas-body"
-                  style={{ maxHeight: 'calc(100vh - 180px)', zIndex: 1200 }}
+                  style={{ maxHeight: 'calc(100vh - 180px)', zIndex: 1050 }}
                 >
                   <div className={/*minimized ? 'box' : */ 'box-hover'}>
                     {children}

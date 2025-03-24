@@ -1,6 +1,4 @@
 import type { Options, RenderOptions } from './types';
-
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DISPLAY_MODE_EDIT } from './actions/display';
 import { defaultTheme } from '../ui';
 
@@ -23,7 +21,7 @@ export const DEFAULT_OPTIONS: Required<Options> = {
   previewEnabled: true,
   deviceToggleEnabled: true,
 
-  dndBackend: HTML5Backend,
+  dndBackend: true,
   blurGateDefaultMode: DISPLAY_MODE_EDIT,
   blurGateDisabled: false,
   middleware: [],

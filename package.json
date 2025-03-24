@@ -195,5 +195,8 @@
       "@semantic-release/github"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "@types/react-beautiful-dnd": "^13.1.8",
+    "react-beautiful-dnd": "^13.1.1"
+  }
 }

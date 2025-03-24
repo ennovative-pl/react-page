@@ -49,7 +49,7 @@ export const BottomToolbarDrawer: FC<
         anchor={anchor}
         PaperProps={{
           style: {
-            zIndex: 1200,
+            zIndex: 1050,
             minWidth: '400px',
             //maxWidth: '450px', //'min(1280px, 50vw)',
             //minWidth: isSmall ? '10px' : '400px',

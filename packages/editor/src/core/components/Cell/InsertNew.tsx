@@ -8,6 +8,7 @@ import {
   useIsInsertMode,
   useIsLayoutMode,
   useIsPreviewMode,
+  useNodeIsHovered,
   useOption,
   usePluginOfCell,
   useSetDisplayReferenceNodeId,
@@ -32,19 +33,16 @@ const InsertNew: React.FC<InsertNewProps> = ({ parentCellId }) => {
   const isPreviewMode = useIsPreviewMode();
   const isLayoutMode = useIsLayoutMode();
   const isInsertMode = useIsInsertMode();
+  const isHovered = useNodeIsHovered(parentCellId ?? '');
 
   const setReferenceNodeId = useSetDisplayReferenceNodeId();
   const checkIfAllowed = useCellIsAllowedHere(parentCellId);
   const plugin = usePluginOfCell(parentCellId ?? '');
 
-  const dragDropManager = useDragDropManager();
-  const monitor = dragDropManager.getMonitor();
-  const isAnyDragging = monitor.isDragging();
-
-  const [{ isOver, isAllowed }, dropRef] = useDrop<
+  const [{ isOver, canDrop, isAllowed }, dropRef] = useDrop<
     CellDrag,
     void,
-    { isOver: boolean; isAllowed: boolean }
+    { isOver: boolean; canDrop: boolean; isAllowed: boolean }
   >({
     accept: 'cell',
     canDrop: (item) => {
@@ -52,6 +50,7 @@ const InsertNew: React.FC<InsertNewProps> = ({ parentCellId }) => {
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
       isAllowed: checkIfAllowed(monitor.getItem()),
     }),
     drop: (item, monitor) => {
@@ -62,34 +61,30 @@ const InsertNew: React.FC<InsertNewProps> = ({ parentCellId }) => {
     },
   });
 
-  // console.log(
-  //   'InsertNew: ',
-  //   parentCellId,
-  //   plugin,
-  //   isAnyDragging
-  // );
-
   if (isPreviewMode) return null;
-  if (parentCellId && plugin?.hideAddChildrenInside && !isAnyDragging) return null;
 
-  // TODO dorobić odkrywanie plusika gdy dodajemy elementy do kontrolki
-  if (
-    //!(plugin?.hideAddChildrenInside && parentCellId) &&
-    //!focused &&
-    !insertAlways &&
-    !isInsertMode &&
-    //parentCellId &&
-    //!isLayoutMode //&&
-    //!isAnyDragging // &&
-    true
-  )
-    return null;
+  let visible = true;
+
+  if (parentCellId && plugin?.hideAddChildrenInside) {
+    visible = false;
+  }
+
+  if (!focused && !insertAlways && !isInsertMode && parentCellId) {
+    visible = false;
+  }
+
+  if (isHovered) {
+    visible = true;
+  }
+
   return (
     <OverlayTrigger overlay={<Tooltip>{t('Add blocks') ?? ''}</Tooltip>}>
       <div
         ref={dropRef}
         className={
-          'react-page-cell-insert-new' + (isOver && isAllowed ? ' hover' : '')
+          'react-page-cell-insert-new' +
+          (isOver && isAllowed ? ' hover' : '') +
+          (visible ? '' : ' d-none')
         }
         style={{
           pointerEvents: 'all',

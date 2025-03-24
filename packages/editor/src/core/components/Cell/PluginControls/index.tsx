@@ -31,7 +31,7 @@ const ControlsList: React.FC<{
               type="button"
               role="tab"
             >
-              {t.title}
+              {t.icon} {t.title}
             </button>
             //       <Tab
             //         sx={{

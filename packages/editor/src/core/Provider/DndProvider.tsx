@@ -1,11 +1,20 @@
 import React from 'react';
-import { DndProvider as DndProviderOrg } from 'react-dnd';
+import { DragDropContext } from 'react-beautiful-dnd';
 import { useOption } from '../components/hooks';
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const DndProvider = ({ children }: any) => {
   const dndBackend = useOption('dndBackend');
+
+  const onDragEnd = (result: any) => {
+    // This function will be replaced with actual logic once we migrate the other components
+    if (!result.destination) {
+      return;
+    }
+  };
+
   return dndBackend ? (
-    <DndProviderOrg backend={dndBackend}>{children}</DndProviderOrg>
+    <DragDropContext onDragEnd={onDragEnd}>{children}</DragDropContext>
   ) : (
     <>{children}</>
   );

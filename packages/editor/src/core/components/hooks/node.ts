@@ -117,6 +117,10 @@ export const useNodeHoverPosition = (nodeId: string): PositionEnum | null => {
   );
 };
 
+export const useNodeIsHovered = (nodeId: string): boolean => {
+  return useSelector((state) => state.reactPage.hover?.nodeId === nodeId);
+};
+
 /**
  *
  * @param nodeId id of a node
