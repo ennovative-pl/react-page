@@ -1,4 +1,3 @@
-import type { BackendFactory } from 'dnd-core';
 import type { FC, PropsWithChildren } from 'react';
 import React from 'react';
 import Editable from '../core/components/Editable';
@@ -10,7 +9,8 @@ import type { ValueWithLegacy } from '../core/types';
 import EditorUI from '../ui/EditorUI';
 import StickyWrapper from './StickyWrapper';
 
-export type DndBackend = BackendFactory;
+// Since we're using react-beautiful-dnd, we don't need a backend factory
+export type DndBackend = boolean;
 export type EditableEditorProps = {
   value?: ValueWithLegacy | null;
 

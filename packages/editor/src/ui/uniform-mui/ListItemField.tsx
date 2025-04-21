@@ -7,7 +7,7 @@ import ListItemMaterial from '@mui/material/ListItem';
 import Stack from '@mui/material/Stack';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 
-import { useDrag, useDrop } from 'react-dnd';
+import { Draggable } from 'react-beautiful-dnd';
 import { connectField, joinName, useField } from 'uniforms';
 
 import AutoField from './AutoField';
@@ -16,11 +16,6 @@ import ListSortField from './ListSortField';
 
 export enum DragItemType {
   ListItemField = 'ListItemField',
-}
-
-interface DragItem {
-  name: string;
-  originalIndex: number;
 }
 
 export type ListItemFieldProps = {
@@ -35,6 +30,7 @@ export type ListItemFieldProps = {
   disableSortable?: boolean;
   value?: unknown;
   name?: string;
+  index?: number;
 };
 
 function ListItem({
@@ -49,6 +45,7 @@ function ListItem({
   disableSortable,
   value,
   name,
+  index = 0,
 }: ListItemFieldProps) {
   const nameParts = joinName(null, name);
   const nameIndex = +nameParts[nameParts.length - 1];
@@ -67,48 +64,44 @@ function ListItem({
     parent.onChange(value);
   };
 
-  const [, drag] = useDrag<DragItem, unknown>(
-    () => ({
-      type: DragItemType.ListItemField,
-      item: { name, originalIndex: nameIndex } as DragItem,
-    }),
-    [value, nameIndex, moveItem]
-  );
-
-  const [, drop] = useDrop(
-    () => ({
-      accept: DragItemType.ListItemField,
-      drop: (draggedItem: DragItem, monitor) => {
-        const didDrop = monitor.canDrop();
-        if (didDrop && draggedItem.name !== name)
-          moveItem(draggedItem.originalIndex, nameIndex);
-      },
-    }),
-    [moveItem]
-  );
-
   const disableSort = disableSortable ?? (parent.value ?? []).length < 2;
 
-  return (
-    <ListItemMaterial
-      dense={dense}
-      disableGutters={disableGutters}
-      divider={divider}
-      ref={(node) => (disableSort ? null : drag(drop(node)))}
-      sx={{ gap: '0.5rem' }}
-    >
-      <ListSortField
-        name=""
-        iconUp={moveItemUpIcon}
-        iconDown={moveItemDownIcon}
-        handleMove={moveItem}
-        dragIcon={dragIcon}
-        disabled={disableSort}
-      />
+  const draggableId = `list-item-${name || 'unnamed'}-${nameIndex}`;
 
-      {children}
-      <ListDelField name="" icon={removeIcon} />
-    </ListItemMaterial>
+  return (
+    <Draggable
+      draggableId={draggableId}
+      index={index}
+      isDragDisabled={disableSort}
+    >
+      {(provided, snapshot) => (
+        <ListItemMaterial
+          dense={dense}
+          disableGutters={disableGutters}
+          divider={divider}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          sx={{
+            gap: '0.5rem',
+            backgroundColor: snapshot.isDragging ? 'rgba(0, 0, 0, 0.05)' : undefined,
+          }}
+        >
+          <div {...provided.dragHandleProps}>
+            <ListSortField
+              name=""
+              iconUp={moveItemUpIcon}
+              iconDown={moveItemDownIcon}
+              handleMove={moveItem}
+              dragIcon={dragIcon}
+              disabled={disableSort}
+            />
+          </div>
+
+          {children}
+          <ListDelField name="" icon={removeIcon} />
+        </ListItemMaterial>
+      )}
+    </Draggable>
   );
 }
 

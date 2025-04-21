@@ -1,4 +1,13 @@
-import type { DropTargetMonitor } from 'react-dnd';
+// Define our own monitor interface to replace DropTargetMonitor from react-dnd
+interface CustomMonitor {
+  getItem: () => any;
+  isOver: (options?: { shallow: boolean }) => boolean;
+  didDrop: () => boolean;
+  getClientOffset: () => { x: number; y: number } | null;
+  getDifferenceFromInitialOffset: () => { x: number; y: number } | null;
+  getSourceClientOffset: () => { x: number; y: number } | null;
+}
+
 import type { CellPluginList, PartialCell } from '../../types';
 import type { HoverInsertActions, Room, Vector } from '../../types/hover';
 import type { HoverTarget } from './computeHover';
@@ -8,7 +17,7 @@ const computeCurrentDropPosition = (
   actions: HoverInsertActions,
   hover: HoverTarget,
   drag: PartialCell,
-  monitor: DropTargetMonitor,
+  monitor: CustomMonitor,
   element: HTMLElement,
   cellPlugins: CellPluginList
 ) => {
@@ -38,7 +47,7 @@ const computeCurrentDropPosition = (
 export const computeAndDispatchInsert = (
   hover: HoverTarget,
   drag: PartialCell,
-  monitor: DropTargetMonitor,
+  monitor: CustomMonitor,
   element: HTMLElement,
   actions: HoverInsertActions,
   cellPlugins: CellPluginList
@@ -56,7 +65,7 @@ export const computeAndDispatchInsert = (
 export const computeAndDispatchHover = (
   hover: HoverTarget,
   drag: PartialCell,
-  monitor: DropTargetMonitor,
+  monitor: CustomMonitor,
   element: HTMLElement,
   actions: HoverInsertActions,
   cellPlugins: CellPluginList

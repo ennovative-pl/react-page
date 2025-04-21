@@ -19,9 +19,10 @@ type ItemProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   insert: InsertNewCell;
   translations: PluginDrawerLabels;
+  index?: number;
 };
 
-const Item: React.FC<ItemProps> = ({ plugin, insert }) => {
+const Item: React.FC<ItemProps> = ({ plugin, insert, index = 0 }) => {
   const title = plugin.title ?? plugin.text;
   const { t } = useUiTranslator();
   if (!plugin.icon && !title) {
@@ -35,8 +36,15 @@ const Item: React.FC<ItemProps> = ({ plugin, insert }) => {
     [insertNew, referenceNodeId, insert]
   );
 
+  // Generate a unique draggableId for this plugin
+  const draggableId = `plugin-${plugin.id}-${index}`;
+
   return (
-    <Draggable insert={insert}>
+    <Draggable
+      insert={insert}
+      draggableId={draggableId}
+      index={index}
+    >
       <ListItem
         title={
           t('Click to add or drag and drop it somewhere on your page!') ?? ''

@@ -84,11 +84,16 @@ export const demo: Value = {
           plugin: {
             id: 'ory/editor/core/layout/background',
             version: 1,
-          },
+            marginClassName: 'm-5',
+          } as any,
           dataI18n: {
+            default: {
+              margin: 'm-5',
+            },
             en: {
+              margin: 'm-5',
               modeFlag: 5,
-              useFlex: true,
+              //useFlex: true,
               align: 'center',
               verticalAlign: 'bottom',
               backgroundColor: { r: 0, g: 0, b: 0, a: 1 },

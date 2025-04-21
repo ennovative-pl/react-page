@@ -11,5 +11,6 @@ export * from './constraints';
 export * from './options';
 export * from './renderOptions';
 export * from './callbacks';
+export * from './settings';
 export type ValueWithLegacy = Value | Value_v0;
 export type { Value_v0 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { BaseSyntheticEvent, FC, PropsWithChildren } from 'react';
 import { useCallback } from 'react';
-import { useDrop } from 'react-dnd';
+import { Droppable } from 'react-beautiful-dnd';
 import type { CellDrag } from '../../types/node';
 
 import {
@@ -12,19 +12,8 @@ import {
 
 const FallbackDropArea: FC<PropsWithChildren> = ({ children }) => {
   const insertNew = useInsertNew();
-
   const isAllowed = useCellIsAllowedHere();
-  const [, dropRef] = useDrop<CellDrag, void, void>({
-    accept: 'cell',
-    canDrop: (item) => isAllowed(item),
-    drop: (item, monitor) => {
-      // fallback drop
-      if (!monitor.didDrop() && item.cell) {
-        insertNew(item.cell);
-      }
-    },
-  });
-
+  
   const setReference = useSetDisplayReferenceNodeId();
   const clearReference = useCallback(
     (e: BaseSyntheticEvent) => {
@@ -36,9 +25,19 @@ const FallbackDropArea: FC<PropsWithChildren> = ({ children }) => {
   );
 
   return (
-    <div ref={dropRef} onClick={clearReference}>
-      {children}
-    </div>
+    <Droppable droppableId="fallback-drop-area" isDropDisabled={false}>
+      {(provided, snapshot) => (
+        <div 
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          onClick={clearReference}
+          className={snapshot.isDraggingOver ? 'react-page-droppable-is-over' : ''}
+        >
+          {children}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
   );
 };
 

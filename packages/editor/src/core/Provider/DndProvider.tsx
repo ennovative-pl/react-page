@@ -6,15 +6,30 @@ import { useOption } from '../components/hooks';
 const DndProvider = ({ children }: any) => {
   const dndBackend = useOption('dndBackend');
 
+  // Add classes to document body when dragging occurs
+  const onDragStart = () => {
+    document.body.classList.add('react-page-dragging');
+  };
+
   const onDragEnd = (result: any) => {
-    // This function will be replaced with actual logic once we migrate the other components
+    // Remove the dragging class
+    document.body.classList.remove('react-page-dragging');
+
+    // If there's no destination, the drop was cancelled
     if (!result.destination) {
       return;
     }
+
+    // Additional drag end processing can be added here
   };
 
   return dndBackend ? (
-    <DragDropContext onDragEnd={onDragEnd}>{children}</DragDropContext>
+    <DragDropContext
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+    >
+      {children}
+    </DragDropContext>
   ) : (
     <>{children}</>
   );

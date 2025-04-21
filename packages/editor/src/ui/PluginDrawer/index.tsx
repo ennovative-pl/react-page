@@ -5,6 +5,7 @@ import ListSubheader from '@mui/material/ListSubheader';
 import TextField from '@mui/material/TextField';
 import React from 'react';
 import { Portal } from 'react-portal';
+import { Droppable } from 'react-beautiful-dnd';
 import {
   useIsInsertMode,
   useUiTranslator,
@@ -87,6 +88,11 @@ export const PluginDrawer: React.FC = React.memo(() => {
 
   const filteredPlugins = plugins.filter(searchFilter);
 
+  // Generate a unique droppable ID for the plugin drawer
+  const droppableId = `plugin-drawer-items-${Math.random()
+    .toString(36)
+    .substring(2)}`;
+
   return (
     <Portal>
       <Drawer
@@ -105,10 +111,8 @@ export const PluginDrawer: React.FC = React.memo(() => {
               <div className="d-flex w-100 justify-content-between align-items-center">
                 <span>{t(defaultLabels.insertPlugin)}</span>
                 <button
-                  //id="offcanvas-close"
                   type="button"
                   className="btn btn-close btn-primary"
-                  //data-bs-dismiss="offcanvas"
                   onClick={() => setEditMode()}
                   aria-label="Zamknij"
                 >
@@ -125,12 +129,6 @@ export const PluginDrawer: React.FC = React.memo(() => {
               onChange={onSearch}
               ref={inputRef as any}
             />
-            {/* <TextField
-              inputRef={inputRef}
-              placeholder={t(defaultLabels.searchPlaceholder) ?? ''}
-              fullWidth={true}
-              onChange={onSearch}
-            /> */}
           </ListItem>
           {filteredPlugins.length === 0 && (
             <ListSubheader>
@@ -139,20 +137,26 @@ export const PluginDrawer: React.FC = React.memo(() => {
           )}
         </List>
         {filteredPlugins.length > 0 && (
-          <List>
-            {filteredPlugins.map((plugin, k: number) => {
-              return (
-                <Item
-                  translations={defaultLabels}
-                  plugin={plugin}
-                  key={k.toString()}
-                  insert={{
-                    plugin: plugin.id,
-                  }}
-                />
-              );
-            })}
-          </List>
+          <Droppable droppableId={droppableId} isDropDisabled={true}>
+            {(provided) => (
+              <List ref={provided.innerRef} {...provided.droppableProps}>
+                {filteredPlugins.map((plugin, k: number) => {
+                  return (
+                    <Item
+                      translations={defaultLabels}
+                      plugin={plugin}
+                      key={k.toString()}
+                      index={k}
+                      insert={{
+                        plugin: plugin.id,
+                      }}
+                    />
+                  );
+                })}
+                {provided.placeholder}
+              </List>
+            )}
+          </Droppable>
         )}
       </Drawer>
     </Portal>

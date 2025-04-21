@@ -1,19 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-
+import React from 'react';
 import type { PropTypes } from '@mui/material';
 import { useIsSmallScreen } from '../../../core/components/hooks';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Tooltip } from '@mui/material';
 
-const DisplayModeToggle = ({
-  description,
-  icon,
-  onClick,
-  active,
-  disabled,
-  activeColor = 'secondary',
-  style,
-  ...rest
-}: {
+interface DisplayModeToggleProps {
   description: string;
   icon: JSX.Element;
   active?: boolean;
@@ -21,39 +11,40 @@ const DisplayModeToggle = ({
   activeColor?: PropTypes.Color;
   onClick: React.MouseEventHandler<HTMLElement>;
   style?: React.CSSProperties;
-} & unknown) => {
-  const isSmall = useIsSmallScreen();
-  const buttonRef = useRef<HTMLButtonElement>(null);
+}
 
-  return (
-    <div className="react-page-controls-mode-toggle-button" style={style}>
-      <div className="react-page-controls-mode-toggle-button-inner">
-        <OverlayTrigger
-          placement="left"
-          overlay={<Tooltip>{description}</Tooltip>}
-        >
-          <button
-            type="button"
-            className={
-              'btn ' +
-              (active ? 'btn-primary' : 'btn-secondary') +
-              (isSmall ? ' btn-sm' : '')
-            }
-            onClick={onClick}
-            disabled={disabled}
-            title={description}
-            ref={buttonRef}
-            {...rest}
-          >
-            {icon}
-          </button>
-        </OverlayTrigger>
+const DisplayModeToggle = React.memo<DisplayModeToggleProps>(
+  ({ description, icon, onClick, active, disabled, style, ...rest }) => {
+    const isSmall = useIsSmallScreen();
+
+    return (
+      <div className="react-page-controls-mode-toggle-button" style={style}>
+        <div className="react-page-controls-mode-toggle-button-inner">
+          <Tooltip title={description} placement="left">
+            <button
+              type="button"
+              className={
+                'btn ' +
+                (active ? 'btn-primary' : 'btn-secondary') +
+                (isSmall ? ' btn-sm' : '')
+              }
+              onClick={onClick}
+              disabled={disabled}
+              {...rest}
+            >
+              {icon}
+            </button>
+          </Tooltip>
+        </div>
+        {/* <div className="react-page-controls-mode-toggle-button-description">
+          {description}
+        </div> */}
       </div>
-      {/* <div className="react-page-controls-mode-toggle-button-description">
-        {description}
-      </div> */}
-    </div>
-  );
-};
+    );
+  }
+);
+
+// Add a display name to the component
+DisplayModeToggle.displayName = 'DisplayModeToggle';
 
 export default DisplayModeToggle;

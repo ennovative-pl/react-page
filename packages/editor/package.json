@@ -43,6 +43,8 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.9.0",
     "react-color": "^2.19.3",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-draggable": "4.4.5",
     "react-lazy-with-preload": "^2.2.1",
     "react-portal": "^4.2.2",

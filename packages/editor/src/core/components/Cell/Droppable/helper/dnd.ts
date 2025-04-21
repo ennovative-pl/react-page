@@ -1,5 +1,9 @@
 import throttle from 'lodash.throttle';
-import type { DropTargetMonitor } from 'react-dnd';
+import type {
+  DroppableStateSnapshot,
+  DraggableLocation,
+  DropResult,
+} from 'react-beautiful-dnd';
 import { delay } from '../../../../helper/throttle';
 import type { HoverTarget } from '../../../../service/hover/computeHover';
 import {
@@ -26,46 +30,72 @@ const shouldClear = (
   return true;
 };
 
+// Helper to simulate monitor behavior for react-beautiful-dnd
+const createSimulatedMonitor = (
+  draggableId: string,
+  destination: DraggableLocation | null,
+  source: DraggableLocation,
+  isOver: boolean
+) => {
+  return {
+    getItem: () => ({ cell: { id: draggableId } }),
+    isOver: () => isOver,
+    didDrop: () => destination !== null,
+    getClientOffset: () => ({ x: 0, y: 0 }),
+    getDifferenceFromInitialOffset: () => ({ x: 0, y: 0 }),
+    getSourceClientOffset: () => ({ x: 0, y: 0 }),
+  };
+};
+
+// This function will be used with react-beautiful-dnd's onDragOver callback
 export const onHover = throttle(
   (
     target: HoverTarget,
-    monitor: DropTargetMonitor,
+    snapshot: DroppableStateSnapshot,
+    draggableId: string,
     element: HTMLElement,
     actions: HoverInsertActions,
     cellPlugins: CellPluginList
   ) => {
-    const drag: CellDrag = monitor.getItem();
-    if (!drag?.cell || !target) {
-      // item undefined, happens when throttle triggers after drop
+    if (!draggableId || !target) {
       return;
     }
 
-    if (drag.cell.id === target.id) {
+    const simMonitor = createSimulatedMonitor(
+      draggableId,
+      null,
+      { droppableId: '', index: 0 },
+      snapshot.isDraggingOver
+    );
+
+    if (draggableId === target.id) {
       // If hovering over itself, do nothing
-      if (shouldClear(target.id, drag.cell.id)) {
+      if (shouldClear(target.id, draggableId)) {
         actions.clear();
       }
       return;
-    } else if (!monitor.isOver({ shallow: true })) {
-      // If hovering over ancestor cell, do nothing (we are going to propagate later in the tree anyways)
+    } else if (!snapshot.isDraggingOver) {
+      // If not hovering over this droppable, do nothing
       return;
-    } else if (drag.cell.id && target.ancestorIds?.includes(drag.cell.id)) {
-      if (shouldClear(target.id, drag.cell.id)) {
+    } else if (draggableId && target.ancestorIds?.includes(draggableId)) {
+      if (shouldClear(target.id, draggableId)) {
         actions.clear();
       }
       return;
     } else if (!target.id) {
       // If hovering over something that isn't a cell or hasn't an id, do nothing. Should be an edge case
-      logger.warn('Canceled cell drop, no id given.', target, drag);
+      logger.warn('Canceled cell drop, no id given.', target, {
+        cell: { id: draggableId },
+      });
       return;
     }
 
-    last = { hoverId: target.id, dragId: drag.cell.id };
+    last = { hoverId: target.id, dragId: draggableId };
 
     computeAndDispatchHover(
       target,
-      drag.cell,
-      monitor,
+      { id: draggableId },
+      simMonitor as any,
       element,
       actions,
       cellPlugins
@@ -75,38 +105,49 @@ export const onHover = throttle(
   { leading: false }
 );
 
+// This function will be called with react-beautiful-dnd's onDragEnd callback
 export const onDrop = (
+  result: DropResult,
   target: HoverTarget,
-  monitor: DropTargetMonitor,
   element: HTMLElement,
   actions: HoverInsertActions,
   cellPlugins: CellPluginList
 ) => {
-  const drag: CellDrag = monitor.getItem();
-  if (!drag.cell) return;
-  if (monitor.didDrop() || !monitor.isOver({ shallow: true }) || !target) {
-    // If the item drop occurred deeper down the tree, don't do anything
+  const { draggableId, destination, source } = result;
+
+  if (!destination || !target) {
+    // If there's no destination, the drop was cancelled
+    actions.cancelCellDrag();
     return;
-  } else if (drag.cell.id === target.id) {
+  }
+
+  const simMonitor = createSimulatedMonitor(
+    draggableId,
+    destination,
+    source,
+    true
+  );
+
+  if (draggableId === target.id) {
     // If the item being dropped on itself do nothing
     actions.cancelCellDrag();
     return;
   } else if (
     target &&
-    drag.cell.id &&
-    target.ancestorIds?.includes(drag.cell.id)
+    draggableId &&
+    target.ancestorIds?.includes(draggableId)
   ) {
     // If hovering over a child of itself, don't propagate further
     actions.cancelCellDrag();
     return;
   }
 
-  last = { hoverId: target.id, dragId: drag.cell.id };
+  last = { hoverId: target.id, dragId: draggableId };
 
   computeAndDispatchInsert(
     target,
-    drag.cell,
-    monitor,
+    { id: draggableId },
+    simMonitor as any,
     element,
     actions,
     cellPlugins

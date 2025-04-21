@@ -1,0 +1,37 @@
+/* Enhanced styling for react-beautiful-dnd */
+.react-page-dragging {
+  cursor: grabbing !important;
+}
+
+/* Make sure the dragged item is visible and stands out */
+[data-rbd-draggable-id] {
+  transition: transform 0.2s, opacity 0.1s;
+}
+
+[data-rbd-draggable-id][data-rbd-draggable-context-id] {
+  z-index: 1000;
+}
+
+/* Override react-beautiful-dnd default styles to ensure dragged item is visible */
+[data-rbd-drag-preview-dragging] {
+  opacity: 0.9 !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
+  transform-origin: 0 0;
+  transition: none !important;
+}
+
+/* Plugin drawer item specific styling */
+.react-page-plugin-drawer-item {
+  cursor: grab;
+}
+
+.react-page-plugin-drawer-item:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Cell styling */
+.react-page-cell-dragging {
+  opacity: 0.8;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}

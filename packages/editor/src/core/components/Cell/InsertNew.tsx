@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDragDropManager, useDrop } from 'react-dnd';
+import React, { useRef, useState, useEffect } from 'react';
+import { Droppable } from 'react-beautiful-dnd';
 import type { CellDrag } from '../../types';
 import {
   useCellIsAllowedHere,
@@ -24,7 +24,6 @@ export interface InsertNewProps {
 
 const InsertNew: React.FC<InsertNewProps> = ({ parentCellId }) => {
   const setInsertMode = useSetInsertMode();
-
   const insertNew = useInsertNew(parentCellId);
   const focused = useIsFocused(parentCellId ?? '');
   const insertAlways = useOption('insertAlways');
@@ -39,27 +38,13 @@ const InsertNew: React.FC<InsertNewProps> = ({ parentCellId }) => {
   const checkIfAllowed = useCellIsAllowedHere(parentCellId);
   const plugin = usePluginOfCell(parentCellId ?? '');
 
-  const [{ isOver, canDrop, isAllowed }, dropRef] = useDrop<
-    CellDrag,
-    void,
-    { isOver: boolean; canDrop: boolean; isAllowed: boolean }
-  >({
-    accept: 'cell',
-    canDrop: (item) => {
-      return checkIfAllowed(item);
-    },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
-      isAllowed: checkIfAllowed(monitor.getItem()),
-    }),
-    drop: (item, monitor) => {
-      // fallback drop
-      if (!monitor.didDrop() && item.cell) {
-        insertNew(item.cell);
-      }
-    },
-  });
+  // Local state to track drop status
+  const [isOver, setIsOver] = useState(false);
+  const [canDrop, setCanDrop] = useState(false);
+  const [isAllowed, setIsAllowed] = useState(false);
+
+  // Generate a unique droppable ID for this insertion point
+  const droppableId = `insert-new-${parentCellId || 'root'}-${Math.random().toString(36).substring(2)}`;
 
   if (isPreviewMode) return null;
 
@@ -79,42 +64,45 @@ const InsertNew: React.FC<InsertNewProps> = ({ parentCellId }) => {
 
   return (
     <OverlayTrigger overlay={<Tooltip>{t('Add blocks') ?? ''}</Tooltip>}>
-      <div
-        ref={dropRef}
-        className={
-          'react-page-cell-insert-new' +
-          (isOver && isAllowed ? ' hover' : '') +
-          (visible ? '' : ' d-none')
-        }
-        style={{
-          pointerEvents: 'all',
-          zIndex: isLayoutMode ? 10 : 1,
-          overflow: 'hidden',
-          width: '50%', // just so that it leaves some room to click on the parent element
-          minWidth: 120,
-          margin: 'auto',
-          cursor: isOver && !isAllowed ? 'not-allowed' : 'pointer',
+      <Droppable droppableId={droppableId}>
+        {(provided, snapshot) => {
+          // Update drop status based on snapshot
+          const isCurrentlyOver = snapshot.isDraggingOver;
+
+          return (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className={
+                'react-page-cell-insert-new' +
+                (isCurrentlyOver ? ' hover' : '') +
+                (visible ? '' : ' d-none')
+              }
+              style={{
+                pointerEvents: 'all',
+                zIndex: isLayoutMode ? 10 : 1,
+                overflow: 'hidden',
+                width: '50%', // just so that it leaves some room to click on the parent element
+                minWidth: 120,
+                margin: 'auto',
+                cursor: isCurrentlyOver && !isAllowed ? 'not-allowed' : 'pointer',
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setReferenceNodeId(parentCellId);
+                setInsertMode();
+              }}
+            >
+              <div className="react-page-cell-insert-new-icon">
+                <button type="button" className={'btn btn-lg btn-secondary shadow'}>
+                  <i className="fas fa-fw fa-plus" />
+                </button>
+              </div>
+              {provided.placeholder}
+            </div>
+          );
         }}
-        onClick={(e) => {
-          e.stopPropagation();
-          setReferenceNodeId(parentCellId);
-          setInsertMode();
-        }}
-      >
-        <div className="react-page-cell-insert-new-icon">
-          <button type="button" className={'btn btn-lg btn-secondary shadow'}>
-            <i className="fas fa-fw fa-plus" />
-          </button>
-          {/* <svg
-          focusable="false"
-          aria-hidden="true"
-          viewBox="0 0 24 24"
-          data-testid="AddIcon"
-          >
-          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
-          </svg> */}
-        </div>
-      </div>
+      </Droppable>
     </OverlayTrigger>
   );
 };

@@ -28,6 +28,7 @@ import { useEditorStore, useLang } from './options';
 import { cloneWithNewIds } from '../../../core/utils/cloneWithNewIds';
 import { useDisplayModeReferenceNodeId } from './displayMode';
 import type { CellPluginOnChangeOptions } from '../../types';
+import React from 'react';
 
 /**
  * @param id id of a node
@@ -316,21 +317,22 @@ export const useInsertNew = (parentCellId?: string) => {
  */
 export const useTrashDrop = () => {
   const removeCell = useRemoveCellById();
-  return useDrop<
-    CellDrag,
-    void,
-    {
-      isHovering: boolean;
+
+  // Create a function to handle the drag end event from react-beautiful-dnd
+  const handleDragEnd = (result: any) => {
+    const { draggableId, destination } = result;
+
+    // If dropped in the trash area (with id "trash-drop-area")
+    if (destination && destination.droppableId === 'trash-drop-area') {
+      removeCell(draggableId);
     }
-  >({
-    accept: 'cell',
-    collect: (monitor) => ({
-      isHovering: monitor.isOver({ shallow: true }),
-    }),
-    drop: (item, monitor) => {
-      if (item.cell) {
-        removeCell(item.cell.id);
-      }
-    },
-  });
+  };
+
+  // Return a ref and the handler function
+  const trashRef = React.useRef<HTMLDivElement>(null);
+  return {
+    ref: trashRef,
+    handleDragEnd,
+    isHovering: false, // This would be set based on the DroppableStateSnapshot in the component
+  };
 };
