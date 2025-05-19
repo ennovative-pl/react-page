@@ -106,7 +106,7 @@
       > div
       > .react-page-cell-draggable-overlay {
       background: var(--faintBlack);
-      border: 1px solid var(--lightWhite);
+      /* border: 1px solid var(--lightWhite); */
       background-blend-mode: screen;
     }
 

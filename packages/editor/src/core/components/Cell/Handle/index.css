@@ -6,43 +6,14 @@
   &&-mode-resizing,
   &&-mode-layout {
     .react-page-cell-handle {
-      /* position: absolute;
-      top: 0px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-100%);
-      transition: opacity ease 0.4s;
-      opacity: 0;
-
-      color: var(--bs-nav-tabs-link-active-color);
-      background-color: var(--bs-nav-tabs-link-active-bg);
-      border-color: var(--bs-nav-tabs-link-active-border-color);
-
-      text-align: center;      
-
-      display: inline-block;
-      margin-bottom: calc(-1 * var(--bs-nav-tabs-border-width));
-      border: var(--bs-nav-tabs-border-width) solid transparent;
-      border-top-left-radius: var(--bs-border-radius);
-      border-top-right-radius: var(--bs-border-radius);
-
-      padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
-      font-size: var(--bs-nav-link-font-size);
-      font-weight: var(--bs-nav-link-font-weight);      
-      text-decoration: none;      
-      background-color: rgba(0, 0, 0, 0);
-      letter-spacing: 0.15em; */
-
       position: absolute;
       top: 0px;
-      /* left: 50%; */
       left: -1px;
       transform: translateY(-100%);
-      /* transform: translateX(-50%) translateY(-100%); */
       transition: opacity ease 0.4s;
       opacity: 1;
 
       color: rgba(0, 0, 0, 0.97);
-
       background: rgba(255, 255, 255, 0.95);
       text-align: center;
       color: rgba(0, 0, 0, 0.97);
@@ -50,18 +21,16 @@
       display: inline-block;
       padding: 9px 18px;
       margin: 0 auto;
-      /* border-radius: 12px 12px 0 0; */
-      /* border-radius: var(--bs-border-radius) var(--bs-border-radius) 0 0; */
       text-transform: uppercase;
       font-size: 12px;
       line-height: 1.2;
-      /* letter-spacing: 0.15em; */
 
-      border-width: 1px 1px 1px 1px;
-      border-style: solid ;
-      border-color: var(--bs-primary) var(--bs-primary) rgba(255, 255, 255, 0.95) var(--bs-primary);
-      /* box-shadow: 0 0px 10px 0px rgb(0 0 0 / 22%); */
+      box-shadow: -2px -2px 10px 0px rgb(0 0 0 / 22%);
       pointer-events: none;
+    }
+
+    .react-page-cell-handle:last-child {
+      box-shadow: -2px -2px 10px 0px rgb(0 0 0 / 22%), 2px -2px 10px 0px rgb(0 0 0 / 22%);
     }
 
     .react-page-cell-handle-no-width {

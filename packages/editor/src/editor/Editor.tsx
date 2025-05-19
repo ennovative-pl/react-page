@@ -22,6 +22,8 @@ export type EditorProps = {
    */
   readOnly?: boolean;
 
+  noHover?: boolean;
+
   /**
    * pass the current language of the content
    */
@@ -32,6 +34,7 @@ export type EditorProps = {
 
 const Editor: FC<PropsWithChildren<EditorProps>> = ({
   readOnly = false,
+  noHover = false,
   value = null,
   onChange = null,
   onChangeLang = null,

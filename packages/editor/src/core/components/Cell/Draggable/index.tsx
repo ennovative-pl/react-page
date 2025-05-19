@@ -50,7 +50,7 @@ const Draggable: FC<PropsWithChildren<Props>> = ({
   const onMobile = useOnMobile();
   const isSmallScreen = useIsSmallScreen();
 
-  const showHandle = allowMoveInEditMode && !onMobile && !isSmallScreen;
+  const showHandle = false; // allowMoveInEditMode && !onMobile && !isSmallScreen;
 
   const ResizeHandle = components?.EditModeResizeHandle ?? DefaultSmallHandle;
 
