@@ -14,6 +14,8 @@ import {
   useUiTranslator,
 } from '../../hooks';
 import { useDragHandle } from '../Draggable/useDragHandle';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+
 const Handle: React.FC<{ nodeId: string; noWidth: boolean }> = ({
   nodeId,
   noWidth,
@@ -36,6 +38,7 @@ const Handle: React.FC<{ nodeId: string; noWidth: boolean }> = ({
   const edit = useEditCellById(nodeId);
   const plugin = usePluginOfCell(nodeId);
   const { t } = useUiTranslator();
+
   if (!plugin) {
     return null;
   }
@@ -57,51 +60,63 @@ const Handle: React.FC<{ nodeId: string; noWidth: boolean }> = ({
           })
         }
         ref={dragRef}
-        // onClick={(e) => {
-        //   const mode = e.metaKey || e.ctrlKey ? 'add' : 'replace';
-        //   focus(false, mode);
-        // }}
       >
         <div className="d-flex align-items-center gap-2" style={{ zIndex: 10 }}>
           <span>
             {t(plugin?.title || plugin?.text)}
             {plugin?.showId ? ` (${nodeId})` : ''}
           </span>
-          <button
-            title="Ustawienia komponentu"
-            className="btn btn-outline-secondary btn-sm ms-2"
-            onClick={() => edit()}
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip>Ustawienia komponentu</Tooltip>}
           >
-            <i className="fas fa-cog" />{' '}
-          </button>
-          {parentCellId && (
             <button
-              title="Zaznacz komponent nadrzędny"
-              className="btn btn-outline-secondary btn-sm"
-              onClick={() => focusParent(true, 'replace')}
+              className="btn btn-outline-secondary btn-sm ms-2"
+              onClick={() => edit()}
             >
-              <i className="fas fa-arrows-up-to-line" />{' '}
+              <i className="fas fa-cog" />{' '}
             </button>
+          </OverlayTrigger>
+          {parentCellId && (
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>Zaznacz komponent nadrzędny</Tooltip>}
+            >
+              <button
+                className="btn btn-outline-secondary btn-sm"
+                onClick={() => focusParent(true, 'replace')}
+              >
+                <i className="fas fa-arrows-up-to-line" />{' '}
+              </button>
+            </OverlayTrigger>
           )}
           {plugin.hideAddChildrenInside && (
-            <button
-              title="Dodaj komponenty"
-              className="btn btn-outline-secondary btn-sm"
-              onClick={() => {
-                setReferenceNodeId(nodeId);
-                setInsertMode();
-              }}
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>Dodaj komponenty</Tooltip>}
             >
-              <i className="fas fa-plus" />{' '}
-            </button>
+              <button
+                className="btn btn-outline-secondary btn-sm"
+                onClick={() => {
+                  setReferenceNodeId(nodeId);
+                  setInsertMode();
+                }}
+              >
+                <i className="fas fa-plus" />{' '}
+              </button>
+            </OverlayTrigger>
           )}
-          <button
-            title="Usuń komponent"
-            className="btn btn-outline-danger btn-sm"
-            onClick={handleRemove}
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip>Usuń komponent</Tooltip>}
           >
-            <i className="fas fa-trash" />{' '}
-          </button>
+            <button
+              className="btn btn-outline-danger btn-sm"
+              onClick={handleRemove}
+            >
+              <i className="fas fa-trash" />{' '}
+            </button>
+          </OverlayTrigger>
         </div>
       </div>
     </>
