@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Draggable from 'react-draggable';
 import { useMeasure } from 'react-use';
 import Cell from '../Cell';
@@ -41,6 +41,7 @@ const ResizableRowCell: React.FC<Props> = ({
   const resize = useResizeCell(nodeId);
   const [ref, { height: cellHeight }] = useMeasure();
   const { y: cellSpacingY } = useCellSpacing() ?? { y: 0 };
+  const draggableRef = useRef<HTMLDivElement>(null);
 
   const showResizeHandle =
     !isPreviewMode &&
@@ -55,6 +56,7 @@ const ResizableRowCell: React.FC<Props> = ({
 
       {showResizeHandle ? (
         <Draggable
+          nodeRef={draggableRef}
           bounds={{
             top: 0,
             bottom: 0,
@@ -69,7 +71,7 @@ const ResizableRowCell: React.FC<Props> = ({
             y: 0,
           }}
           axis="x"
-          onDrag={(e, data) => {
+          onDrag={(_e, data) => {
             const diff = Math.round(data.deltaX / stepWidth);
             const newSize =
               rowHasInlineChildrenPosition === 'right'
@@ -80,6 +82,7 @@ const ResizableRowCell: React.FC<Props> = ({
           grid={[Math.round(stepWidth), 0]}
         >
           <div
+            ref={draggableRef}
             className="resize-handle"
             style={{
               // fix floating style
