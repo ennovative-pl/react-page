@@ -107,7 +107,7 @@ const GlobalHotKeys: React.FC<{ focusRef: RefObject<HTMLDivElement> }> = ({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const data = [new ClipboardItem({ [type]: blob as any })];
 
-        navigator.clipboard.write(data);
+        navigator?.clipboard?.write(data);
         if (deleteAfter) {
           removeCells(focusedNodeIds);
         }
@@ -150,7 +150,9 @@ const GlobalHotKeys: React.FC<{ focusRef: RefObject<HTMLDivElement> }> = ({
         handler: async () => {
           // is this something we can use?
           try {
-            const node = JSON.parse(await navigator.clipboard.readText());
+            const text = await navigator?.clipboard?.readText();
+            if (!text) return;
+            const node = JSON.parse(text);
             if (!editor) {
               return;
             }

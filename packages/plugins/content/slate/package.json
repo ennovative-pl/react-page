@@ -60,8 +60,8 @@
     "@types/xmldom": "^0.1.31"
   },
   "browser": {
-    "./lib/HtmlToSlate/parseHtml.js": "./lib/HtmlToSlate/parseHtml.browser.js",
-    "./lib-es/HtmlToSlate/parseHtml.js": "./lib-es/HtmlToSlate/parseHtml.browser.js"
+    "./lib-es/HtmlToSlate/parseHtml.js": "./lib-es/HtmlToSlate/parseHtml.browser.js",
+    "./lib/HtmlToSlate/parseHtml.js": "./lib/HtmlToSlate/parseHtml.browser.js"
   },
   "gitHead": "2463f837858716626ff6892328e760b7fbd14c4d"
 }

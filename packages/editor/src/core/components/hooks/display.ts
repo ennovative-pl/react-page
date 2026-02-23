@@ -57,7 +57,9 @@ export const useOnMobile = () => {
       : false;
   return (
     state ||
-    (/iPad|iPhone|iPod|Android/.test(navigator.userAgent) &&
+    (typeof navigator !== 'undefined' &&
+      /iPad|iPhone|iPod|Android/.test(navigator.userAgent) &&
+      typeof window !== 'undefined' &&
       !Object.prototype.hasOwnProperty.call(window, 'MSStream'))
   );
 };
